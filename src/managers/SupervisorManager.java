@@ -27,11 +27,15 @@
 package managers;
 
 import models.Supervisor;
+import models.Project;
 
+import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SupervisorManager {
+	Scanner input = new Scanner(System.in);
+	
     private Map<String, Supervisor> supervisors;
 
     public SupervisorManager() {
@@ -54,6 +58,30 @@ public class SupervisorManager {
         }
 
         return false;
+    }
+    
+    public Project createNewProject(String userID) {
+    	Supervisor supervisor = supervisors.get(userID);
+	    if (supervisor != null) {
+	    	String title;
+	    	System.out.print("Input project title: ");		title = input.next();
+	    	Project newProj = new Project(projID, title, supervisor.getName(), supervisor.getEmail());
+	    	return newProj;		//in main app need have projManager to addProject()
+	   	}
+	    
+	    return null;
+    }
+    
+    public void viewProjects() {
+    	
+    }
+    
+    public void viewRequestHistory() {
+    	
+    }
+    
+    public void pendingRequests() {
+    	
     }
 
     // Other methods related to supervisors can be added here

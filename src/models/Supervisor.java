@@ -25,15 +25,19 @@
 //    }
 //}
 //
-
 package models;
+
+import java.util.*;
 
 public class Supervisor extends User {
     private String password;
+    private ArrayList<String> projectIDs;
+    private int numOfProjs;
 
     public Supervisor(String userID, String name, String email) {
         super(userID, name, email);
         this.password = "password"; // Set the default password
+        projectIDs = new ArrayList<String>();
     }
 
     public String getPassword() {
@@ -42,5 +46,9 @@ public class Supervisor extends User {
 
     public void setPassword(String newPassword) {
         this.password = newPassword;
+    }
+    
+    public void addProjID(String projID) {
+    	this.projectIDs.add(projID);
     }
 }

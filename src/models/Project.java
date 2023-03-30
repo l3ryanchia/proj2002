@@ -52,14 +52,20 @@
 package models;
 
 public class Project {
-    private String projectID;
-    private String title;
-    private String supervisor;
+	public enum Status {Available, Allocated, Reserved, Unavailable}
 
-    public Project(String projectID, String title, String supervisor) {
+    private String projectID;
+    private String projectTitle;
+    private String supervisor;
+    private String emailAddress;
+    private Status status;
+    
+    public Project(String projectID, String title, String supervisor, String supervisorID) {
         this.projectID = projectID;
-        this.title = title;
+        this.projectTitle = title;
         this.supervisor = supervisor;
+        this.status = Status.Allocated;
+        this.emailAddress = supervisorID + "@e.ntu.edu.sg";
     }
 
     // Getters and setters for projectID, title, and supervisor
@@ -73,11 +79,11 @@ public class Project {
     }
 
     public String getTitle() {
-        return title;
+        return projectTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.projectTitle = title;
     }
 
     public String getSupervisor() {
@@ -86,5 +92,17 @@ public class Project {
 
     public void setSupervisor(String supervisor) {
         this.supervisor = supervisor;
+    }
+    
+    public Status getStatus() {
+    	return this.status;
+    }
+    
+    public void setStatus(Status state) {
+    	this.status = state;
+    }
+    
+    public String getEmail() {
+    	return this.emailAddress;
     }
 }
