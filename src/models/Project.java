@@ -98,8 +98,8 @@ public class Project {
     	return this.status;
     }
     
-    public void setStatus(Status state) {
-    	this.status = state;
+    public void setStatus(Status status) {
+    	this.status = status;
     }
     
     public String getEmail() {
