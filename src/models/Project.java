@@ -50,24 +50,25 @@
 //}
 
 package models;
-enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE}
 
 public class Project {
-    private String projectID;
-    private String title;
-    private String supervisor;
-    private Status status;
-    private String student;
+	public enum Status {Available, Allocated, Reserved, Unavailable}
 
-    public Project(String projectID, String title, String supervisor) {
+    private String projectID;
+    private String projectTitle;
+    private String supervisor;
+    private String emailAddress;
+    private Status status;
+    
+    public Project(String projectID, String title, String supervisor, String supervisorID) {
         this.projectID = projectID;
-        this.title = title;
+        this.projectTitle = title;
         this.supervisor = supervisor;
-        this.status = Status.AVAILABLE;
-        this.student = "NIL";
+        this.status = Status.Allocated;
+        this.emailAddress = supervisorID + "@e.ntu.edu.sg";
     }
 
-    // Getters and setters for projectID, title, and supervisor, status and student
+    // Getters and setters for projectID, title, and supervisor
 
     public String getProjectID() {
         return projectID;
@@ -78,11 +79,11 @@ public class Project {
     }
 
     public String getTitle() {
-        return title;
+        return projectTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.projectTitle = title;
     }
 
     public String getSupervisor() {
@@ -93,24 +94,15 @@ public class Project {
         this.supervisor = supervisor;
     }
     
-    public void reserveProject() {
-    	this.status = Status.RESERVED;
-    }
-    
-    public void unreserveProject() {
-    	this.status = Status.AVAILABLE;
-    }
-    
-    public void allocateStudent(String student) {
-    	this.student = student;
-    	this.status = Status.ALLOCATED;
-    }
-    
-    public String getStudent() {
-    	return this.student;
-    }
-    
     public Status getStatus() {
     	return this.status;
+    }
+    
+    public void setStatus(Status state) {
+    	this.status = state;
+    }
+    
+    public String getEmail() {
+    	return this.emailAddress;
     }
 }
