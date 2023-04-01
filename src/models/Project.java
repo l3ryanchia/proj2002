@@ -60,7 +60,7 @@ public class Project {
     private String emailAddress;
     private Status status;
     
-    public Project(String projectID, String title, String supervisor, String supervisorID) {
+    public Project(String projectID, String title, String supervisor, String supervisorID) {		//assuming supervisor is the name?
         this.projectID = projectID;
         this.projectTitle = title;
         this.supervisor = supervisor;
