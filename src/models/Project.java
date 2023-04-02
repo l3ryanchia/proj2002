@@ -52,11 +52,12 @@
 package models;
 
 public class Project {
-	public enum Status {Available, Allocated, Reserved, Unavailable}
+	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE}
 
     private String projectID;
     private String projectTitle;
     private String supervisor;
+    private String student;
     private String emailAddress;
     private Status status;
     
@@ -64,8 +65,9 @@ public class Project {
         this.projectID = projectID;
         this.projectTitle = title;
         this.supervisor = supervisor;
-        this.status = Status.Allocated;
-        this.emailAddress = supervisorID + "@e.ntu.edu.sg";
+        this.student = "NIL";
+        this.status = Status.ALLOCATED;
+        this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
     }
 
     // Getters and setters for projectID, title, and supervisor
@@ -104,5 +106,22 @@ public class Project {
     
     public String getEmail() {
     	return this.emailAddress;
+    }
+    
+    public void reserveProject() {
+    	this.status = Status.RESERVED;
+    }
+
+    public void unreserveProject() {
+    	this.status = Status.AVAILABLE;
+    }
+
+    public void allocateStudent(String student) {
+    	this.student = student;
+    	this.setStatus(Status.ALLOCATED);
+    }
+
+    public String getStudent() {
+    	return this.student;
     }
 }
