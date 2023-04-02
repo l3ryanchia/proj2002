@@ -24,7 +24,6 @@ public class Req_DeallocateProj extends Request{
 		student.deallocateProject(project.getProjectID());
 		//reverse of: supervisor.addProj(project.getProjectID());
 		project.deallocateStudent();
-		//function to ban student from choosing same project
 		setRequestStatus(ReqStatus.APPROVED);
 	}
 	
