@@ -61,6 +61,7 @@ public class StudentManager {
     }
 
     // Other methods related to students can be added here
+    /*
     public void allocateProject(String projectID, String studentID) {
     	Student student = getStudent(studentID);
     	student.setProject(projectID);
@@ -72,4 +73,5 @@ public class StudentManager {
     	student.setProject(projectID);
     	student.setStatus(StudentStatus.RESERVED);
     }
+    */
 }

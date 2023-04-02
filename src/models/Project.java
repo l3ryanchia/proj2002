@@ -51,6 +51,10 @@
 
 package models;
 
+import java.util.Map;
+
+import models.Project.Status;
+
 public class Project {
 	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE}
 
@@ -111,7 +115,33 @@ public class Project {
     public void setStudent(String student) {
     	this.student = student;
     }
+    
     public String getStudent() {
     	return this.student;
+    }
+    
+    public void displayProject() {
+    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "PROJECT SUPERVISOR");
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+    	System.out.printf("%10s %85s %25s \n", this.getProjectID(), this.getTitle(), this.getSupervisor());
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+    }
+    
+    public void reserveProject() {
+    	this.setStatus(Status.RESERVED);
+    }
+
+    public void unreserveProject() {
+    	this.setStatus(Status.AVAILABLE);
+    }
+
+    public void allocateStudent(String studentID) {
+    	this.setStudent(studentID);
+    	this.setStatus(Status.ALLOCATED);
+    }
+    
+    public void deallocateStudent() {
+    	this.setStudent("NIL");
+    	this.setStatus(Status.AVAILABLE);
     }
 }

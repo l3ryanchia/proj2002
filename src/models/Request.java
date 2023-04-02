@@ -21,20 +21,58 @@ package models;
     // ...
 }*/
 
-//still finding a way to do this, thinking of using subclasses for 3 diff types of requests and storing in 2D matrix
-public class Request {
-	public enum Status {PENDING, APPROVED, REJECTED}
+public abstract class Request {
+	public enum ReqStatus {PENDING, APPROVED, REJECTED}
+	public enum UserType {STUDENT, SUPERVISOR, FYPCOORDINATOR};
+	protected static int requestIDCounter=1;
 	
     private String requestID;
-    private int type;
-    private Status status;
+    private ReqStatus status;
+    protected String senderID;
+    protected String receiverID;
+    protected UserType senderType;
+    protected UserType receiverType;
+    protected Project project;
 
-    public Request(String requestID, User sender, User receiver, String type) {
-        this.requestID = requestID;
-        this.type = type;
-        this.status = Status.PENDING;
+    public Request() {
+        this.requestID = "R" + requestIDCounter;
+        this.status = ReqStatus.PENDING;
+        requestIDCounter++;
     }
 
-    // Getters and Setters
-    // ...
+    public String getRequestID() {
+    	return this.requestID;
+    }
+    
+    public String getSenderID() {
+    	return this.senderID;
+    }
+    
+    public String getReceiverID() {
+    	return this.receiverID;
+    }
+    
+    public UserType getSenderType() {
+    	return this.senderType;
+    }
+    
+    public UserType getReceiverType() {
+    	return this.receiverType;
+    }
+    
+	public Project getProject() {
+		return this.project;
+	}
+    
+    public ReqStatus getRequestStatus() {
+    	return this.status;
+    }
+    
+    protected void setRequestStatus(ReqStatus state) {
+    	this.status = state;
+    }
+    
+    public abstract void approveRequest();
+    public abstract void rejectRequest();
+    public abstract void displayRequest();
 }

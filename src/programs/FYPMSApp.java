@@ -12,6 +12,7 @@ public class FYPMSApp {
     protected static SupervisorManager supervisorManager;
     protected static ProjectManager projectManager;
     protected static FYPCoordinatorManager fypCoordinatorManager;
+    protected static RequestManager requestManager;
 
     // Constructor
     public FYPMSApp() {
@@ -19,6 +20,7 @@ public class FYPMSApp {
         supervisorManager = new SupervisorManager();
         projectManager = new ProjectManager();
         fypCoordinatorManager = new FYPCoordinatorManager();
+        requestManager = new RequestManager();
     }
 
     public static void main(String[] args) {
@@ -58,7 +60,7 @@ public class FYPMSApp {
         Scanner scanner = new Scanner(System.in);
 
         while (!exit) {
-            System.out.println("Welcome to FYP Management System");
+            System.out.println("\nWelcome to FYP Management System");
             System.out.println("1. Login");
             System.out.println("2. Exit");
             System.out.print("Please choose an option: ");
