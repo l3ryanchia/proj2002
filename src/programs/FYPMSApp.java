@@ -8,10 +8,10 @@ import serializers.*;
 
 public class FYPMSApp {
     // Attributes to store loaded data
-    private StudentManager studentManager;
-    private SupervisorManager supervisorManager;
-    private ProjectManager projectManager;
-    private FYPCoordinatorManager fypCoordinatorManager;
+	protected static StudentManager studentManager;
+    protected static SupervisorManager supervisorManager;
+    protected static ProjectManager projectManager;
+    protected static FYPCoordinatorManager fypCoordinatorManager;
 
     // Constructor
     public FYPMSApp() {
@@ -97,7 +97,7 @@ public class FYPMSApp {
             if (student.getPassword().equals(password)) {
                 System.out.println("Login successful!");
                 // Allow user to change password or perform other student-related tasks
-                studentMenu(student);
+                StudentMenu.displayMenu(student);
             } else {
                 System.out.println("Invalid password.");
             }
@@ -123,65 +123,6 @@ public class FYPMSApp {
             System.out.println("Invalid userID.");
         }
     }
-    
-    private void studentMenu(Student student) {
-    	boolean exit = false;
-    	Scanner scanner = new Scanner(System.in);
-    	
-        while (!exit) {
-            System.out.println("Welcome to FYP Management System - Students");
-            System.out.println("1. View all available projects");
-            System.out.println("2. View registered project");
-            System.out.println("3. View request history");
-            System.out.println("4. Exit");
-            System.out.print("Please choose an option: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline
-
-            switch (choice) {
-                case 1:
-                    //view all projs
-                    break;
-                case 2:
-                    //display registered project
-                	System.out.println("1. Request to change title");
-                    System.out.println("2. Request to deregister FYP");
-                    System.out.println("3. Exit");
-                    System.out.print("Please choose an option: ");
-                    
-                    choice = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline
-                    
-                    switch (choice) {
-                    	case 1:
-                    	
-                    		break;
-                    	case 2:
-                    		
-                    		break;
-                    	case 3:
-                    		break;
-                    	default:
-                            System.out.println("Invalid choice. Please try again.");
-                    	
-                    } 
-                    
-                    break;
-                case 3:
-                    //view request history
-                    break;
-                case 4:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-        scanner.close();
-    }
-    
-
 
 }
 // push test 1 2 3 30 mar 16:10

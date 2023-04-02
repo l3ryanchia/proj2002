@@ -37,4 +37,17 @@ public class ProjectManager {
     	project.setStudent(studentID);
     	project.setStatus(Status.ALLOCATED);
     }
+    
+    public void displayAllAvailableProjects() {
+    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "PROJECT SUPERVISOR");
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+    		Project project = set.getValue();
+    		if(project.getStatus()==Status.AVAILABLE) {
+    			System.out.printf("%10s %85s %25s \n", project.getProjectID(), project.getTitle(), project.getSupervisor());
+    		}
+    	}
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+
+    }
 }

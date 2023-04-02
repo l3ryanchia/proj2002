@@ -61,13 +61,13 @@ public class Project {
     private String emailAddress;
     private Status status;
     
-    public Project(String projectID, String title, String supervisor, String supervisorID) {		//assuming supervisor is the name?
+    public Project(String projectID, String title, String supervisor) {		//assuming supervisor is the name?
         this.projectID = projectID;
         this.projectTitle = title;
         this.supervisor = supervisor;
         this.student = "NIL";
-        this.status = Status.ALLOCATED;
-        this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
+        this.status = Status.AVAILABLE;
+        //this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
     }
 
     // Getters and setters for projectID, title, and supervisor
