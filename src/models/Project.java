@@ -107,20 +107,10 @@ public class Project {
     public String getEmail() {
     	return this.emailAddress;
     }
-    
-    public void reserveProject() {
-    	this.status = Status.RESERVED;
-    }
 
-    public void unreserveProject() {
-    	this.status = Status.AVAILABLE;
-    }
-
-    public void allocateStudent(String student) {
+    public void setStudent(String student) {
     	this.student = student;
-    	this.setStatus(Status.ALLOCATED);
     }
-
     public String getStudent() {
     	return this.student;
     }
