@@ -18,8 +18,11 @@ import java.util.*;
 
 
 public class FYPCoordinator extends Supervisor {
+	public static String FYPCoordinatorID;
+	
     public FYPCoordinator(String userID, String name, String email) {
         super(userID, name, email);
+        FYPCoordinatorID = userID;
     }
 
     // Other methods for the FYPCoordinator class can be added here

@@ -38,6 +38,7 @@ public class Supervisor extends User {
         super(userID, name, email);
         this.password = "password"; // Set the default password
         projectIDs = new ArrayList<String>();
+        numOfProjs = 0;
     }
 
     public String getPassword() {
@@ -48,7 +49,17 @@ public class Supervisor extends User {
         this.password = newPassword;
     }
     
-    public void addProjID(String projID) {
+    public void addProj(String projID) {
     	this.projectIDs.add(projID);
+    	this.numOfProjs++;
     }
+    
+    public int getNumOfProjs() {
+    	return this.numOfProjs;
+    }
+    
+    public ArrayList<String> getProjIDs() {
+    	return this.projectIDs;
+    }
+    
 }

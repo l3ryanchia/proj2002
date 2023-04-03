@@ -8,10 +8,11 @@ import serializers.*;
 
 public class FYPMSApp {
     // Attributes to store loaded data
-    private StudentManager studentManager;
-    private SupervisorManager supervisorManager;
-    private ProjectManager projectManager;
-    private FYPCoordinatorManager fypCoordinatorManager;
+	protected static StudentManager studentManager;
+    protected static SupervisorManager supervisorManager;
+    protected static ProjectManager projectManager;
+    protected static FYPCoordinatorManager fypCoordinatorManager;
+    protected static RequestManager requestManager;
 
     // Constructor
     public FYPMSApp() {
@@ -19,6 +20,7 @@ public class FYPMSApp {
         supervisorManager = new SupervisorManager();
         projectManager = new ProjectManager();
         fypCoordinatorManager = new FYPCoordinatorManager();
+        requestManager = new RequestManager();
     }
 
     public static void main(String[] args) {
@@ -58,7 +60,7 @@ public class FYPMSApp {
         Scanner scanner = new Scanner(System.in);
 
         while (!exit) {
-            System.out.println("Welcome to FYP Management System");
+            System.out.println("\nWelcome to FYP Management System");
             System.out.println("1. Login");
             System.out.println("2. Exit");
             System.out.print("Please choose an option: ");
@@ -97,6 +99,7 @@ public class FYPMSApp {
             if (student.getPassword().equals(password)) {
                 System.out.println("Login successful!");
                 // Allow user to change password or perform other student-related tasks
+                StudentMenu.displayMenu(student);
             } else {
                 System.out.println("Invalid password.");
             }
@@ -123,5 +126,5 @@ public class FYPMSApp {
         }
     }
 
-
 }
+// push test 1 2 3 30 mar 16:10

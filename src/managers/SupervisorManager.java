@@ -32,6 +32,7 @@ import models.Project;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class SupervisorManager {
 	Scanner input = new Scanner(System.in);
@@ -72,8 +73,29 @@ public class SupervisorManager {
 	    return null;
     }
     
-    public void viewProjects() {
-    	
+    public boolean viewProjects(String userID, ProjectManager projectManager) {			//need to include projectManager because of the HashMap it has
+    	String projID;
+    	Supervisor supervisor = supervisors.get(userID);
+    	if (supervisor != null)
+    	{
+    		int count = supervisor.getNumOfProjs();
+    		ArrayList<String> list = supervisor.getProjIDs();
+    		if (count == 0) {
+    			System.out.println("Supervisor has no projects to his name.");
+    		}
+    		else {
+    			for (int i=0; i<count; i++) {
+    				System.out.println("Project " + i + " information:");
+    				projID = list.get(i);
+    				Project project = projectManager.getProject(projID);
+    				System.out.println("Project ID:\t" + project.getProjectID());
+    				System.out.println("Project Title:\t" + project.getTitle());
+    				System.out.println("Status:\t" + project.getStatus());
+    			}
+    		}
+    		return true;																//returns true false - check if userID given matches??
+    	}
+    	else return false;
     }
     
     public void viewRequestHistory() {

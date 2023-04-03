@@ -76,7 +76,7 @@ public class ProjectSerializer {
 
             int projectIDCounter = 1;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",", 2);
+                String[] values = line.split(",", 2); //theres a bug to fix here for supervisor names with comma
 
                 if (values.length != 2) {
                     System.out.println("Skipping invalid row: " + line);

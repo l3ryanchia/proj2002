@@ -26,10 +26,14 @@
 
 package managers;
 
+import models.Project;
 import models.Student;
+import models.Project.Status;
+import models.Student.StudentStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class StudentManager {
     private Map<String, Student> students;
@@ -46,7 +50,7 @@ public class StudentManager {
         students.put(student.getUserID(), student);
     }
 
-    public boolean checkPassword(String userID, String password) {
+    public boolean checkPassword(String userID, String password) { //where is this being used??
         Student student = students.get(userID);
 
         if (student != null) {
@@ -57,4 +61,17 @@ public class StudentManager {
     }
 
     // Other methods related to students can be added here
+    /*
+    public void allocateProject(String projectID, String studentID) {
+    	Student student = getStudent(studentID);
+    	student.setProject(projectID);
+    	student.setStatus(StudentStatus.REGISTERED);
+    }
+    
+    public void reserveProject(String projectID, String studentID) {
+    	Student student = getStudent(studentID);
+    	student.setProject(projectID);
+    	student.setStatus(StudentStatus.RESERVED);
+    }
+    */
 }

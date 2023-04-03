@@ -51,21 +51,27 @@
 
 package models;
 
+import java.util.Map;
+
+import models.Project.Status;
+
 public class Project {
-	public enum Status {Available, Allocated, Reserved, Unavailable}
+	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE}
 
     private String projectID;
     private String projectTitle;
     private String supervisor;
+    private String student;
     private String emailAddress;
     private Status status;
     
-    public Project(String projectID, String title, String supervisor, String supervisorID) {
+    public Project(String projectID, String title, String supervisor) {		//assuming supervisor is the name?
         this.projectID = projectID;
         this.projectTitle = title;
         this.supervisor = supervisor;
-        this.status = Status.Allocated;
-        this.emailAddress = supervisorID + "@e.ntu.edu.sg";
+        this.student = "NIL";
+        this.status = Status.AVAILABLE;
+        //this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
     }
 
     // Getters and setters for projectID, title, and supervisor
@@ -104,5 +110,38 @@ public class Project {
     
     public String getEmail() {
     	return this.emailAddress;
+    }
+
+    public void setStudent(String student) {
+    	this.student = student;
+    }
+    
+    public String getStudent() {
+    	return this.student;
+    }
+    
+    public void displayProject() {
+    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "PROJECT SUPERVISOR");
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+    	System.out.printf("%10s %85s %25s \n", this.getProjectID(), this.getTitle(), this.getSupervisor());
+    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+    }
+    
+    public void reserveProject() {
+    	this.setStatus(Status.RESERVED);
+    }
+
+    public void unreserveProject() {
+    	this.setStatus(Status.AVAILABLE);
+    }
+
+    public void allocateStudent(String studentID) {
+    	this.setStudent(studentID);
+    	this.setStatus(Status.ALLOCATED);
+    }
+    
+    public void deallocateStudent() {
+    	this.setStudent("NIL");
+    	this.setStatus(Status.AVAILABLE);
     }
 }
