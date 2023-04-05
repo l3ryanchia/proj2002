@@ -80,10 +80,21 @@ public class RequestManager {
     	else {
 	    	for (int i=0; i<requests.size(); i++) {
 	    		if (requests.get(i).getSenderID() == senderID) {
-	   				requests.get(i).displayRequest();
+	    			requests.get(i).displayRequest();
 	  				continue;
 	   			}
 	   		}
     	}
     }
+    //proposed concise version
+    /*
+    public void checkOutgoing(String senderID, boolean pending) { 
+    	for (int i=0; i<requests.size(); i++) {
+    		if (requests.get(i).getSenderID() == senderID) {
+   				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
+    			requests.get(i).displayRequest();
+   			}
+   		}
+    }
+    */
 }
