@@ -113,8 +113,11 @@ public class FYPMSApp {
                 
 
                 // Check if the user is also the FYP coordinator
+                FYPCoordinator coordinator = fypCoordinatorManager.getCoordinator();
+                
                 if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) {
                     System.out.println("Welcome, FYP coordinator!");
+                    FYPCoordinatorMenu.displayMenu(coordinator);
                     // Allow user to perform FYP coordinator-related tasks
                 } else {
                     System.out.println("Welcome, Supervisor!");
