@@ -29,10 +29,13 @@ public class RequestManager {
     		requests.get(i).displayRequest();
     	}
     }
+    //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.STUDENT, true)
+    //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)
     
-    public void checkIncoming(String receiverID, models.Request.UserType userType) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    public void checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
     	for (int i=0; i<requests.size(); i++) {
 			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID() == receiverID)) {
+				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
 				requests.get(i).displayRequest();
 				continue;
 			}

@@ -22,6 +22,15 @@ public class ProjectManager {
     }
 
     // Other methods related to projects can be added here
+//    public List<Project> getProjectsBySupervisor(String supervisorID) {
+//        List<Project> supervisorProjects = new ArrayList<>();
+//        for (Project project : projects.values()) {
+//            if (project.getSupervisor().equals(supervisorID)) {
+//                supervisorProjects.add(project);
+//            }
+//        }
+//        return supervisorProjects;
+//    }
     /*
     public void reserveProject(String projectID) {
     	Project project = getProject(projectID);

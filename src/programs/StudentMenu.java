@@ -104,8 +104,7 @@ public class StudentMenu {
                 	}
                     break;
                 case 3://view request history
-                    //FYPMSApp.requestManager.displayStudentRequests();
-                    FYPMSApp.requestManager.checkOutgoing(student.getUserID(), false);
+                    FYPMSApp.requestManager.displayStudentRequests();
                     break;
                 case 4: //change password
                 	System.out.println("Please enter new password: ");

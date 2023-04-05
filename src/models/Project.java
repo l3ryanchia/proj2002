@@ -56,7 +56,8 @@ import java.util.Map;
 import models.Project.Status;
 
 public class Project {
-	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE}
+	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE};
+	public static int projectIDCounter = 1;
 
     private String projectID;
     private String projectTitle;
@@ -65,12 +66,13 @@ public class Project {
     private String emailAddress;
     private Status status;
     
-    public Project(String projectID, String title, String supervisor) {		//assuming supervisor is the name?
-        this.projectID = projectID;
+    public Project(String title, String supervisor) {		//assuming supervisor is the name?
+        this.projectID = "P" + projectIDCounter;
         this.projectTitle = title;
         this.supervisor = supervisor;
         this.student = "NIL";
         this.status = Status.AVAILABLE;
+        projectIDCounter++;
         //this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
     }
 

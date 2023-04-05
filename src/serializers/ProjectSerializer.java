@@ -74,20 +74,20 @@ public class ProjectSerializer {
             String line;
             br.readLine(); // Skip header line
 
-            int projectIDCounter = 1;
+            //int projectIDCounter = 1;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",", 2); //theres a bug to fix here for supervisor names with comma; update: bug fixed by removing commas in the supervisors name
+                String[] values = line.split(",", 2); //theres a bug to fix here for supervisor names with comma
 
                 if (values.length != 2) {
                     System.out.println("Skipping invalid row: " + line);
                     continue;
                 }
 
-                String projectID = "P" + projectIDCounter;
+                //String projectID = "P" + projectIDCounter;
                 String supervisor = values[0].trim();
                 String title = values[1].trim();
-                projects.add(new Project(projectID, title, supervisor));
-                projectIDCounter++;
+                projects.add(new Project(title, supervisor));
+                //projectIDCounter++;
             }
         } catch (IOException e) {
             e.printStackTrace();

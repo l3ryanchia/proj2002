@@ -110,13 +110,15 @@ public class FYPMSApp {
 
             if (supervisor.getPassword().equals(password)) {
                 System.out.println("Login successful!");
+                
 
                 // Check if the user is also the FYP coordinator
                 if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) {
                     System.out.println("Welcome, FYP coordinator!");
                     // Allow user to perform FYP coordinator-related tasks
                 } else {
-                	
+                    System.out.println("Welcome, Supervisor!");
+                    SupervisorMenu.displayMenu(supervisor);
                 	// Allow user to perform supervisor-related tasks
                 }
             } else {

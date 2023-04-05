@@ -29,6 +29,8 @@ package models;
 
 import java.util.*;
 
+import programs.FYPMSApp;
+
 public class Supervisor extends User {
     private String password;
     private ArrayList<String> projectIDs;
@@ -60,6 +62,19 @@ public class Supervisor extends User {
     
     public ArrayList<String> getProjIDs() {
     	return this.projectIDs;
+    }
+    
+    public Project createProject() {
+    	Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter project title: ");
+        String title = scanner.nextLine();
+
+        Project project = new Project(title, this.getName());
+        this.addProj(project.getProjectID());
+        System.out.println("Project created successfully!");
+        return project;
+
     }
     
 }
