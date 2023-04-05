@@ -116,7 +116,8 @@ public class FYPMSApp {
                     System.out.println("Welcome, FYP coordinator!");
                     // Allow user to perform FYP coordinator-related tasks
                 } else {
-                    // Allow user to perform supervisor-related tasks
+                	
+                	// Allow user to perform supervisor-related tasks
                 }
             } else {
                 System.out.println("Invalid password.");
