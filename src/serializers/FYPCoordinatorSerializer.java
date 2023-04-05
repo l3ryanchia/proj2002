@@ -51,7 +51,7 @@ public class FYPCoordinatorSerializer {
                 String[] values = line.split(",");
                 String name = values[0].trim();
                 String email = values[1].trim();
-                String userID = email.substring(0, email.indexOf('@')).toLowerCase();
+                String userID = email.substring(0, email.indexOf('@'));
                 coordinator = new FYPCoordinator(userID, name, email);
             }
         } catch (IOException e) {
