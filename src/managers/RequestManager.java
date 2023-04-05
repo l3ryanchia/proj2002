@@ -1,9 +1,6 @@
 package managers;
 
-import models.Project;
-import models.Request;
-import models.Request.UserType;
-import models.Project.Status;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +23,67 @@ public class RequestManager {
 
     // Other methods related to requests can be added here
     
-    public void displayStudentRequests() {
+    public void displayStudentRequests() {					//should this be specific to a certain student? nobody can see all of students req right?
     	for(int i=0; i<requests.size(); i++) {
-    		if(requests.get(i).getSenderType() != UserType.STUDENT) continue;
+    		if(requests.get(i).getSenderType() != models.Request.UserType.STUDENT) continue;
     		requests.get(i).displayRequest();
+    	}
+    }
+    
+    public void checkIncoming(String receiverID, models.Request.UserType userType) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    	for (int i=0; i<requests.size(); i++) {
+			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID() == receiverID)) {
+				requests.get(i).displayRequest();
+				continue;
+			}
+		}
+    	
+    	/*switch(choice){
+    		case 1:
+    			for (int i=0; i<requests.size(); i++) {
+    				if ((requests.get(i).getSenderType() == models.Request.UserType.STUDENT) && (requests.get(i).getReceiverID() == receiverID)) {
+    					requests.get(i).displayRequest();
+    					continue;
+    				}
+    			}
+    			break;
+    			
+    		case 2:
+    			for (int i=0; i<requests.size(); i++) {
+    				if ((requests.get(i).getSenderType() == models.Request.UserType.STUDENT) && (requests.get(i).getReceiverID() == receiverID)) {
+    					requests.get(i).displayRequest();
+    					continue;
+    				}
+    			}
+    			break;
+    			
+    		case 3:
+    			for (int i=0; i<requests.size(); i++) {
+    				if ((requests.get(i).getSenderType() == models.Request.UserType.SUPERVISOR) && (requests.get(i).getReceiverID() == receiverID)) {
+    					requests.get(i).displayRequest();
+    					continue;
+    				}
+    			}
+    			break;
+    	}*/
+    }
+    
+    public void checkOutgoing(String senderID, boolean pending) {		//only student and sup
+    	if (pending) {
+    		for (int i=0; i<requests.size(); i++) {
+        		if ((requests.get(i).getSenderID() == senderID) && (requests.get(i).getRequestStatus() == models.Request.ReqStatus.PENDING)) {
+       				requests.get(i).displayRequest();
+      				continue;
+       			}
+       		}
+    	}
+    	else {
+	    	for (int i=0; i<requests.size(); i++) {
+	    		if (requests.get(i).getSenderID() == senderID) {
+	   				requests.get(i).displayRequest();
+	  				continue;
+	   			}
+	   		}
     	}
     }
 }

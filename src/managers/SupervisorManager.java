@@ -97,14 +97,6 @@ public class SupervisorManager {
     	}
     	else return false;
     }
-    
-    public void viewRequestHistory() {
-    	
-    }
-    
-    public void pendingRequests() {
-    	
-    }
 
     // Other methods related to supervisors can be added here
 }
