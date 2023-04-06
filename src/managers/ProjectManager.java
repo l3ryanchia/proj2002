@@ -53,13 +53,13 @@ public class ProjectManager {
     */
     
     //add filters
-    public void displayAllAvailableProjects() {
+    public void displayAllAvailableProjects(SupervisorManager supervisorManager ) {
     	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
     		if(project.getStatus()==Status.AVAILABLE) {
-    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), FYPMSApp.supervisorManager. + "@e.ntu.edu.sg", "AVAILABLE");
+    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
     		}
     	}
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");

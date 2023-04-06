@@ -24,16 +24,12 @@ public class Req_ChangeTitle extends Request {
 		setRequestStatus(ReqStatus.REJECTED);
 	}
 	
-	public void displayRequest() {
-    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("Request: Change Title - "+ this.getRequestStatus());
-		System.out.println("SenderID: " + this.senderID);
-		System.out.println("ReceiverID: " + this.receiverID);
-		//System.out.println("Status: " + this.getRequestStatus());
-    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME");
-    	System.out.printf("%10s %85s %25s \n", this.project.getProjectID(), this.project.getTitle(), this.project.getSupervisor());
-    	System.out.println("Proposed Title: " + this.newTitle);
-    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+	public void displayRequestType() {
+    	System.out.println("Request: Change Title");
 	}
+	
+	public void displayAdditionalInfo() {
+    	System.out.println("Proposed Title: " + this.newTitle);
+    };
 	
 }

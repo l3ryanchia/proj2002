@@ -9,10 +9,10 @@ import serializers.*;
 public class FYPMSApp {
     // Attributes to store loaded data
 	protected static StudentManager studentManager;
-    protected static SupervisorManager supervisorManager;
-    protected static ProjectManager projectManager;
-    protected static FYPCoordinatorManager fypCoordinatorManager;
-    protected static RequestManager requestManager;
+	protected static SupervisorManager supervisorManager;
+	protected static ProjectManager projectManager;
+	protected static FYPCoordinatorManager fypCoordinatorManager;
+	protected static RequestManager requestManager;
 
     // Constructor
     public FYPMSApp() {
@@ -22,8 +22,10 @@ public class FYPMSApp {
         fypCoordinatorManager = new FYPCoordinatorManager();
         requestManager = new RequestManager();
     }
-    
-    //public get
+    /*
+    public SupervisorManager getSupervisorManager() {
+    	return supervisorManager;
+    }*/
 
     public static void main(String[] args) {
         FYPMSApp app = new FYPMSApp();

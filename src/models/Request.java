@@ -74,5 +74,17 @@ public abstract class Request {
     
     public abstract void approveRequest();
     public abstract void rejectRequest();
-    public abstract void displayRequest();
+    public abstract void displayRequestType();
+    public void displayAdditionalInfo() {};
+    
+    public void displayRequest() {
+    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    	System.out.println("RequestID: " + this.getRequestID() + " - " + this.getRequestStatus());
+    	this.displayRequestType(); //may vary for each subclass
+		System.out.println("SenderID: " + this.senderID + " || ReceiverID: " + this.receiverID);
+    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME");
+    	System.out.printf("%10s %85s %25s \n", this.project.getProjectID(), this.project.getTitle(), this.project.getSupervisor());
+    	this.displayAdditionalInfo(); //may vary for each subclass
+    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    };
 }

@@ -30,7 +30,7 @@ public class StudentMenu {
                 		break;
                 	}
                 	
-                	FYPMSApp.projectManager.displayAllAvailableProjects();
+                	FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
                 	while(true) {
                 		System.out.println("1. Request for a project");
 	                    System.out.println("2. Back");
@@ -55,7 +55,7 @@ public class StudentMenu {
 	                    		}
 	                    		
 	                    		Project selectedProj = FYPMSApp.projectManager.getProject(selection);
-	                    		Supervisor selectedSup = FYPMSApp.supervisorManager.getSupervisor(selectedProj.getSupervisor());
+	                    		Supervisor selectedSup = FYPMSApp.supervisorManager.getSupervisor(FYPMSApp.supervisorManager.getSupervisorID(selectedProj.getSupervisor()));
 	                    		FYPMSApp.requestManager.addRequest(new Req_AllocateProj(student, selectedSup, selectedProj));
 	                    		break;
 	                    	case 2:
@@ -104,8 +104,8 @@ public class StudentMenu {
                 	}
                     break;
                 case 3://view request history
-                    FYPMSApp.requestManager.displayStudentRequests();
-                	//FYPMSApp.requestManager.checkOutgoing(String senderID, boolean pending);
+                    //FYPMSApp.requestManager.displayStudentRequests();
+                	FYPMSApp.requestManager.checkOutgoing(student.getUserID(), false);
                     break;
                 case 4: //change password
                 	System.out.println("Please enter new password: ");

@@ -61,7 +61,7 @@ public class Project {
 
     private String projectID;
     private String projectTitle;
-    private String supervisor;
+    private String supervisor; //should we put the whole supervisor?
     private String student;
     //private String emailAddress;
     private Status status;

@@ -20,21 +20,53 @@ public class FYPCoordinatorMenu {
 
             int choice = scanner.nextInt();
             scanner.nextLine();
+            int subchoice;
 
             switch (choice) {
                 case 1:
                     //viewProjectsByStatus(scanner);
+                	
                     break;
                 case 2:
                     //generateProjectDetailsReport(scanner);
                     break;
                 case 3:
-                	System.out.println("Pending Requests from Students:");
+                	System.out.println("PENDING REQUESTS FROM STUDENTS:");
                 	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.STUDENT, true);
-                	System.out.println("Pending Requests from Supervisors:");
+                	System.out.println("PENDING REQUESTS FROM SUPERVISORS:");
                 	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true);
-                	
-                	//viewPendingRequests(coordinator, scanner);
+                	while(true) {
+                		System.out.println("\n1. Approve a request");
+                		System.out.println("2. Reject a request");
+	                    System.out.println("3. Back");
+	                    System.out.print("Please choose an option: ");
+	                    
+	                    subchoice = scanner.nextInt();
+	                    scanner.nextLine();
+	                    String selection;
+	                     
+	                    switch (subchoice) {
+	                    	case 1:
+	                    		System.out.print("Please enter Reqeust ID: ");
+	                    		selection = scanner.nextLine();
+	                    		
+	                    		FYPMSApp.requestManager.getRequestByID(selection).approveRequest();
+	                    		System.out.print("Request Approved!");
+	                    		break;
+	                    	case 2:
+	                    		System.out.print("Please enter Reqeust ID: ");
+	                    		selection = scanner.nextLine();
+	                    		
+	                    		FYPMSApp.requestManager.getRequestByID(selection).rejectRequest(); //should not be able to reject approved requests
+	                    		System.out.print("Request Rejected!");
+	                    		break;
+	                    	case 3:
+	                    		break;
+	                    	default:
+	                            System.out.println("Invalid choice. Please try again.");
+	                    } 
+	                    if(subchoice==3) break;
+                	}
                     break;
                 case 4:
                     //viewRequestHistory(coordinator, scanner);

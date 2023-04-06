@@ -46,6 +46,18 @@ public class SupervisorManager {
     public Supervisor getSupervisor(String userID) {
         return supervisors.get(userID);
     }
+    
+    public String getSupervisorID(String name) {
+    	String output = "Not found!";
+    	for(Map.Entry<String, Supervisor> set:supervisors.entrySet()) {
+    		Supervisor supervisor = set.getValue();
+    		if(supervisor.getName().equals(name)) {
+    			output = supervisor.getUserID();
+    			break;
+    		}
+    	}
+    	return output;
+    }
 
     public void addSupervisor(Supervisor supervisor) {
         supervisors.put(supervisor.getUserID(), supervisor);

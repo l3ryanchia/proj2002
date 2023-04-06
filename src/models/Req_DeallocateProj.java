@@ -31,14 +31,8 @@ public class Req_DeallocateProj extends Request{
 		setRequestStatus(ReqStatus.REJECTED);
 	}
 	
-	public void displayRequest() {
-    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("Request: Deallocate Project - "+ this.getRequestStatus());
-		System.out.println("SenderID: " + this.senderID);
-		System.out.println("ReceiverID: " + this.receiverID);
-    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME");
-    	System.out.printf("%10s %85s %25s \n", this.project.getProjectID(), this.project.getTitle(), this.project.getSupervisor());
-    	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+	public void displayRequestType() {
+		System.out.println("Request: Deallocate Project");
 	}
 
 }
