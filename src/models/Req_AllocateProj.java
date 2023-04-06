@@ -23,6 +23,7 @@ public class Req_AllocateProj extends Request{
 	public void approveRequest() {
 		student.allocateProject(project.getProjectID());
 		supervisor.addProj(project.getProjectID());
+		//if supervisor more than 2 projs, makeUnavailable()
 		project.allocateStudent(student.getUserID());
 		setRequestStatus(ReqStatus.APPROVED);
 	}

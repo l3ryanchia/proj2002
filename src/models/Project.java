@@ -63,14 +63,14 @@ public class Project {
     private String projectTitle;
     private String supervisor;
     private String student;
-    private String emailAddress;
+    //private String emailAddress;
     private Status status;
     
     public Project(String title, String supervisor) {		//assuming supervisor is the name?
         this.projectID = "P" + projectIDCounter;
         this.projectTitle = title;
         this.supervisor = supervisor;
-        this.student = "NIL";
+        this.student = null;
         this.status = Status.AVAILABLE;
         projectIDCounter++;
         //this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?

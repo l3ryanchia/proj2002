@@ -45,7 +45,7 @@ public class Student extends User {
         super(userID, name, email);
         this.password = "password"; // Set the default password
         this.status = StudentStatus.UNREGISTERED;
-        this.projectID = "NIL";
+        this.projectID = null;
         this.projectBlacklist = new ArrayList<>();
     }
 

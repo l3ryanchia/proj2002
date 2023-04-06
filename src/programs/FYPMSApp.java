@@ -22,6 +22,8 @@ public class FYPMSApp {
         fypCoordinatorManager = new FYPCoordinatorManager();
         requestManager = new RequestManager();
     }
+    
+    //public get
 
     public static void main(String[] args) {
         FYPMSApp app = new FYPMSApp();

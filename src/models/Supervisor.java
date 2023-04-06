@@ -77,4 +77,15 @@ public class Supervisor extends User {
 
     }
     
+    public void allocateProject() {
+    	//counter++
+    	//if counter>=2, iterate through project list
+    	if(not ALLOCATED)
+    		if(RESERVED) reject request
+    		change to UNAVAILABLE
+
+    }
+    
+    //deallocate project()
+    
 }

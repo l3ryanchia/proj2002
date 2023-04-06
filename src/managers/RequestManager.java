@@ -13,6 +13,9 @@ public class RequestManager {
         requests = new ArrayList<>();
     }
 
+    //get request by request ID
+    //get request by project ID
+    
     public Request getRequest(int index) {
         return requests.get(index);
     }

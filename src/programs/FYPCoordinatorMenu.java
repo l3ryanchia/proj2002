@@ -23,16 +23,21 @@ public class FYPCoordinatorMenu {
 
             switch (choice) {
                 case 1:
-                    viewProjectsByStatus(scanner);
+                    //viewProjectsByStatus(scanner);
                     break;
                 case 2:
-                    generateProjectDetailsReport(scanner);
+                    //generateProjectDetailsReport(scanner);
                     break;
                 case 3:
-                    viewPendingRequests(coordinator, scanner);
+                	System.out.println("Pending Requests from Students:");
+                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.STUDENT, true);
+                	System.out.println("Pending Requests from Supervisors:");
+                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true);
+                	
+                	//viewPendingRequests(coordinator, scanner);
                     break;
                 case 4:
-                    viewRequestHistory(coordinator, scanner);
+                    //viewRequestHistory(coordinator, scanner);
                     break;
                 case 5:
                     logout = true;
@@ -42,7 +47,7 @@ public class FYPCoordinatorMenu {
             }
         }
     }
-
+/*
     private static void viewProjectsByStatus(Scanner scanner) {
         System.out.println("Please enter project status (AVAILABLE, UNAVAILABLE, RESERVED, ALLOCATED): ");
         String status = scanner.nextLine().toUpperCase();
@@ -149,5 +154,5 @@ public class FYPCoordinatorMenu {
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
-    }
+    }*/
 }
