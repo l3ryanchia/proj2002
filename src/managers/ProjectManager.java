@@ -83,6 +83,19 @@ public class ProjectManager {
     		change to UNAVAILABLE*/
     }
     
+    public void makeAvailable(Supervisor supervisor, RequestManager reqManager) {
+    	for (Map.Entry<String, Project> set:projects.entrySet()) {
+    		Project project = set.getValue();
+    		if (project.getSupervisor() == supervisor.getName()) {
+    			if (project.getStatus() == Status.UNAVAILABLE) {
+    				project.setStatus(Status.AVAILABLE);
+    			}
+    		}
+        }
+    	/*if (UNAVAILABLE)
+    		change to AVAILABLE*/
+    }
+    
     public int displayFilter(Status status, String supervisor, SupervisorManager supervisorManager) {
     	int count = 0;
     	if ((status == null) && (supervisor == null)) {

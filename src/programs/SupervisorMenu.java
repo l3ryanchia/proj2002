@@ -4,6 +4,7 @@ package programs;
 import java.util.Scanner;
 import java.util.List;
 import models.*;
+import models.Project.Status;
 import models.Request.UserType;
 
 public class SupervisorMenu {
@@ -63,6 +64,20 @@ public class SupervisorMenu {
 		                    case 2:
 		                    	System.out.print("Please enter projectID for transfer of student: ");
 	                    		String changeID = scanner.nextLine();
+	                    		System.out.print("Please enter supervisorID for replacement: ");
+	                    		String supervisorNewID = scanner.nextLine();
+	                    		
+	                    		if (supervisor.getProjIDs().contains(changeID)) {
+	                    			Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
+	                    			if (selectedProj.getStatus() != Status.ALLOCATED) {
+	                    				System.out.print("This project is not allocated.");
+	                    				break;
+	                    			}
+	                    			Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(supervisorNewID);
+	                    			if (newSup != null) FYPMSApp.requestManager.addRequest(new Req_TransferStudent(supervisor, newSup, selectedProj));
+	                    			else System.out.print("Supervisor does not exist in our system.");	
+	                    		}
+	                    		else System.out.println("You did not submit this project!");
 		                    	break;
 		                    	
 		                    case 3:
