@@ -24,6 +24,7 @@ public class Req_DeallocateProj extends Request{
 		student.deallocateProject(project.getProjectID());
 		//reverse of: supervisor.addProj(project.getProjectID());
 		project.deallocateStudent();
+		supervisor.deallocateProject(project.getProjectID());
 		setRequestStatus(ReqStatus.APPROVED);
 	}
 	

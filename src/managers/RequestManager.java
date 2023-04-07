@@ -4,7 +4,7 @@ import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 public class RequestManager {
     private List<Request> requests;
@@ -30,6 +30,17 @@ public class RequestManager {
     	}
         return output;
     }
+    
+    public Request getRequestByProjID(String projID) {
+    	Request output=null;
+    	for(int i=0; i<requests.size(); i++) {
+    		if(requests.get(i).getProject().getProjectID().equals(projID)) {
+    			output = requests.get(i);
+    			break;
+    		}
+    	}
+        return output;
+    }
 
     public void addRequest(Request request) {
         requests.add(request);
@@ -47,14 +58,17 @@ public class RequestManager {
     //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.STUDENT, true)
     //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)
     
-    public void checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    public int checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    	int count=0;
     	for (int i=0; i<requests.size(); i++) {
 			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID() == receiverID)) {
 				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
 				requests.get(i).displayRequest();
+				count++;
 				continue;
 			}
 		}
+    	return count;
     	
     	/*switch(choice){
     		case 1:
@@ -106,13 +120,18 @@ public class RequestManager {
     }*/
     
     //proposed concise version
-    public void checkOutgoing(String senderID, boolean pending) { 
+    public int checkOutgoing(String senderID, boolean pending) { 
+    	int count = 0;
     	for (int i=0; i<requests.size(); i++) {
     		if (requests.get(i).getSenderID() == senderID) {
    				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
     			requests.get(i).displayRequest();
+    			count++;
    			}
    		}
+    	return count;
     }
+    
+    
     
 }

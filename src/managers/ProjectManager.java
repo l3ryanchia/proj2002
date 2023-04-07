@@ -3,8 +3,8 @@ package managers;
 import models.Project;
 import models.Project.Status;
 import models.Supervisor;
-import models.request;
-import models.to;
+//import models.Request;
+//import models.to;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,11 +65,75 @@ public class ProjectManager {
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
     
-    public void makeUnavailable(Supervisor supervisor) {
-    	//iterate through projs and check supervisor
-    	if(not ALLOCATED)
+    public void makeUnavailable (Supervisor supervisor, RequestManager reqManager){
+    	for (Map.Entry<String, Project> set:projects.entrySet()) {
+    		Project project = set.getValue();
+    		if (project.getSupervisor() == supervisor.getName()) {
+    			if (project.getStatus() != Status.ALLOCATED) {
+    				if (project.getStatus() != Status.RESERVED) {
+    					reqManager.getRequestByProjID(project.getProjectID()).rejectRequest();
+    				}
+    				project.setStatus(Status.UNAVAILABLE);
+    			}
+    		}
+        }
+    	
+    	/*if(not ALLOCATED)
     		if(RESERVED) reject request
-    		change to UNAVAILABLE
+    		change to UNAVAILABLE*/
+    }
+    
+    public int displayFilter(Status status, String supervisor, SupervisorManager supervisorManager) {
+    	int count = 0;
+    	if ((status == null) && (supervisor == null)) {
+    		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+   	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+   	    		Project project = set.getValue();
+   	    		if(project.getStatus()==Status.AVAILABLE) {
+   	    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+   	    			count++;
+   	    		}
+    	    }
+    	   	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	}
+    	else {
+   			if (status == null) {
+   				System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+       	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+       	    		Project project = set.getValue();
+        	    	if(project.getSupervisor()==supervisor) {
+        	    		System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	    		count++;
+        	   		}
+        	   	}
+        	   	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    		}
+   			
+    		else if (supervisor == null) {
+    			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        	   	for(Map.Entry<String, Project> set:projects.entrySet()) {
+        	   		Project project = set.getValue();
+        	   		if(project.getStatus()==status) {
+        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	   			count++;
+            		}
+       	    	}
+       	    	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    		}
+    			
+   			else {
+   				System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+       	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+        	    	Project project = set.getValue();
+        	    	if((project.getStatus()==status) && (project.getSupervisor()==supervisor)) {				//both filter used
+        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	   			count++;
+        	   		}
+        	   	}
+        	   	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    		}
+    	}
+    	return count;
     }
     
 }

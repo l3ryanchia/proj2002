@@ -110,9 +110,9 @@ public class Project {
     	this.status = state;
     }
     
-    public String getEmail() {
+    /*public String getEmail() {
     	return this.emailAddress;
-    }
+    }*/
 
     public void setStudent(String student) {
     	this.student = student;
@@ -143,7 +143,17 @@ public class Project {
     }
     
     public void deallocateStudent() {
-    	this.setStudent("NIL");
+    	this.setStudent(null);
+    	this.setStatus(Status.AVAILABLE);
+    }
+    
+    public void allocateSupervisor(String supervisor) {
+    	this.setSupervisor(supervisor);
+    	this.setStatus(Status.ALLOCATED);
+    }
+    
+    public void deallocateSupervisor() {
+    	this.setSupervisor(null);
     	this.setStatus(Status.AVAILABLE);
     }
 }

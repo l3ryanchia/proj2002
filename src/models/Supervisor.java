@@ -29,18 +29,18 @@ package models;
 
 import java.util.*;
 
-import programs.FYPMSApp;
-
 public class Supervisor extends User {
     private String password;
     private ArrayList<String> projectIDs;
     private int numOfProjs;
+    private int numOfAllocated;
 
     public Supervisor(String userID, String name, String email) {
         super(userID, name, email);
         this.password = "password"; // Set the default password
         projectIDs = new ArrayList<String>();
         numOfProjs = 0;
+        numOfAllocated = 0;
     }
 
     public String getPassword() {
@@ -51,13 +51,17 @@ public class Supervisor extends User {
         this.password = newPassword;
     }
     
-    public void addProj(String projID) {
+    /*public void addProj(String projID) {
     	this.projectIDs.add(projID);
     	this.numOfProjs++;
-    }
+    }*/
     
     public int getNumOfProjs() {
     	return this.numOfProjs;
+    }
+    
+    public int getNumOfAllocated() {
+    	return this.numOfAllocated;
     }
     
     public ArrayList<String> getProjIDs() {
@@ -71,21 +75,28 @@ public class Supervisor extends User {
         String title = scanner.nextLine();
 
         Project project = new Project(title, this.getName());
-        this.addProj(project.getProjectID());
+        this.projectIDs.add(project.getProjectID());
+    	this.numOfProjs++;
         System.out.println("Project created successfully!");
         return project;
-
     }
     
-    public void allocateProject() {
-    	//counter++
-    	//if counter>=2, iterate through project list
-    	if(not ALLOCATED)
-    		if(RESERVED) reject request
-    		change to UNAVAILABLE
-
+    public void allocateProject(String projID) {
+    	this.projectIDs.remove(projID);
+    	this.projectIDs.add(projID);
+    	this.numOfAllocated++;
     }
     
-    //deallocate project()
+    public void deallocateProject(String projID) {
+    	this.numOfAllocated--;
+    	this.projectIDs.remove(projID);
+    }
+    
+    public boolean numAtLimit() {
+    	if (this.numOfAllocated >= 2) {
+    		return true;
+    	}
+    	return false;
+    }
     
 }

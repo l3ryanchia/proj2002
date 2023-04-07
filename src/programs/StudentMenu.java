@@ -62,7 +62,7 @@ public class StudentMenu {
 	                    		break;
 	                    	default:
 	                            System.out.println("Invalid choice. Please try again.");
-	                    } 
+	                    }
 	                    if(subchoice==2) break;
                 	}      
                     break;
