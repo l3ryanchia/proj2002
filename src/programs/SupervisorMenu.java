@@ -137,9 +137,9 @@ public class SupervisorMenu {
                     
                 case 4:
                     //viewRequestHistory(supervisor, scanner);
-                	FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true);
+                	//FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true);
                 	FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false);
-                	FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true);
+                	//FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true);
                 	FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false);
                     break;
                     
