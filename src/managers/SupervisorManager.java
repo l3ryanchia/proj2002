@@ -62,6 +62,10 @@ public class SupervisorManager {
     public void addSupervisor(Supervisor supervisor) {
         supervisors.put(supervisor.getUserID(), supervisor);
     }
+    
+    public void removeSupervisor(Supervisor supervisor) {
+    	supervisors.remove(supervisor.getUserID());
+    }
 
     public boolean checkPassword(String userID, String password) {
         Supervisor supervisor = supervisors.get(userID);

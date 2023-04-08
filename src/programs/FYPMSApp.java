@@ -55,7 +55,7 @@ public class FYPMSApp {
 
         // Load FYP coordinator
         FYPCoordinator coordinator = FYPCoordinatorSerializer.readCoordinatorFromFile("database/fypCoordinator.csv");
-        fypCoordinatorManager.setCoordinator(coordinator);
+        fypCoordinatorManager.setCoordinator(coordinator, supervisorManager);
     }
 
     // The main loop of the application
@@ -131,9 +131,21 @@ public class FYPMSApp {
                 FYPCoordinator coordinator = fypCoordinatorManager.getCoordinator();
                 
                 if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) {
-                    System.out.println("Welcome, FYP coordinator!");
-                    FYPCoordinatorMenu.displayMenu(coordinator);
-                    // Allow user to perform FYP coordinator-related tasks
+                	System.out.println("Login as: ");
+                	System.out.println("1. FYP Coordinator");
+                	System.out.println("2. Supervisor");
+                	int selection = scanner.nextInt();
+                	scanner.nextLine();
+                	
+                	if(selection==1) {
+	                    System.out.println("Welcome, FYP coordinator!");
+	                    FYPCoordinatorMenu.displayMenu(coordinator);
+	                    // Allow user to perform FYP coordinator-related tasks
+                	} else {
+                		System.out.println("Welcome, Supervisor!");
+                        SupervisorMenu.displayMenu(supervisor);
+                    	// Allow user to perform supervisor-related tasks
+                	}
                 } else {
                     System.out.println("Welcome, Supervisor!");
                     SupervisorMenu.displayMenu(supervisor);

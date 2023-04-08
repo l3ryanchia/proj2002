@@ -31,7 +31,7 @@ import java.util.*;
 
 public class Supervisor extends User {
     private String password;
-    private ArrayList<String> projectIDs;
+    private ArrayList<String> projectIDs; //this is not initialised by serialiser so its empty, propose to remove
     private int numOfProjs;
     private int numOfAllocated;
 

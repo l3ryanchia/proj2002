@@ -10,7 +10,7 @@ public class Req_TransferStudent extends Request {
 	
 	public Req_TransferStudent(Supervisor supervisorOld, Supervisor supervisorNew, Project project) {
 		super();
-		this.senderID = supervisorNew.getUserID();
+		this.senderID = supervisorOld.getUserID();
 		this.receiverID = FYPCoordinator.FYPCoordinatorID;
 		this.senderType = UserType.SUPERVISOR;
 		this.receiverType = UserType.FYPCOORDINATOR;

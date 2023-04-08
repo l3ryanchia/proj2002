@@ -34,8 +34,14 @@ public class FYPCoordinatorManager {
         return coordinator;
     }
 
-    public void setCoordinator(FYPCoordinator coordinator) {
+    public void setCoordinator(FYPCoordinator coordinator, SupervisorManager supervisorManager) {
+    	if(supervisorManager.getSupervisor(coordinator.getUserID()) == null) {
+    		System.out.println("FYP Coordinator must be registered as a Supervisor!");
+    		return;
+    	}
         this.coordinator = coordinator;
+        supervisorManager.removeSupervisor(coordinator);
+        supervisorManager.addSupervisor(coordinator);
     }
 
     public boolean checkPassword(String userID, String password) {
