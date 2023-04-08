@@ -117,7 +117,10 @@ public class StudentMenu {
                 	System.out.println("Please enter new password: ");
                 	String newpassword = scanner.nextLine();
                 	student.setPassword(newpassword);
+           
                 	System.out.println("Password changed!");
+                	System.out.println("Please relogin.");
+                	logout = true; // force logout to verify effect
                     break;
                 case 5:
                     logout = true;
