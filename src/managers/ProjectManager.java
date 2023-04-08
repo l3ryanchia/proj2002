@@ -145,7 +145,7 @@ public class ProjectManager {
     	
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
 	    	Project project = set.getValue();
-	    	if(project.getSupervisor() == supervisor) filteredProjs.put(project.getProjectID(), project);
+	    	if(project.getSupervisor().equals(supervisor)) filteredProjs.put(project.getProjectID(), project);
     	}
     	
     	return filteredProjs;

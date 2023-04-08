@@ -12,6 +12,9 @@ public class StudentMenu {
     	Scanner scanner = new Scanner(System.in);
     	
         while (!logout) {
+        	boolean isValidInput = false;
+        	int subchoice;
+            int choice = 0;
             System.out.println("\nWelcome to FYP Management System - Students");
             System.out.println("1. View all available projects");
             System.out.println("2. View registered project");
@@ -20,10 +23,20 @@ public class StudentMenu {
             System.out.println("5. Logout");
             System.out.print("Please choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            //int choice = scanner.nextInt();
+            //scanner.nextLine();
+            while (!isValidInput) {
+	            try {
+	            	choice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }
             
-            int subchoice;
             switch (choice) {
                 case 1: //view all projects
                 	if(student.getStatus()==StudentStatus.REGISTERED) {
@@ -38,12 +51,26 @@ public class StudentMenu {
                 	//FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
                 	
                 	while(true) {
+                		isValidInput = false;
+                		subchoice = 0;
                 		System.out.println("1. Request for a project");
 	                    System.out.println("2. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
-	                    subchoice = scanner.nextInt();
-	                    scanner.nextLine(); 
+	                    //subchoice = scanner.nextInt();
+	                    //scanner.nextLine();
+	                    while (!isValidInput) {
+	        	            try {
+	        	            	subchoice = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
+	                    
 	                    switch (subchoice) {
 	                    	case 1:
 	                    		
@@ -82,13 +109,26 @@ public class StudentMenu {
                 	registeredProj.displayProject();
                 	
                 	while(true) {
+                		isValidInput = false;
+                		subchoice = 0;
 	                	System.out.println("1. Request to change title");
 	                    System.out.println("2. Request to deregister FYP");
 	                    System.out.println("3. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
-	                    subchoice = scanner.nextInt();
-	                    scanner.nextLine();
+	                    //subchoice = scanner.nextInt();
+	                    //scanner.nextLine();
+	                    while (!isValidInput) {
+	        	            try {
+	        	            	subchoice = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
 	                    
 	                    switch (subchoice) {
 	                    	case 1: //change title

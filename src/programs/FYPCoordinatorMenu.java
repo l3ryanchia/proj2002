@@ -13,6 +13,9 @@ public class FYPCoordinatorMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (!logout) {
+        	boolean isValidInput = false;
+        	int subchoice;
+            int choice = 0;
             System.out.println("\nWelcome to FYP Management System - FYP Coordinator");
             System.out.println("1. View projects by status");
             System.out.println("2. Generate project details report");
@@ -22,9 +25,19 @@ public class FYPCoordinatorMenu {
             System.out.println("6. Change password");
             System.out.print("Please choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            int subchoice;
+            //int choice = scanner.nextInt();
+            //scanner.nextLine();
+            while (!isValidInput) {
+	            try {
+	            	choice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }
 
             switch (choice) {
                 case 1:
@@ -52,24 +65,50 @@ public class FYPCoordinatorMenu {
                 case 2:
                 	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
                 	
-                	int displayReport=1, filter;
+                	int displayReport=0, filter=0;
                 	while(displayReport != 2) {
+                		displayReport = 0; filter = 0;
+                		isValidInput = false;
 	                	System.out.println("1. Add search filter");
 	                	System.out.println("2. Display project details report");
-	                	displayReport = scanner.nextInt();
+	                	//displayReport = scanner.nextInt();
+	                	while (!isValidInput) {
+	        	            try {
+	        	            	displayReport = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
 	                	
 	                	switch(displayReport) {
 	                		case 1:
 			                	System.out.println("Filter by: ");
 			                	System.out.println("1. Project Status");
 			                	System.out.println("2. Project Supervisor");
-			                	filter = scanner.nextInt();
+			                	isValidInput = false;
+			                	//filter = scanner.nextInt();
+			                	
+			                	while (!isValidInput) {
+			        	            try {
+			        	            	filter = scanner.nextInt();
+			        	            	scanner.nextLine(); // Consume the newline
+			        	            	isValidInput = true;
+			        	            } catch(Exception e) {
+			        	            	//System.out.println("Invalid choice. Please try again.");
+			        	            	scanner.nextLine();
+			        	            	break;
+			        	            }
+			                    }
 			                	
 			                	switch(filter) {
 			                		case 1:
 			                			String statusFilter; //consider making this a list to filter by multiple options
-			                			System.out.println("Enter status filter (in UPPERCASE): ");
-			                			statusFilter = scanner.nextLine();
+			                			System.out.println("Enter status filter [AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE]: ");
+			                			statusFilter = scanner.nextLine().toUpperCase();
 			                			Project.Status status = null;
 			                			switch(statusFilter) {
 			                				case "AVAILABLE": status = Project.Status.AVAILABLE; break;
@@ -83,10 +122,14 @@ public class FYPCoordinatorMenu {
 			                			break;
 			                		case 2:
 			                			String supersivorFilter; //consider making this a list to filter by multiple options
-			                			System.out.println("Enter supervisor name: ");
+			                			System.out.println("Enter supervisor's full name: ");
 			                			supersivorFilter = scanner.nextLine();
 			                			
 			                			projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supersivorFilter);
+			                			break;
+			                			
+			                		default:
+			                			System.out.println("Invalid input.");
 			                			break;
 			                	}
 			                	break;
@@ -104,13 +147,26 @@ public class FYPCoordinatorMenu {
                 	System.out.println("PENDING REQUESTS FROM SUPERVISORS:");
                 	if(FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)==0) System.out.println("No pending requests.");
                 	while(true) {
+                		isValidInput = false;
+                		subchoice = 0;
                 		System.out.println("\n1. Approve a request");
                 		System.out.println("2. Reject a request");
 	                    System.out.println("3. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
-	                    subchoice = scanner.nextInt();
-	                    scanner.nextLine();
+	                    //subchoice = scanner.nextInt();
+	                    //scanner.nextLine();
+	                    while (!isValidInput) {
+	        	            try {
+	        	            	subchoice = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
 	                    String selection;
 	                    Request request;
 	                     

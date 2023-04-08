@@ -61,7 +61,7 @@ public class RequestManager {
     public int checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
     	int count=0;
     	for (int i=0; i<requests.size(); i++) {
-			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID() == receiverID)) {
+			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID().equals(receiverID))) {
 				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
 				requests.get(i).displayRequest();
 				count++;
@@ -123,7 +123,7 @@ public class RequestManager {
     public int checkOutgoing(String senderID, boolean pending) { 
     	int count = 0;
     	for (int i=0; i<requests.size(); i++) {
-    		if (requests.get(i).getSenderID() == senderID) {
+    		if (requests.get(i).getSenderID().equals(senderID)) {
    				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
     			requests.get(i).displayRequest();
     			count++;

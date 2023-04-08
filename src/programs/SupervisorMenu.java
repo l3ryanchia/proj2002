@@ -15,6 +15,9 @@ public class SupervisorMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (!logout) {
+        	boolean isValidInput = false;
+        	int subchoice;
+            int choice = 0;
             System.out.println("\nWelcome to FYP Management System - Supervisors");
             System.out.println("1. Create a new project");
             System.out.println("2. View my projects");
@@ -23,9 +26,18 @@ public class SupervisorMenu {
             System.out.println("5. Logout");
             System.out.println("6. Change password");
             System.out.print("Please choose an option: ");
-            int subchoice;
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            
+            while (!isValidInput) {
+	            try {
+	            	choice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }
 
             switch (choice) {
                 case 1:
@@ -43,13 +55,27 @@ public class SupervisorMenu {
                 	}
                 	
                 	while(true) {
+                		isValidInput = false;
+                		subchoice = 0;
                 		System.out.println("1. Modify title");
                 		System.out.println("2. Transfer student");
 	                    System.out.println("3. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
-	                    subchoice = scanner.nextInt();
-	                    scanner.nextLine(); 
+	                    //subchoice = scanner.nextInt();
+	                    //scanner.nextLine();
+	                    while (!isValidInput) {
+	        	            try {
+	        	            	subchoice = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
+	                    
 	                    switch (subchoice) {
 		                    case 1:
 		                    	System.out.print("Please enter projectID: ");
@@ -116,18 +142,32 @@ public class SupervisorMenu {
                 case 3:
                     //viewPendingRequests(supervisor, scanner);
                 	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
-                		System.out.println("You have no pending request");
+                		System.out.println("You have no pending request.");
                 		break;
                 	}
                 	
                 	while(true) {
+                		isValidInput = false;
+                		subchoice = 0;
                 		System.out.println("1. Approve a request:");
                 		System.out.println("2. Reject a request:");
 	                    System.out.println("3. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
-	                    subchoice = scanner.nextInt();
-	                    scanner.nextLine(); 
+	                    //subchoice = scanner.nextInt();
+	                    //scanner.nextLine();
+	                    while (!isValidInput) {
+	        	            try {
+	        	            	subchoice = scanner.nextInt();
+	        	            	scanner.nextLine(); // Consume the newline
+	        	            	isValidInput = true;
+	        	            } catch(Exception e) {
+	        	            	//System.out.println("Invalid choice. Please try again.");
+	        	            	scanner.nextLine();
+	        	            	break;
+	        	            }
+	                    }
+	                    
 	                    models.Request request;
 	                    switch (subchoice) {
 		                    case 1:
@@ -164,9 +204,10 @@ public class SupervisorMenu {
                 case 4:
                     //viewRequestHistory(supervisor, scanner);
                 	//FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true);
-                	FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false);
+                	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
+                		System.out.println("Request history is empty.");
+                	}
                 	//FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true);
-                	FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false);
                     break;
                     
                 case 5:

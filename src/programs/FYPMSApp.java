@@ -64,13 +64,24 @@ public class FYPMSApp {
         Scanner scanner = new Scanner(System.in);
 
         while (!exit) {
+        	boolean isValidInput = false;
             System.out.println("\nWelcome to FYP Management System");
             System.out.println("1. Login");
             System.out.println("2. Exit");
             System.out.print("Please choose an option: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline
+            
+            int choice=0;
+            while (!isValidInput) {
+	            try {
+	            	choice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }            
 
             switch (choice) {
                 case 1:
