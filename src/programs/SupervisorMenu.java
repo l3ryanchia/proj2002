@@ -21,6 +21,7 @@ public class SupervisorMenu {
             System.out.println("3. View pending requests");
             System.out.println("4. View request history");
             System.out.println("5. Logout");
+            System.out.println("6. Change password");
             System.out.print("Please choose an option: ");
             int subchoice;
             int choice = scanner.nextInt();
@@ -170,6 +171,17 @@ public class SupervisorMenu {
                     
                 case 5:
                     logout = true;
+                    break;
+                
+                case 6:
+                	System.out.println("Please enter new password: ");
+                	String newpassword = scanner.nextLine();
+                	supervisor.setPassword(newpassword);
+           
+                	System.out.println("Password changed!");
+                	//System.out.println("Password: " + newpassword); // supervisor works
+                	System.out.println("Please relogin.");
+                	logout = true; // force logout to verify effect
                     break;
                     
                 default:

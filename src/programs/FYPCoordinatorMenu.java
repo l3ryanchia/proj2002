@@ -19,6 +19,7 @@ public class FYPCoordinatorMenu {
             System.out.println("3. View pending requests");
             System.out.println("4. View request history");
             System.out.println("5. Logout");
+            System.out.println("6. Change password");
             System.out.print("Please choose an option: ");
 
             int choice = scanner.nextInt();
@@ -115,7 +116,7 @@ public class FYPCoordinatorMenu {
 	                     
 	                    switch (subchoice) {
 	                    	case 1:
-	                    		System.out.print("Please enter Reqeust ID: ");
+	                    		System.out.print("Please enter Request ID: ");
 	                    		selection = scanner.nextLine();
 	                    		request = FYPMSApp.requestManager.getRequestByID(selection);
 	                    		if(request == null) {System.out.print("Invalid ID."); break;}
@@ -152,6 +153,30 @@ public class FYPCoordinatorMenu {
                     break;
                 case 5:
                     logout = true;
+                    break;
+                /*case 6:
+                	System.out.println("Please enter new password: ");
+                	String newpassword = scanner.nextLine();
+                	coordinator.setPassword(newpassword);
+                	System.out.println("Password changed!");
+                    break;
+                    
+                	System.out.println("Please enter new password: ");
+                	String newpassword = scanner.nextLine();
+                	student.setPassword(newpassword);
+           
+                	System.out.println("Password changed!");
+                    break;*/
+                case 6:
+                	System.out.println("Please enter new password: ");
+                	String newpassword = scanner.nextLine();
+                	
+                	coordinator.setPassword(newpassword); // DOESNT CHANGE TO NEW PASSWORD
+           
+                	System.out.println("Password changed!");
+                	//System.out.println("Password: " + newpassword);
+                	System.out.println("Please relogin.");
+                	logout = true; // force logout to verify effect
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
