@@ -15,9 +15,10 @@ public class Req_ChangeTitle extends Request {
 		this.newTitle = newTitle;
 	}
 	
-	public void approveRequest() {
+	public boolean approveRequest() {
 		project.setTitle(newTitle);
 		setRequestStatus(ReqStatus.APPROVED);
+		return true;
 	}
 	
 	public void rejectRequest() {

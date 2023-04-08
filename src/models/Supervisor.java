@@ -81,10 +81,15 @@ public class Supervisor extends User {
         return project;
     }
     
-    public void allocateProject(String projID) {
-    	this.projectIDs.remove(projID);
+    public boolean allocateProject(String projID) {
+    	if(this.numOfAllocated >= 2) {
+    		System.out.println("Supervisor has reached maximum number of allocated projects!");
+    		return false;
+    	}
+    	//this.projectIDs.remove(projID);
     	this.projectIDs.add(projID);
     	this.numOfAllocated++;
+    	return true;
     }
     
     public void deallocateProject(String projID) {

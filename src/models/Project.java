@@ -147,6 +147,10 @@ public class Project {
     	this.setStatus(Status.AVAILABLE);
     }
     
+    public void reallocateSupervisor(String supervisor) {
+    	this.setSupervisor(supervisor);
+    }
+    
     public void allocateSupervisor(String supervisor) {
     	this.setSupervisor(supervisor);
     	this.setStatus(Status.ALLOCATED);
@@ -154,6 +158,6 @@ public class Project {
     
     public void deallocateSupervisor() {
     	this.setSupervisor(null);
-    	this.setStatus(Status.AVAILABLE);
+    	this.setStatus(Status.AVAILABLE); //why set to available?
     }
 }

@@ -3,6 +3,8 @@ package programs;
 
 import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
+
 import models.*;
 import models.Project.Status;
 import models.Request.UserType;
@@ -31,8 +33,10 @@ public class SupervisorMenu {
                     break;
                     
                 case 2:
-                    //viewProjects(supervisor, scanner);
-                	if(FYPMSApp.projectManager.displayFilter(null, supervisor.getName(), FYPMSApp.supervisorManager) == 0) {
+                	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
+                	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
+
+                	if(FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager) == 0) {
                 		System.out.println("You have no projects under your name.");
                 		break;
                 	}
@@ -50,7 +54,7 @@ public class SupervisorMenu {
 		                    	System.out.print("Please enter projectID: ");
 	                    		String selection = scanner.nextLine();
 	                    		
-	                    		if (supervisor.getProjIDs().contains(selection)) {
+	                    		if (supervisor.getProjIDs().contains(selection)) { //or if project.getSupervisor() is him, then dunnid the ProjID list?
 	                    			System.out.print("Please enter new title: ");
 	                    			String newTitle = scanner.nextLine();
 	                    			Project project = FYPMSApp.projectManager.getProject(selection);
@@ -61,16 +65,33 @@ public class SupervisorMenu {
 	                    		}
 		                    	break;
 		                    	
-		                    case 2:
+		                    case 2: // reorganised this part to improve readability
+		                    	
 		                    	System.out.print("Please enter projectID for transfer of student: ");
-	                    		String changeID = scanner.nextLine();
-	                    		System.out.print("Please enter supervisorID for replacement: ");
-	                    		String supervisorNewID = scanner.nextLine();
+	                    		String changeID = scanner.nextLine();	
+	                    	
+	                    		Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
+	                    		if(!selectedProj.getSupervisor().equals(supervisor.getName())) {
+	                    			System.out.println("You did not submit this project!");
+	                    			break;
+	                    		}
 	                    		
+	                    		System.out.print("Please enter supervisorID for replacement: ");
+	                    		String newSupervisorID = scanner.nextLine();
+	                    		
+	                    		Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(newSupervisorID);
+	                    		if (newSup == null) {
+	                    			System.out.print("Supervisor does not exist in our system."); 
+	                    			break;
+	                    		}
+	                    		
+	                    		FYPMSApp.requestManager.addRequest(new Req_TransferStudent(supervisor, newSup, selectedProj));
+	                    		
+	                    		/*
 	                    		if (supervisor.getProjIDs().contains(changeID)) {
-	                    			Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
+	                    			
 	                    			if (selectedProj.getStatus() != Status.ALLOCATED) {
-	                    				System.out.print("This project is not allocated.");
+	                    				System.out.print("This project has not been allocated to a student.");
 	                    				break;
 	                    			}
 	                    			Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(supervisorNewID);
@@ -78,8 +99,9 @@ public class SupervisorMenu {
 	                    			else System.out.print("Supervisor does not exist in our system.");	
 	                    		}
 	                    		else System.out.println("You did not submit this project!");
+	                    		*/
+	                    		
 		                    	break;
-		                    	
 		                    case 3:
 		                    	break;
 		                    	
@@ -98,8 +120,8 @@ public class SupervisorMenu {
                 	}
                 	
                 	while(true) {
-                		System.out.println("1. Approve request:");
-                		System.out.println("2. Reject request:");
+                		System.out.println("1. Approve a request:");
+                		System.out.println("2. Reject a request:");
 	                    System.out.println("3. Back");
 	                    System.out.print("Please choose an option: ");
 	                    
@@ -111,18 +133,21 @@ public class SupervisorMenu {
 		                    	System.out.print("Please enter requestID: ");
 	                    		String toApprove = scanner.nextLine();
 	                    		request = FYPMSApp.requestManager.getRequestByID(toApprove);
-	                    		if(request == null) System.out.print("Invalid ID.");
-	                    		if(request.getReceiverID() != supervisor.getUserID()) System.out.print("This request is not addressed to you.");
-	                    		request.approveRequest();
+	                    		if(request == null) {System.out.print("Invalid ID."); break;}
+	                    		if(request.getReceiverID() != supervisor.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+	                    		
+	                    		if(request.approveRequest()) System.out.print("Request Approved!");
 		                    	break;
 		                    	
 		                    case 2:
 		                    	System.out.print("Please enter requestID: ");
 	                    		String toReject = scanner.nextLine();
 	                    		request = FYPMSApp.requestManager.getRequestByID(toReject);
-	                    		if(request == null) System.out.print("Invalid ID.");
-	                    		if(request.getReceiverID() != supervisor.getUserID()) System.out.print("This request is not addressed to you.");
+	                    		if(request == null) {System.out.print("Invalid ID."); break;}
+	                    		if(request.getReceiverID() != supervisor.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+	                    		
 	                    		request.rejectRequest();
+	                    		System.out.print("Request Rejected!");
 		                    	break;
 		                    	
 		                    case 3:

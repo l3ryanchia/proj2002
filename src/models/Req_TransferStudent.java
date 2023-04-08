@@ -21,13 +21,20 @@ public class Req_TransferStudent extends Request {
 		this.supervisorOld = supervisorOld;
 	}
 	
-	public void approveRequest() {
-		project.deallocateSupervisor();
-		project.allocateStudent(supervisorNew.getName());
+	public boolean approveRequest() {
+		//project.deallocateSupervisor();
+		//project.allocateSupervisor(supervisorNew.getName());
+		if(!supervisorNew.allocateProject(project.getProjectID())) {
+			System.out.println("Failed to approve request!");
+			return false;
+		}
 		supervisorOld.deallocateProject(project.getProjectID());
-		supervisorNew.allocateProject(project.getProjectID());
+		
+		project.setSupervisor(supervisorNew.getName());
+		//project.reallocateSupervisor(supervisorNew.getName());
 		
 		setRequestStatus(ReqStatus.APPROVED);
+		return true;
 	}
 	
     public void rejectRequest() {

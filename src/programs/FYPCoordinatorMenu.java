@@ -2,7 +2,10 @@ package programs;
 
 import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
+
 import models.*;
+import models.Request.UserType;
 
 public class FYPCoordinatorMenu {
     protected static void displayMenu(FYPCoordinator coordinator) {
@@ -24,17 +27,81 @@ public class FYPCoordinatorMenu {
 
             switch (choice) {
                 case 1:
-                    //viewProjectsByStatus(scanner);
+                	Map <String, Project> projectsToDisplay;
+                	
+                	//consider using loop to iterate through Project.Status instead
+                	
+                	System.out.println("AVAILABLE PROJECTS: ");
+                	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.AVAILABLE);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	
+                	System.out.println("ALLOCATED PROJECTS: ");
+                	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.ALLOCATED);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	
+                	System.out.println("RESERVED PROJECTS: ");
+                	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.RESERVED);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	
+                	System.out.println("UNAVAILABLE PROJECTS: ");
+                	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.UNAVAILABLE);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
                 	
                     break;
                 case 2:
-                    //generateProjectDetailsReport(scanner);
+                	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
+                	
+                	int displayReport=1, filter;
+                	while(displayReport != 2) {
+	                	System.out.println("1. Add search filter");
+	                	System.out.println("2. Display project details report");
+	                	displayReport = scanner.nextInt();
+	                	
+	                	switch(displayReport) {
+	                		case 1:
+			                	System.out.println("Filter by: ");
+			                	System.out.println("1. Project Status");
+			                	System.out.println("2. Project Supervisor");
+			                	filter = scanner.nextInt();
+			                	
+			                	switch(filter) {
+			                		case 1:
+			                			String statusFilter; //consider making this a list to filter by multiple options
+			                			System.out.println("Enter status filter (in UPPERCASE): ");
+			                			statusFilter = scanner.nextLine();
+			                			Project.Status status = null;
+			                			switch(statusFilter) {
+			                				case "AVAILABLE": status = Project.Status.AVAILABLE; break;
+			                				case "ALLOCATED": status = Project.Status.ALLOCATED; break;
+			                				case "RESERVED": status = Project.Status.RESERVED; break;
+			                				case "UNAVAILABLE": status = Project.Status.UNAVAILABLE; break;
+			                				default: System.out.println("Invalid filter!"); break;
+			                			}
+			                			
+			                			projectsList = FYPMSApp.projectManager.filterByStatus(projectsList, status);
+			                			break;
+			                		case 2:
+			                			String supersivorFilter; //consider making this a list to filter by multiple options
+			                			System.out.println("Enter supervisor name: ");
+			                			supersivorFilter = scanner.nextLine();
+			                			
+			                			projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supersivorFilter);
+			                			break;
+			                	}
+			                	break;
+	                		case 2:
+	                			FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager);
+	                			break;
+	                		default: 
+	                			System.out.println("Invalid input.");
+	                	}
+                	}
                     break;
                 case 3:
                 	System.out.println("PENDING REQUESTS FROM STUDENTS:");
-                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.STUDENT, true);
+                	if(FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.STUDENT, true)==0) System.out.println("No pending requests.");
                 	System.out.println("PENDING REQUESTS FROM SUPERVISORS:");
-                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true);
+                	if(FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)==0) System.out.println("No pending requests.");
                 	while(true) {
                 		System.out.println("\n1. Approve a request");
                 		System.out.println("2. Reject a request");
@@ -44,21 +111,32 @@ public class FYPCoordinatorMenu {
 	                    subchoice = scanner.nextInt();
 	                    scanner.nextLine();
 	                    String selection;
+	                    Request request;
 	                     
 	                    switch (subchoice) {
 	                    	case 1:
 	                    		System.out.print("Please enter Reqeust ID: ");
 	                    		selection = scanner.nextLine();
+	                    		request = FYPMSApp.requestManager.getRequestByID(selection);
+	                    		if(request == null) {System.out.print("Invalid ID."); break;}
+	                    		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
 	                    		
-	                    		FYPMSApp.requestManager.getRequestByID(selection).approveRequest();
-	                    		System.out.print("Request Approved!");
+	                    		if(request.approveRequest()) {
+	                    			System.out.print("Request Approved!");
+	                    			//run make unavailable();
+	                    		}
+	                    		
 	                    		break;
 	                    	case 2:
 	                    		System.out.print("Please enter Reqeust ID: ");
 	                    		selection = scanner.nextLine();
+	                    		request = FYPMSApp.requestManager.getRequestByID(selection);
+	                    		if(request == null) {System.out.print("Invalid ID."); break;}
+	                    		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
 	                    		
 	                    		FYPMSApp.requestManager.getRequestByID(selection).rejectRequest(); //should not be able to reject approved requests
 	                    		System.out.print("Request Rejected!");
+	                    		
 	                    		break;
 	                    	case 3:
 	                    		break;
@@ -69,7 +147,8 @@ public class FYPCoordinatorMenu {
                 	}
                     break;
                 case 4:
-                    //viewRequestHistory(coordinator, scanner);
+                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), UserType.STUDENT, false);
+                	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), UserType.SUPERVISOR, false);
                     break;
                 case 5:
                     logout = true;

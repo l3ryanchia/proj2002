@@ -20,13 +20,17 @@ public class Req_AllocateProj extends Request{
 		project.reserveProject();
 	}
 	
-	public void approveRequest() {
+	public boolean approveRequest() {
+		if(!supervisor.allocateProject(project.getProjectID())) {
+			System.out.println("Failed to approve request!");
+			return false;
+		}
 		student.allocateProject(project.getProjectID());
-		supervisor.allocateProject(project.getProjectID());
 		//if supervisor more than 2 projs, makeUnavailable()
 		project.allocateStudent(student.getUserID());
-		project.allocateSupervisor(supervisor.getName());
+		//project.allocateSupervisor(supervisor.getName()); //?
 		setRequestStatus(ReqStatus.APPROVED);
+		return true;
 	}
 	
 	public void rejectRequest() {

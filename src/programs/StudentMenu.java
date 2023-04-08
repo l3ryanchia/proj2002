@@ -1,5 +1,6 @@
 package programs;
 
+import java.util.Map;
 import java.util.Scanner;
 
 import models.*;
@@ -30,7 +31,12 @@ public class StudentMenu {
                 		break;
                 	}
                 	
-                	FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
+                	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
+                	projectsList = FYPMSApp.projectManager.filterByStatus(projectsList, Project.Status.AVAILABLE);
+                	FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager);
+                	
+                	//FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
+                	
                 	while(true) {
                 		System.out.println("1. Request for a project");
 	                    System.out.println("2. Back");
@@ -92,7 +98,8 @@ public class StudentMenu {
 	                    		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, newtitle));
 	                    		break;
 	                    	case 2: //deregister project
-	                    		Supervisor registeredSup = FYPMSApp.supervisorManager.getSupervisor(registeredProj.getSupervisor());
+	                    		//seems abit inefficient here, to get the supervisor object need to first get the supervisor ID by getting the supervisor name
+	                    		Supervisor registeredSup = FYPMSApp.supervisorManager.getSupervisor(FYPMSApp.supervisorManager.getSupervisorID(registeredProj.getSupervisor()));
 	                    		FYPMSApp.requestManager.addRequest(new Req_DeallocateProj(student, registeredSup, registeredProj));
 	                    		break;
 	                    	case 3:
@@ -104,7 +111,6 @@ public class StudentMenu {
                 	}
                     break;
                 case 3://view request history
-                    //FYPMSApp.requestManager.displayStudentRequests();
                 	FYPMSApp.requestManager.checkOutgoing(student.getUserID(), false);
                     break;
                 case 4: //change password

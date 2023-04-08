@@ -72,7 +72,7 @@ public abstract class Request {
     	this.status = state;
     }
     
-    public abstract void approveRequest();
+    public abstract boolean approveRequest();
     public abstract void rejectRequest();
     public abstract void displayRequestType();
     public void displayAdditionalInfo() {};

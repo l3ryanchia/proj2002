@@ -23,6 +23,10 @@ public class ProjectManager {
     public void addProject(Project project) {
         projects.put(project.getProjectID(), project);
     }
+    
+    public Map<String, Project> getProjectList(){
+    	return projects;
+    }
 
     // Other methods related to projects can be added here
 //    public List<Project> getProjectsBySupervisor(String supervisorID) {
@@ -77,10 +81,6 @@ public class ProjectManager {
     			}
     		}
         }
-    	
-    	/*if(not ALLOCATED)
-    		if(RESERVED) reject request
-    		change to UNAVAILABLE*/
     }
     
     public void makeAvailable(Supervisor supervisor, RequestManager reqManager) {
@@ -94,6 +94,45 @@ public class ProjectManager {
         }
     	/*if (UNAVAILABLE)
     		change to AVAILABLE*/
+    }
+    
+    public Map<String, Project> filterByStatus(Map<String, Project> projects, Status status){
+    	if(status==null) return this.getProjectList();
+    	
+    	Map<String, Project> filteredProjs = new HashMap<>();
+    	
+    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+	    	Project project = set.getValue();
+	    	if(project.getStatus() == status) filteredProjs.put(project.getProjectID(), project);
+    	}
+    	
+    	return filteredProjs;
+    }
+    
+    public Map<String, Project> filterBySupervisor(Map<String, Project> projects, String supervisor){
+    	if(supervisor==null) return this.getProjectList();
+    	
+    	Map<String, Project> filteredProjs = new HashMap<>();
+    	
+    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+	    	Project project = set.getValue();
+	    	if(project.getSupervisor() == supervisor) filteredProjs.put(project.getProjectID(), project);
+    	}
+    	
+    	return filteredProjs;
+    }
+    
+    public int displayProjects(Map<String, Project> projects, SupervisorManager supervisorManager) {
+    	int count = 0;
+    	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+   	    for(Map.Entry<String, Project> set:projects.entrySet()) {
+    	    Project project = set.getValue();
+    	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+    	   	count++;
+    	   }
+    	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	return count;
     }
     
     public int displayFilter(Status status, String supervisor, SupervisorManager supervisorManager) {

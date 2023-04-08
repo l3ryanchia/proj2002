@@ -20,12 +20,13 @@ public class Req_DeallocateProj extends Request{
 		this.supervisor = supervisor;
 	}
 	
-	public void approveRequest() {
+	public boolean approveRequest() {
 		student.deallocateProject(project.getProjectID());
 		//reverse of: supervisor.addProj(project.getProjectID());
 		project.deallocateStudent();
 		supervisor.deallocateProject(project.getProjectID());
 		setRequestStatus(ReqStatus.APPROVED);
+		return true;
 	}
 	
 	public void rejectRequest() {
