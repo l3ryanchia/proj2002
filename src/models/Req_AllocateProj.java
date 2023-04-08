@@ -20,6 +20,10 @@ public class Req_AllocateProj extends Request{
 		project.reserveProject();
 	}
 	
+	public Supervisor getSupervisor() {
+		return this.supervisor;
+	}
+	
 	public boolean approveRequest() {
 		if(!supervisor.allocateProject(project.getProjectID())) {
 			System.out.println("Failed to approve request!");

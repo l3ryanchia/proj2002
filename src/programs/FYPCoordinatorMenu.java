@@ -123,7 +123,7 @@ public class FYPCoordinatorMenu {
 	                    		
 	                    		if(request.approveRequest()) {
 	                    			System.out.print("Request Approved!");
-	                    			//run make unavailable();
+	                    			FYPMSApp.projectManager.updateProjectsStatus(request, FYPMSApp.requestManager);
 	                    		}
 	                    		
 	                    		break;

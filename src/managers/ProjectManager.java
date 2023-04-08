@@ -2,8 +2,11 @@ package managers;
 
 import models.Project;
 import models.Project.Status;
+import models.Req_AllocateProj;
+import models.Req_DeallocateProj;
+import models.Req_TransferStudent;
+import models.Request;
 import models.Supervisor;
-//import models.Request;
 //import models.to;
 
 import java.util.HashMap;
@@ -69,12 +72,40 @@ public class ProjectManager {
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
     
+    public void updateProjectsStatus(Request request, RequestManager reqManager) {
+    	if(request instanceof Req_AllocateProj) {
+    		Supervisor supervisor = ((Req_AllocateProj) request).getSupervisor(); //downcasting - check if its legal
+    		if(supervisor.getNumOfAllocated() >= 2) {
+    			this.makeUnavailable(supervisor, reqManager);
+    			//print notif
+    		}
+    		
+    	} else if (request instanceof Req_DeallocateProj) {
+    		Supervisor supervisor = ((Req_DeallocateProj) request).getSupervisor(); //downcasting - check if its legal
+    		if(supervisor.getNumOfAllocated() == 1) {
+    			this.makeAvailable(supervisor, reqManager);
+    			//print notif
+    		}
+    	} else if (request instanceof Req_TransferStudent) {
+    		Supervisor supervisorOld = ((Req_TransferStudent) request).getSupervisorOld(); //downcasting - check if its legal
+    		Supervisor supervisorNew = ((Req_TransferStudent) request).getSupervisorNew(); //downcasting - check if its legal
+    		if(supervisorNew.getNumOfAllocated() >= 2) {
+    			this.makeUnavailable(supervisorNew, reqManager);
+    			//print notif
+    		}
+    		if(supervisorOld.getNumOfAllocated() == 1) {
+    			this.makeAvailable(supervisorOld, reqManager);
+    			//print notif
+    		}
+    	}
+    }
+    
     public void makeUnavailable (Supervisor supervisor, RequestManager reqManager){
     	for (Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
-    		if (project.getSupervisor() == supervisor.getName()) {
+    		if (project.getSupervisor().equals(supervisor.getName())) {
     			if (project.getStatus() != Status.ALLOCATED) {
-    				if (project.getStatus() != Status.RESERVED) {
+    				if (project.getStatus() == Status.RESERVED) {
     					reqManager.getRequestByProjID(project.getProjectID()).rejectRequest();
     				}
     				project.setStatus(Status.UNAVAILABLE);
@@ -86,14 +117,12 @@ public class ProjectManager {
     public void makeAvailable(Supervisor supervisor, RequestManager reqManager) {
     	for (Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
-    		if (project.getSupervisor() == supervisor.getName()) {
+    		if (project.getSupervisor().equals(supervisor.getName())) {
     			if (project.getStatus() == Status.UNAVAILABLE) {
     				project.setStatus(Status.AVAILABLE);
     			}
     		}
         }
-    	/*if (UNAVAILABLE)
-    		change to AVAILABLE*/
     }
     
     public Map<String, Project> filterByStatus(Map<String, Project> projects, Status status){

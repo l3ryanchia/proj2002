@@ -1,8 +1,5 @@
 package models;
 
-import models.Request.ReqStatus;
-import models.Request.UserType;
-
 public class Req_DeallocateProj extends Request{
 	
 	private Student student;
@@ -18,6 +15,10 @@ public class Req_DeallocateProj extends Request{
 		
 		this.student = student;
 		this.supervisor = supervisor;
+	}
+	
+	public Supervisor getSupervisor() {
+		return this.supervisor;
 	}
 	
 	public boolean approveRequest() {

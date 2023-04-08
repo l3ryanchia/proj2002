@@ -21,6 +21,14 @@ public class Req_TransferStudent extends Request {
 		this.supervisorOld = supervisorOld;
 	}
 	
+	public Supervisor getSupervisorOld() {
+		return supervisorOld;
+	}
+	
+	public Supervisor getSupervisorNew() {
+		return supervisorNew;
+	}
+	
 	public boolean approveRequest() {
 		//project.deallocateSupervisor();
 		//project.allocateSupervisor(supervisorNew.getName());
