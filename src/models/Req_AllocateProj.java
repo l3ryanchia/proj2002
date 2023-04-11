@@ -25,6 +25,7 @@ public class Req_AllocateProj extends Request{
 	}
 	
 	public boolean approveRequest() {
+		if(!this.checkPending()) return false;
 		if(!supervisor.allocateProject(project.getProjectID())) {
 			System.out.println("Failed to approve request!");
 			return false;
@@ -37,10 +38,12 @@ public class Req_AllocateProj extends Request{
 		return true;
 	}
 	
-	public void rejectRequest() {
+	public boolean rejectRequest() {
+		if(!this.checkPending()) return false;
 		student.unreserveProject();
 		project.unreserveProject();
 		setRequestStatus(ReqStatus.REJECTED);
+		return true;
 	}
 	
 	public void displayRequestType() {

@@ -43,6 +43,7 @@ public class SupervisorMenu {
                 case 1:
                 	Project newProj = supervisor.createProject();
                 	FYPMSApp.projectManager.addProject(newProj);
+                	if(supervisor.getNumOfAllocated() >= 2) FYPMSApp.projectManager.makeUnavailable(supervisor, FYPMSApp.requestManager);
                     break;
                     
                 case 2:
@@ -95,7 +96,7 @@ public class SupervisorMenu {
 		                    case 2: // reorganised this part to improve readability
 		                    	
 		                    	System.out.print("Please enter projectID for transfer of student: ");
-	                    		String changeID = scanner.nextLine();	
+	                    		String changeID = scanner.nextLine(); //can someone help add the exception handling here	
 	                    	
 	                    		Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
 	                    		if(!selectedProj.getSupervisor().equals(supervisor.getName())) {
@@ -142,9 +143,12 @@ public class SupervisorMenu {
                 case 3:
                     //viewPendingRequests(supervisor, scanner);
                 	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
-                		System.out.println("You have no pending request.");
-                		break;
+                		System.out.println("You have no pending incoming request.");
                 	}
+                	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) {
+                		System.out.println("You have no pending outgoing request.");
+                	}
+                	
                 	
                 	while(true) {
                 		isValidInput = false;
@@ -187,8 +191,7 @@ public class SupervisorMenu {
 	                    		if(request == null) {System.out.print("Invalid ID."); break;}
 	                    		if(request.getReceiverID() != supervisor.getUserID()) {System.out.print("This request is not addressed to you."); break;}
 	                    		
-	                    		request.rejectRequest();
-	                    		System.out.print("Request Rejected!");
+	                    		if(request.rejectRequest()) System.out.print("Request Rejected!");
 		                    	break;
 		                    	
 		                    case 3:

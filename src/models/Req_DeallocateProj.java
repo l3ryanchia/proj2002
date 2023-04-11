@@ -22,6 +22,7 @@ public class Req_DeallocateProj extends Request{
 	}
 	
 	public boolean approveRequest() {
+		if(!this.checkPending()) return false;
 		student.deallocateProject(project.getProjectID());
 		//reverse of: supervisor.addProj(project.getProjectID());
 		project.deallocateStudent();
@@ -30,8 +31,10 @@ public class Req_DeallocateProj extends Request{
 		return true;
 	}
 	
-	public void rejectRequest() {
+	public boolean rejectRequest() {
+		if(!this.checkPending()) return false;
 		setRequestStatus(ReqStatus.REJECTED);
+		return true;
 	}
 	
 	public void displayRequestType() {

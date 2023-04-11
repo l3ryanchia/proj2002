@@ -30,6 +30,7 @@ public class Req_TransferStudent extends Request {
 	}
 	
 	public boolean approveRequest() {
+		if(!this.checkPending()) return false;
 		//project.deallocateSupervisor();
 		//project.allocateSupervisor(supervisorNew.getName());
 		if(!supervisorNew.allocateProject(project.getProjectID())) {
@@ -45,11 +46,17 @@ public class Req_TransferStudent extends Request {
 		return true;
 	}
 	
-    public void rejectRequest() {
+    public boolean rejectRequest() {
+    	if(!this.checkPending()) return false;
     	setRequestStatus(ReqStatus.REJECTED);
+    	return true;
     }
     
     public void displayRequestType() {
     	System.out.println("Request: Transfer Student");
+    }
+    
+    public void displayAdditionalInfo() {
+    	System.out.println("Proposed New Supervisor: " + this.supervisorNew.getUserID());
     }
 }

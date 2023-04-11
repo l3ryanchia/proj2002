@@ -133,9 +133,9 @@ public class StudentMenu {
 	                    switch (subchoice) {
 	                    	case 1: //change title
 	                    		System.out.print("Please enter new title: ");
-	                    		String newtitle = scanner.nextLine();
+	                    		String newTitle = scanner.nextLine();
 	                    		
-	                    		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, newtitle));
+	                    		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, FYPMSApp.supervisorManager.getSupervisorID(registeredProj.getSupervisor()), newTitle));
 	                    		break;
 	                    	case 2: //deregister project
 	                    		//seems abit inefficient here, to get the supervisor object need to first get the supervisor ID by getting the supervisor name

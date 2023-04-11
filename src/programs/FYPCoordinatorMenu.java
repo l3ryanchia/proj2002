@@ -179,7 +179,7 @@ public class FYPCoordinatorMenu {
 	                    		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
 	                    		
 	                    		if(request.approveRequest()) {
-	                    			System.out.print("Request Approved!");
+	                    			System.out.print("Request Approved!"); //why no new line
 	                    			FYPMSApp.projectManager.updateProjectsStatus(request, FYPMSApp.requestManager);
 	                    		}
 	                    		
@@ -191,8 +191,7 @@ public class FYPCoordinatorMenu {
 	                    		if(request == null) {System.out.print("Invalid ID."); break;}
 	                    		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
 	                    		
-	                    		FYPMSApp.requestManager.getRequestByID(selection).rejectRequest(); //should not be able to reject approved requests
-	                    		System.out.print("Request Rejected!");
+	                    		if(request.rejectRequest()) System.out.print("Request Rejected!");
 	                    		
 	                    		break;
 	                    	case 3:

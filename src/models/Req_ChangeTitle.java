@@ -4,10 +4,10 @@ public class Req_ChangeTitle extends Request {
 	
 	private String newTitle;
 	
-	public Req_ChangeTitle(Project project, String newTitle) {
+	public Req_ChangeTitle(Project project, String supervisorID, String newTitle) { 
 		super();
 		this.senderID = project.getStudent();
-		this.receiverID = project.getSupervisor();
+		this.receiverID = supervisorID;  //think of way to remove supervisorID as input
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.SUPERVISOR;
 		this.project = project;
@@ -16,13 +16,16 @@ public class Req_ChangeTitle extends Request {
 	}
 	
 	public boolean approveRequest() {
+		if(!this.checkPending()) return false;
 		project.setTitle(newTitle);
 		setRequestStatus(ReqStatus.APPROVED);
 		return true;
 	}
 	
-	public void rejectRequest() {
+	public boolean rejectRequest() {
+		if(!this.checkPending()) return false;
 		setRequestStatus(ReqStatus.REJECTED);
+		return true;
 	}
 	
 	public void displayRequestType() {
@@ -31,6 +34,6 @@ public class Req_ChangeTitle extends Request {
 	
 	public void displayAdditionalInfo() {
     	System.out.println("Proposed Title: " + this.newTitle);
-    };
+    }
 	
 }

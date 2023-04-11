@@ -10,6 +10,7 @@ import models.Supervisor;
 //import models.to;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProjectManager {
@@ -106,7 +107,10 @@ public class ProjectManager {
     		if (project.getSupervisor().equals(supervisor.getName())) {
     			if (project.getStatus() != Status.ALLOCATED) {
     				if (project.getStatus() == Status.RESERVED) {
-    					reqManager.getRequestByProjID(project.getProjectID()).rejectRequest();
+    					List<Request> projectRequests = reqManager.getRequestByProjID(project.getProjectID());
+    					for(int i=0; i<projectRequests.size(); i++) {
+    						projectRequests.get(i).rejectRequest();
+    					}
     				}
     				project.setStatus(Status.UNAVAILABLE);
     			}

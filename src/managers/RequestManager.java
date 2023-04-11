@@ -31,12 +31,11 @@ public class RequestManager {
         return output;
     }
     
-    public Request getRequestByProjID(String projID) {
-    	Request output=null;
+    public List<Request> getRequestByProjID(String projID) {
+    	List <Request> output = new ArrayList<>();
     	for(int i=0; i<requests.size(); i++) {
     		if(requests.get(i).getProject().getProjectID().equals(projID)) {
-    			output = requests.get(i);
-    			break;
+    			output.add(requests.get(i));
     		}
     	}
         return output;

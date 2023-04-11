@@ -68,12 +68,19 @@ public abstract class Request {
     	return this.status;
     }
     
+    protected boolean checkPending() {
+    	if(this.getRequestStatus() != ReqStatus.PENDING) {
+    		System.out.println("Request has already been processed!");
+    		return false;
+    	} else return true;
+    }
+    
     protected void setRequestStatus(ReqStatus state) {
     	this.status = state;
     }
     
     public abstract boolean approveRequest();
-    public abstract void rejectRequest();
+    public abstract boolean rejectRequest();
     public abstract void displayRequestType();
     public void displayAdditionalInfo() {};
     
