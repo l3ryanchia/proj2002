@@ -37,7 +37,7 @@ public class Req_DeallocateProj extends Request{
 		return true;
 	}
 	
-	public void displayRequestType() {
+	protected void displayRequestType() {
 		System.out.println("Request: Deallocate Project");
 	}
 

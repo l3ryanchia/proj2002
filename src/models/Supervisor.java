@@ -30,25 +30,16 @@ package models;
 import java.util.*;
 
 public class Supervisor extends User {
-    private String password;
     private ArrayList<String> projectIDs; //this is not initialised by serialiser so its empty, propose to remove
     private int numOfProjs;
     private int numOfAllocated;
 
     public Supervisor(String userID, String name, String email) {
         super(userID, name, email);
-        this.password = "password"; // Set the default password
+        //this.password = "password"; // Set the default password
         projectIDs = new ArrayList<String>();
         numOfProjs = 0;
         numOfAllocated = 0;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String newPassword) {
-        this.password = newPassword;
     }
     
     /*public void addProj(String projID) {

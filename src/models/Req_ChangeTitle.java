@@ -28,11 +28,11 @@ public class Req_ChangeTitle extends Request {
 		return true;
 	}
 	
-	public void displayRequestType() {
+	protected void displayRequestType() {
     	System.out.println("Request: Change Title");
 	}
 	
-	public void displayAdditionalInfo() {
+	protected void displayAdditionalInfo() {
     	System.out.println("Proposed Title: " + this.newTitle);
     }
 	

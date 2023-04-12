@@ -52,11 +52,11 @@ public class Req_TransferStudent extends Request {
     	return true;
     }
     
-    public void displayRequestType() {
+    protected void displayRequestType() {
     	System.out.println("Request: Transfer Student");
     }
     
-    public void displayAdditionalInfo() {
+    protected void displayAdditionalInfo() {
     	System.out.println("Proposed New Supervisor: " + this.supervisorNew.getUserID());
     }
 }

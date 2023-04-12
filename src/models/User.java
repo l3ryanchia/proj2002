@@ -32,11 +32,13 @@ public abstract class User {
     private String userID;
     private String name;
     private String email;
+    private String password;
 
     public User(String userID, String name, String email) {
         this.userID = userID;
         this.name = name;
         this.email = email;
+        this.password = "password";
     }
 
     public String getUserID() {
@@ -49,6 +51,19 @@ public abstract class User {
 
     public String getEmail() {
         return email;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
+    }
+    
+    public boolean authenticate(String password) {
+    	if(this.getPassword().equals(password)) return true;
+    	else return false;
     }
 }
 

@@ -81,8 +81,8 @@ public abstract class Request {
     
     public abstract boolean approveRequest();
     public abstract boolean rejectRequest();
-    public abstract void displayRequestType();
-    public void displayAdditionalInfo() {};
+    protected abstract void displayRequestType();
+    protected void displayAdditionalInfo() {};
     
     public void displayRequest() {
     	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");

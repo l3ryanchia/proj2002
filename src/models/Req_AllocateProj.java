@@ -46,7 +46,7 @@ public class Req_AllocateProj extends Request{
 		return true;
 	}
 	
-	public void displayRequestType() {
+	protected void displayRequestType() {
     	System.out.println("Request: Allocate Project");
 	}
 

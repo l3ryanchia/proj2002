@@ -36,25 +36,16 @@ import java.util.List;
 public class Student extends User {
 	public enum StudentStatus {REGISTERED, RESERVED, UNREGISTERED};
 	
-    private String password;
     private StudentStatus status;
     private String projectID;
     private List<String> projectBlacklist;
 
     public Student(String userID, String name, String email) {
         super(userID, name, email);
-        this.password = "password"; // Set the default password
+        //this.password = "password"; // Set the default password
         this.status = StudentStatus.UNREGISTERED;
         this.projectID = null;
         this.projectBlacklist = new ArrayList<>();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String newPassword) {
-        this.password = newPassword;
     }
     
     public StudentStatus getStatus() {

@@ -111,7 +111,7 @@ public class FYPMSApp {
         if (studentManager.getStudent(userID) != null) {
             Student student = studentManager.getStudent(userID);
 
-            if (student.getPassword().equals(password)) {
+            if (student.authenticate(password)) {
                 System.out.println("Login successful!");
                 // Allow user to change password or perform other student-related tasks
                 StudentMenu.displayMenu(student);
@@ -123,7 +123,7 @@ public class FYPMSApp {
         else if (supervisorManager.getSupervisor(userID) != null) {
             Supervisor supervisor = supervisorManager.getSupervisor(userID);
 
-            if (supervisor.getPassword().equals(password)) {
+            if (supervisor.authenticate(password)) {
                 System.out.println("Login successful!");
                 
 
