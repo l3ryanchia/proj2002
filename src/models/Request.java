@@ -28,8 +28,8 @@ public abstract class Request {
 	
     private String requestID;
     private ReqStatus status;
-    protected String senderID;
-    protected String receiverID;
+    protected String senderID; //remove
+    protected String receiverID; //remove
     protected UserType senderType;
     protected UserType receiverType;
     protected Project project;
@@ -44,11 +44,11 @@ public abstract class Request {
     	return this.requestID;
     }
     
-    public String getSenderID() {
+    public String getSenderID() { //change to abstract
     	return this.senderID;
     }
     
-    public String getReceiverID() {
+    public String getReceiverID() {//change to abstract
     	return this.receiverID;
     }
     

@@ -40,8 +40,8 @@ import java.io.IOException;
 
 public class FYPCoordinatorSerializer {
 
-    public static FYPCoordinator readCoordinatorFromFile(String filename) {
-        FYPCoordinator coordinator = null;
+    public static FYPCoordinator readCoordinatorFromFile(String filename) { //change to supervisor return type
+        FYPCoordinator coordinator = null;//change to supervisor
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -52,7 +52,7 @@ public class FYPCoordinatorSerializer {
                 String name = values[0].trim();
                 String email = values[1].trim();
                 String userID = email.substring(0, email.indexOf('@'));
-                coordinator = new FYPCoordinator(userID, name, email);
+                coordinator = new FYPCoordinator(userID, name, email); //find by name from supervisor manager
             }
         } catch (IOException e) {
             e.printStackTrace();

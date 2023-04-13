@@ -5,7 +5,7 @@ import models.Request.UserType;
 
 public class Req_TransferStudent extends Request {
 	//private Student student;
-	private Supervisor supervisorOld;
+	private Supervisor supervisorOld;//remove
 	private Supervisor supervisorNew;
 	
 	public Req_TransferStudent(Supervisor supervisorOld, Supervisor supervisorNew, Project project) {

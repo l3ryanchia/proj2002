@@ -56,7 +56,7 @@ public class RequestManager {
     */
     //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.STUDENT, true)
     //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)
-    
+    //add receiverID
     public int checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
     	int count=0;
     	for (int i=0; i<requests.size(); i++) {

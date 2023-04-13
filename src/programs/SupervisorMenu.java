@@ -210,6 +210,9 @@ public class SupervisorMenu {
                 	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
                 		System.out.println("Request history is empty.");
                 	}
+                	
+                	//add outgoing history
+                	
                 	//FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true);
                     break;
                     

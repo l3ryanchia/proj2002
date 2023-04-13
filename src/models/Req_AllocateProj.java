@@ -2,10 +2,10 @@ package models;
 
 public class Req_AllocateProj extends Request{
 	
-	private Student student;
-	private Supervisor supervisor;
+	private Student student;//remove
+	private Supervisor supervisor; //remove
 	
-	public Req_AllocateProj(Student student, Supervisor supervisor, Project project) {
+	public Req_AllocateProj(Student student, Supervisor supervisor, Project project) {//pass the studentID
 		super();
 		this.senderID = student.getUserID();
 		this.receiverID = FYPCoordinator.FYPCoordinatorID;
@@ -17,7 +17,7 @@ public class Req_AllocateProj extends Request{
 		this.supervisor = supervisor;
 		
 		student.reserveProject(project.getProjectID());
-		project.reserveProject();
+		project.reserveProject(studentID); //change
 	}
 	
 	public Supervisor getSupervisor() {

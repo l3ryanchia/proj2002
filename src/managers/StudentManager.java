@@ -46,7 +46,9 @@ public class StudentManager {
         return students.get(userID);
     }
 
-    public void addStudent(Student student) {
+    public void addStudent(String userID, String name, String email) {
+    	//constructor for student
+    	Student student = new Student(userID, name, email);
         students.put(student.getUserID(), student);
     }
 

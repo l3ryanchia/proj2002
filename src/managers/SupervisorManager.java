@@ -67,7 +67,7 @@ public class SupervisorManager {
     	supervisors.remove(supervisor.getUserID());
     }
 
-    public boolean checkPassword(String userID, String password) {
+    public boolean checkPassword(String userID, String password) { //delete
         Supervisor supervisor = supervisors.get(userID);
 
         if (supervisor != null) {
@@ -77,7 +77,7 @@ public class SupervisorManager {
         return false;
     }
     
-    public Project createNewProject(String userID) {
+    public Project createNewProject(String userID) { //delete
     	Supervisor supervisor = supervisors.get(userID);
 	    if (supervisor != null) {
 	    	String title;

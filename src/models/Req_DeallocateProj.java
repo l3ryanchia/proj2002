@@ -2,8 +2,8 @@ package models;
 
 public class Req_DeallocateProj extends Request{
 	
-	private Student student;
-	private Supervisor supervisor;
+	private Student student;//remove
+	private Supervisor supervisor;//remove
 	
 	public Req_DeallocateProj(Student student, Supervisor supervisor, Project project) {
 		super();
@@ -20,6 +20,8 @@ public class Req_DeallocateProj extends Request{
 	public Supervisor getSupervisor() {
 		return this.supervisor;
 	}
+	
+	//getstudent
 	
 	public boolean approveRequest() {
 		if(!this.checkPending()) return false;

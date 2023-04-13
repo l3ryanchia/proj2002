@@ -84,9 +84,9 @@ public class ProjectSerializer {
                 }
 
                 //String projectID = "P" + projectIDCounter;
-                String supervisor = values[0].trim();
+                String supervisor = values[0].trim(); // find supervisor from supervisor manager
                 String title = values[1].trim();
-                projects.add(new Project(title, supervisor));
+                projects.add(new Project(title, supervisor)); //change constructor
                 //projectIDCounter++;
             }
         } catch (IOException e) {

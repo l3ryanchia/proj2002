@@ -61,12 +61,12 @@ public class Project {
 
     private String projectID;
     private String projectTitle;
-    private String supervisor; //should we put the whole supervisor?
-    private String student;
+    private String supervisor; //put the whole supervisor
+    private String student;//put the whole student
     //private String emailAddress;
     private Status status;
     
-    public Project(String title, String supervisor) {		//assuming supervisor is the name?
+    public Project(String title, String supervisor) {		//supervisor object
         this.projectID = "P" + projectIDCounter;
         this.projectTitle = title;
         this.supervisor = supervisor;
@@ -129,16 +129,18 @@ public class Project {
     	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
     }
     
-    public void reserveProject() {
+    public void reserveProject(String studentID) {
+    	this.setStudent(studentID);
     	this.setStatus(Status.RESERVED);
     }
 
     public void unreserveProject() {
+    	this.setStudent(null);
     	this.setStatus(Status.AVAILABLE);
     }
 
     public void allocateStudent(String studentID) {
-    	this.setStudent(studentID);
+    	//this.setStudent(studentID);
     	this.setStatus(Status.ALLOCATED);
     }
     

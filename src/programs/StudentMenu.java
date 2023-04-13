@@ -71,7 +71,7 @@ public class StudentMenu {
 	        	            }
 	                    }
 	                    
-	                    switch (subchoice) {
+	                    switch (subchoice) { //separate submenus into methods
 	                    	case 1:
 	                    		
 	                    		if(student.getStatus()==Student.StudentStatus.RESERVED) {

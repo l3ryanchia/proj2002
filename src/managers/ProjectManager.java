@@ -73,7 +73,7 @@ public class ProjectManager {
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
     
-    public void updateProjectsStatus(Request request, RequestManager reqManager) {
+    public void updateProjectsStatus(Request request, RequestManager reqManager) { //move to request manager
     	if(request instanceof Req_AllocateProj) {
     		Supervisor supervisor = ((Req_AllocateProj) request).getSupervisor(); //downcasting - check if its legal
     		if(supervisor.getNumOfAllocated() >= 2) {
@@ -84,7 +84,7 @@ public class ProjectManager {
     	} else if (request instanceof Req_DeallocateProj) {
     		Supervisor supervisor = ((Req_DeallocateProj) request).getSupervisor(); //downcasting - check if its legal
     		if(supervisor.getNumOfAllocated() == 1) {
-    			this.makeAvailable(supervisor, reqManager);
+    			this.makeAvailable(supervisor);
     			//print notif
     		}
     	} else if (request instanceof Req_TransferStudent) {
@@ -95,7 +95,7 @@ public class ProjectManager {
     			//print notif
     		}
     		if(supervisorOld.getNumOfAllocated() == 1) {
-    			this.makeAvailable(supervisorOld, reqManager);
+    			this.makeAvailable(supervisorOld);
     			//print notif
     		}
     	}
@@ -118,7 +118,7 @@ public class ProjectManager {
         }
     }
     
-    public void makeAvailable(Supervisor supervisor, RequestManager reqManager) {
+    public void makeAvailable(Supervisor supervisor) {
     	for (Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
     		if (project.getSupervisor().equals(supervisor.getName())) {

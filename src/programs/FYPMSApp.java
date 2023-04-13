@@ -16,7 +16,8 @@ public class FYPMSApp {
 
     // Constructor
     public FYPMSApp() {
-        studentManager = new StudentManager();
+        //studentManager = new StudentManager();
+    	studentManager = ReadCSV.loadStudentData();
         supervisorManager = new SupervisorManager();
         projectManager = new ProjectManager();
         fypCoordinatorManager = new FYPCoordinatorManager();
@@ -36,11 +37,14 @@ public class FYPMSApp {
     // Load data from files
     private void loadData() {
         // Load students
+    	
+    	studentManager = StudentSerializer.readStudentsFromFile("database/studentList.csv");
+/*    	
         List<Student> students = StudentSerializer.readStudentsFromFile("database/studentList.csv");
         for (Student student : students) {
             studentManager.addStudent(student);
         }
-
+*/
         // Load supervisors
         List<Supervisor> supervisors = SupervisorSerializer.readSupervisorsFromFile("database/facultyList.csv");
         for (Supervisor supervisor : supervisors) {
@@ -54,7 +58,7 @@ public class FYPMSApp {
         }
 
         // Load FYP coordinator
-        FYPCoordinator coordinator = FYPCoordinatorSerializer.readCoordinatorFromFile("database/fypCoordinator.csv");
+        FYPCoordinator coordinator = FYPCoordinatorSerializer.readCoordinatorFromFile("database/fypCoordinator.csv"); //change object type to supervisor
         fypCoordinatorManager.setCoordinator(coordinator, supervisorManager);
     }
 
