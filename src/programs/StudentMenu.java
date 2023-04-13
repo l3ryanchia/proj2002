@@ -46,7 +46,7 @@ public class StudentMenu {
                 	
                 	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
                 	projectsList = FYPMSApp.projectManager.filterByStatus(projectsList, Project.Status.AVAILABLE);
-                	FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager);
+                	FYPMSApp.projectManager.displayProjects(projectsList);
                 	
                 	//FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
                 	
@@ -88,8 +88,8 @@ public class StudentMenu {
 	                    		}
 	                    		
 	                    		Project selectedProj = FYPMSApp.projectManager.getProject(selection);
-	                    		Supervisor selectedSup = FYPMSApp.supervisorManager.getSupervisor(FYPMSApp.supervisorManager.getSupervisorID(selectedProj.getSupervisor()));
-	                    		FYPMSApp.requestManager.addRequest(new Req_AllocateProj(student, selectedSup, selectedProj));
+	                    		Supervisor selectedSup = selectedProj.getSupervisor();
+	                    		FYPMSApp.requestManager.addRequest(new Req_AllocateProj(student, selectedProj));
 	                    		break;
 	                    	case 2:
 	                    		break;
@@ -135,11 +135,11 @@ public class StudentMenu {
 	                    		System.out.print("Please enter new title: ");
 	                    		String newTitle = scanner.nextLine();
 	                    		
-	                    		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, FYPMSApp.supervisorManager.getSupervisorID(registeredProj.getSupervisor()), newTitle));
+	                    		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, newTitle));
 	                    		break;
 	                    	case 2: //deregister project
 	                    		//seems abit inefficient here, to get the supervisor object need to first get the supervisor ID by getting the supervisor name
-	                    		Supervisor registeredSup = FYPMSApp.supervisorManager.getSupervisor(FYPMSApp.supervisorManager.getSupervisorID(registeredProj.getSupervisor()));
+	                    		Supervisor registeredSup = registeredProj.getSupervisor();
 	                    		FYPMSApp.requestManager.addRequest(new Req_DeallocateProj(student, registeredSup, registeredProj));
 	                    		break;
 	                    	case 3:

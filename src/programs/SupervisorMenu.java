@@ -50,7 +50,7 @@ public class SupervisorMenu {
                 	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
                 	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
 
-                	if(FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager) == 0) {
+                	if(FYPMSApp.projectManager.displayProjects(projectsList) == 0) {
                 		System.out.println("You have no projects under your name.");
                 		break;
                 	}
@@ -113,7 +113,7 @@ public class SupervisorMenu {
 	                    			break;
 	                    		}
 	                    		
-	                    		FYPMSApp.requestManager.addRequest(new Req_TransferStudent(supervisor, newSup, selectedProj));
+	                    		FYPMSApp.requestManager.addRequest(new Req_TransferStudent(newSup, selectedProj));
 	                    		
 	                    		/*
 	                    		if (supervisor.getProjIDs().contains(changeID)) {

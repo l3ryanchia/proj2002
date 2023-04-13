@@ -2,31 +2,40 @@ package models;
 
 public class Req_AllocateProj extends Request{
 	
-	private Student student;//remove
-	private Supervisor supervisor; //remove
+	private Student student;//remove - i think shouldnt remove cause need reserve project (14/4/2023)
+	//private Supervisor supervisor; //remove
 	
-	public Req_AllocateProj(Student student, Supervisor supervisor, Project project) {//pass the studentID
+	public Req_AllocateProj(Student student, Project project) {//pass the studentID
 		super();
-		this.senderID = student.getUserID();
-		this.receiverID = FYPCoordinator.FYPCoordinatorID;
+		this.student = student;
+		//this.receiverID = FYPCoordinator.FYPCoordinatorID;
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.FYPCOORDINATOR;
 		this.project = project;
 		
-		this.student = student;
-		this.supervisor = supervisor;
+		//this.student = student;
+		//this.supervisor = supervisor;
 		
 		student.reserveProject(project.getProjectID());
-		project.reserveProject(studentID); //change
+		project.reserveProject(student); //change
 	}
 	
 	public Supervisor getSupervisor() {
-		return this.supervisor;
+		return this.project.getSupervisor();
 	}
+	
+	public  String getSenderID() {
+		return this.project.getStudent().getUserID();
+		//return this.student.getUserID();	or this??
+	}
+	
+    public String getReceiverID() {
+    	//return FYPcoordinatorID
+    }
 	
 	public boolean approveRequest() {
 		if(!this.checkPending()) return false;
-		if(!supervisor.allocateProject(project.getProjectID())) {
+		if(!this.project.getSupervisor().allocateProject(project.getProjectID())) {
 			System.out.println("Failed to approve request!");
 			return false;
 		}

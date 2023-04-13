@@ -47,19 +47,19 @@ public class FYPCoordinatorMenu {
                 	
                 	System.out.println("AVAILABLE PROJECTS: ");
                 	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.AVAILABLE);
-                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay);
                 	
                 	System.out.println("ALLOCATED PROJECTS: ");
                 	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.ALLOCATED);
-                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay);
                 	
                 	System.out.println("RESERVED PROJECTS: ");
                 	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.RESERVED);
-                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay);
                 	
                 	System.out.println("UNAVAILABLE PROJECTS: ");
                 	projectsToDisplay = FYPMSApp.projectManager.filterByStatus(FYPMSApp.projectManager.getProjectList(), Project.Status.UNAVAILABLE);
-                	FYPMSApp.projectManager.displayProjects(projectsToDisplay, FYPMSApp.supervisorManager);
+                	FYPMSApp.projectManager.displayProjects(projectsToDisplay);
                 	
                     break;
                 case 2:
@@ -134,7 +134,7 @@ public class FYPCoordinatorMenu {
 			                	}
 			                	break;
 	                		case 2:
-	                			FYPMSApp.projectManager.displayProjects(projectsList, FYPMSApp.supervisorManager);
+	                			FYPMSApp.projectManager.displayProjects(projectsList);
 	                			break;
 	                		default: 
 	                			System.out.println("Invalid input.");

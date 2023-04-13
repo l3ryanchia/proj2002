@@ -7,7 +7,7 @@ import java.util.List;
 //import java.util.Map;
 
 public class RequestManager {
-    private List<Request> requests;
+    private List<Request> requests; //change hash map??
 
     public RequestManager() {
         requests = new ArrayList<>();

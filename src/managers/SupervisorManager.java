@@ -82,7 +82,7 @@ public class SupervisorManager {
 	    if (supervisor != null) {
 	    	String title;
 	    	System.out.print("Input project title: ");		title = input.next();
-	    	Project newProj = new Project(title, supervisor.getName());
+	    	Project newProj = new Project(title, supervisor);
 	    	return newProj;		//in main app need have projManager to addProject()
 	   	}
 	    

@@ -52,7 +52,7 @@ public class FYPMSApp {
         }
 
         // Load projects
-        List<Project> projects = ProjectSerializer.readProjectsFromFile("database/projects.csv");
+        List<Project> projects = ProjectSerializer.readProjectsFromFile("database/projects.csv", supervisorManager);
         for (Project project : projects) {
             projectManager.addProject(project);
         }

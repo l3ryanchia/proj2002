@@ -4,16 +4,25 @@ public class Req_ChangeTitle extends Request {
 	
 	private String newTitle;
 	
-	public Req_ChangeTitle(Project project, String supervisorID, String newTitle) { 
+	public Req_ChangeTitle(Project project, String newTitle) { 
 		super();
-		this.senderID = project.getStudent();
-		this.receiverID = supervisorID;  //think of way to remove supervisorID as input
+		//this.senderID = project.getStudent();
+		//this.receiverID = supervisorID;  //think of way to remove supervisorID as input
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.SUPERVISOR;
 		this.project = project;
 		
 		this.newTitle = newTitle;
 	}
+	
+	public  String getSenderID() {
+		return this.project.getStudent().getUserID();
+		//return this.student.getUserID();	or this??
+	}
+	
+    public String getReceiverID() {
+    	return this.project.getSupervisor().getUserID();
+    }
 	
 	public boolean approveRequest() {
 		if(!this.checkPending()) return false;

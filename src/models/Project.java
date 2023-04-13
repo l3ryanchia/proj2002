@@ -61,12 +61,12 @@ public class Project {
 
     private String projectID;
     private String projectTitle;
-    private String supervisor; //put the whole supervisor
-    private String student;//put the whole student
+    private Supervisor supervisor; //put the whole supervisor
+    private Student student;//put the whole student
     //private String emailAddress;
     private Status status;
     
-    public Project(String title, String supervisor) {		//supervisor object
+    public Project(String title, Supervisor supervisor) {		//supervisor object
         this.projectID = "P" + projectIDCounter;
         this.projectTitle = title;
         this.supervisor = supervisor;
@@ -93,12 +93,12 @@ public class Project {
     public void setTitle(String title) {
         this.projectTitle = title;
     }
-
-    public String getSupervisor() {
-        return supervisor;
+    
+    public Supervisor getSupervisor() {
+    	return this.supervisor;
     }
 
-    public void setSupervisor(String supervisor) {
+    public void setSupervisor(Supervisor supervisor) {
         this.supervisor = supervisor;
     }
     
@@ -114,11 +114,11 @@ public class Project {
     	return this.emailAddress;
     }*/
 
-    public void setStudent(String student) {
+    public void setStudent(Student student) {
     	this.student = student;
     }
     
-    public String getStudent() {
+    public Student getStudent() {
     	return this.student;
     }
     
@@ -129,8 +129,8 @@ public class Project {
     	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
     }
     
-    public void reserveProject(String studentID) {
-    	this.setStudent(studentID);
+    public void reserveProject(Student student) {
+    	this.setStudent(student);
     	this.setStatus(Status.RESERVED);
     }
 
@@ -149,11 +149,11 @@ public class Project {
     	this.setStatus(Status.AVAILABLE);
     }
     
-    public void reallocateSupervisor(String supervisor) {
+    public void reallocateSupervisor(Supervisor supervisor) {
     	this.setSupervisor(supervisor);
     }
     
-    public void allocateSupervisor(String supervisor) {
+    public void allocateSupervisor(Supervisor supervisor) {
     	this.setSupervisor(supervisor);
     	this.setStatus(Status.ALLOCATED);
     }

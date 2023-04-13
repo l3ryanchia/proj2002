@@ -61,13 +61,13 @@ public class ProjectManager {
     */
     
     //add filters
-    public void displayAllAvailableProjects(SupervisorManager supervisorManager ) {
+    public void displayAllAvailableProjects() {
     	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
     		if(project.getStatus()==Status.AVAILABLE) {
-    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     		}
     	}
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -155,27 +155,27 @@ public class ProjectManager {
     	return filteredProjs;
     }
     
-    public int displayProjects(Map<String, Project> projects, SupervisorManager supervisorManager) {
+    public int displayProjects(Map<String, Project> projects) {
     	int count = 0;
     	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
    	    for(Map.Entry<String, Project> set:projects.entrySet()) {
     	    Project project = set.getValue();
-    	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+    	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     	   	count++;
     	   }
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	return count;
     }
     
-    public int displayFilter(Status status, String supervisor, SupervisorManager supervisorManager) {
+    public int displayFilter(Status status, String supervisor) {
     	int count = 0;
     	if ((status == null) && (supervisor == null)) {
     		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
    	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
    	    		Project project = set.getValue();
    	    		if(project.getStatus()==Status.AVAILABLE) {
-   	    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+   	    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
    	    			count++;
    	    		}
     	    }
@@ -186,8 +186,8 @@ public class ProjectManager {
    				System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
        	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
        	    		Project project = set.getValue();
-        	    	if(project.getSupervisor()==supervisor) {
-        	    		System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	    	if(project.getSupervisor().getName()==supervisor) {
+        	    		System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
         	    		count++;
         	   		}
         	   	}
@@ -199,7 +199,7 @@ public class ProjectManager {
         	   	for(Map.Entry<String, Project> set:projects.entrySet()) {
         	   		Project project = set.getValue();
         	   		if(project.getStatus()==status) {
-        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
         	   			count++;
             		}
        	    	}
@@ -210,8 +210,8 @@ public class ProjectManager {
    				System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
        	    	for(Map.Entry<String, Project> set:projects.entrySet()) {
         	    	Project project = set.getValue();
-        	    	if((project.getStatus()==status) && (project.getSupervisor()==supervisor)) {				//both filter used
-        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), supervisorManager.getSupervisorID(project.getSupervisor()) + "@e.ntu.edu.sg", project.getStatus());
+        	    	if((project.getStatus()==status) && (project.getSupervisor().getName()==supervisor)) {				//both filter used
+        	   			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
         	   			count++;
         	   		}
         	   	}
