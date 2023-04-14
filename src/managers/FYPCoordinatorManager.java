@@ -21,27 +21,28 @@
 
 package managers;
 
-import models.FYPCoordinator;
+import models.Supervisor;
 
 public class FYPCoordinatorManager {
-    private FYPCoordinator coordinator;
+    private Supervisor coordinator;
 
     public FYPCoordinatorManager() {
         coordinator = null;
     }
 
-    public FYPCoordinator getCoordinator() {
+    public Supervisor getCoordinator() {
         return coordinator;
     }
 
-    public void setCoordinator(FYPCoordinator coordinator, SupervisorManager supervisorManager) {
-    	if(supervisorManager.getSupervisor(coordinator.getUserID()) == null) {
+    public void setCoordinator(Supervisor coordinator/*, SupervisorManager supervisorManager*/) {
+    	/*if(supervisorManager.getSupervisor(coordinator.getUserID()) == null) {
     		System.out.println("FYP Coordinator must be registered as a Supervisor!");
     		return;
-    	}
-        this.coordinator = coordinator;
-        supervisorManager.removeSupervisor(coordinator);
-        supervisorManager.addSupervisor(coordinator);
+    	}*/		//above needed?
+        coordinator.setCoordinator();
+    	this.coordinator = coordinator;
+        //supervisorManager.removeSupervisor(coordinator);
+        //supervisorManager.addSupervisor(coordinator);
     }
 
     public boolean checkPassword(String userID, String password) {

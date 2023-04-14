@@ -20,7 +20,7 @@ public class StudentSerializer {
                 String email = studentData[1].trim();
                 String userID = email.split("@")[0]; 
                 
-                studentManager.addStudent(userID, name, email); //remove email
+                studentManager.addStudent(userID, name); //remove email
                 //students.add(new Student(userID, name, email));
             }
         } catch (IOException e) {

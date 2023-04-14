@@ -18,9 +18,12 @@ public class FYPMSApp {
     public FYPMSApp() {
         //studentManager = new StudentManager();
     	studentManager = ReadCSV.loadStudentData();
-        supervisorManager = new SupervisorManager();
-        projectManager = new ProjectManager();
-        fypCoordinatorManager = new FYPCoordinatorManager();
+        //supervisorManager = new SupervisorManager();
+        supervisorManager = ReadCSV.loadSupervisorData();
+        //projectManager = new ProjectManager();
+        projectManager = ReadCSV.loadProjectData(supervisorManager);
+        //fypCoordinatorManager = new FYPCoordinatorManager();
+        fypCoordinatorManager = ReadCSV.loadFYPCoordinator(supervisorManager);
         requestManager = new RequestManager();
     }
     /*
@@ -30,12 +33,12 @@ public class FYPMSApp {
 
     public static void main(String[] args) {
         FYPMSApp app = new FYPMSApp();
-        app.loadData();
+        app.loadData(); //no need alr right?
         app.run();
     }
 
     // Load data from files
-    private void loadData() {
+    /*private void loadData() {
         // Load students
     	
     	studentManager = StudentSerializer.readStudentsFromFile("database/studentList.csv");
@@ -45,7 +48,7 @@ public class FYPMSApp {
             studentManager.addStudent(student);
         }
 */
-        // Load supervisors
+        /*// Load supervisors
         List<Supervisor> supervisors = SupervisorSerializer.readSupervisorsFromFile("database/facultyList.csv");
         for (Supervisor supervisor : supervisors) {
             supervisorManager.addSupervisor(supervisor);
@@ -60,7 +63,7 @@ public class FYPMSApp {
         // Load FYP coordinator
         FYPCoordinator coordinator = FYPCoordinatorSerializer.readCoordinatorFromFile("database/fypCoordinator.csv"); //change object type to supervisor
         fypCoordinatorManager.setCoordinator(coordinator, supervisorManager);
-    }
+    }*/
 
     // The main loop of the application
     private void run() {
@@ -132,7 +135,7 @@ public class FYPMSApp {
                 
 
                 // Check if the user is also the FYP coordinator
-                FYPCoordinator coordinator = fypCoordinatorManager.getCoordinator();
+                Supervisor coordinator = fypCoordinatorManager.getCoordinator();
                 
                 if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) {
                 	System.out.println("Login as: ");

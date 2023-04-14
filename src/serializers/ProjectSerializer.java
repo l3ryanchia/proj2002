@@ -35,6 +35,7 @@ package serializers;
 
 import models.Project;
 import managers.SupervisorManager;
+import managers.ProjectManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -68,9 +69,9 @@ import java.util.List;
 
 public class ProjectSerializer {
 
-    public static List<Project> readProjectsFromFile(String filename, SupervisorManager supervisorManager) { //need pass in supervisor manager?
-        List<Project> projects = new ArrayList<>();
-
+    public static ProjectManager readProjectsFromFile(String filename, SupervisorManager supervisorManager) { //need pass in supervisor manager?
+        //List<Project> projects = new ArrayList<>();
+    	ProjectManager projectManager = new ProjectManager();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             br.readLine(); // Skip header line
@@ -88,14 +89,14 @@ public class ProjectSerializer {
                 String supervisor = values[0].trim(); // find supervisor from supervisor manager
                 String title = values[1].trim();
                 
-                
-                projects.add(new Project(title, supervisorManager.getSupervisor(supervisorManager.getSupervisorID(supervisor)))); //change constructor
+                projectManager.addProject(title, supervisorManager.getSupervisor(supervisorManager.getSupervisorID(supervisor)));
+                //projects.add(new Project(title, supervisorManager.getSupervisor(supervisorManager.getSupervisorID(supervisor)))); //change constructor
                 //projectIDCounter++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return projects;
+        return projectManager;
     }
 }

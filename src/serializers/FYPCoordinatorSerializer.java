@@ -33,6 +33,9 @@
 package serializers;
 
 import models.FYPCoordinator;
+import models.Supervisor;
+import managers.SupervisorManager;
+import managers.FYPCoordinatorManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -40,8 +43,10 @@ import java.io.IOException;
 
 public class FYPCoordinatorSerializer {
 
-    public static FYPCoordinator readCoordinatorFromFile(String filename) { //change to supervisor return type
-        FYPCoordinator coordinator = null;//change to supervisor
+    public static FYPCoordinatorManager readCoordinatorFromFile(String filename, SupervisorManager supervisorManager) { //change to supervisor return type
+        //FYPCoordinator coordinator = null;	//change to supervisor
+    	Supervisor coordinator = null;
+    	FYPCoordinatorManager fypCoordinatorManager = new FYPCoordinatorManager();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -52,12 +57,15 @@ public class FYPCoordinatorSerializer {
                 String name = values[0].trim();
                 String email = values[1].trim();
                 String userID = email.substring(0, email.indexOf('@'));
-                coordinator = new FYPCoordinator(userID, name, email); //find by name from supervisor manager
+                //coordinator = new FYPCoordinator(userID, name, email); //find by name from supervisor manager
+                
+                coordinator = supervisorManager.getSupervisor(userID);
+                fypCoordinatorManager.setCoordinator(coordinator);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return coordinator;
+        return fypCoordinatorManager;
     }
 }

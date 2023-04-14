@@ -24,7 +24,8 @@ public class ProjectManager {
         return projects.get(projectID);
     }
 
-    public void addProject(Project project) {
+    public void addProject(String title, Supervisor supervisor) {
+    	Project project = new Project(title, supervisor);
         projects.put(project.getProjectID(), project);
     }
     
@@ -104,7 +105,7 @@ public class ProjectManager {
     public void makeUnavailable (Supervisor supervisor, RequestManager reqManager){
     	for (Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
-    		if (project.getSupervisor().equals(supervisor.getName())) {
+    		if (project.getSupervisor().equals(supervisor)) {
     			if (project.getStatus() != Status.ALLOCATED) {
     				if (project.getStatus() == Status.RESERVED) {
     					List<Request> projectRequests = reqManager.getRequestByProjID(project.getProjectID());
@@ -121,7 +122,7 @@ public class ProjectManager {
     public void makeAvailable(Supervisor supervisor) {
     	for (Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
-    		if (project.getSupervisor().equals(supervisor.getName())) {
+    		if (project.getSupervisor().equals(supervisor)) {
     			if (project.getStatus() == Status.UNAVAILABLE) {
     				project.setStatus(Status.AVAILABLE);
     			}

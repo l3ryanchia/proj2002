@@ -33,13 +33,15 @@ public class Supervisor extends User {
     private ArrayList<String> projectIDs; //this is not initialised by serialiser so its empty, propose to remove
     private int numOfProjs;
     private int numOfAllocated;
+    private boolean coordinator;
 
-    public Supervisor(String userID, String name, String email) {
-        super(userID, name, email);
+    public Supervisor(String userID, String name) {
+        super(userID, name);
         //this.password = "password"; // Set the default password
         projectIDs = new ArrayList<String>();
         numOfProjs = 0;
         numOfAllocated = 0;
+        coordinator = false;
     }
     
     /*public void addProj(String projID) {
@@ -59,13 +61,16 @@ public class Supervisor extends User {
     	return this.projectIDs;
     }
     
+    public void setCoordinator() {
+    	coordinator = true;
+    }
     public Project createProject() {
     	Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter project title: ");
         String title = scanner.nextLine();
 
-        Project project = new Project(title, this.getName());
+        Project project = new Project(title, this);
         this.projectIDs.add(project.getProjectID());
     	this.numOfProjs++;
         System.out.println("Project created successfully!");

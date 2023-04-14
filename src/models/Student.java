@@ -40,8 +40,8 @@ public class Student extends User {
     private String projectID;
     private List<String> projectBlacklist;
 
-    public Student(String userID, String name, String email) {
-        super(userID, name, email);
+    public Student(String userID, String name) {
+        super(userID, name);
         //this.password = "password"; // Set the default password
         this.status = StudentStatus.UNREGISTERED;
         this.projectID = null;

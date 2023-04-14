@@ -46,12 +46,12 @@ public class StudentManager {
         return students.get(userID);
     }
 
-    public void addStudent(String userID, String name, String email) {
+    public void addStudent(String userID, String name) {
     	//constructor for student
-    	Student student = new Student(userID, name, email);
+    	Student student = new Student(userID, name);
         students.put(student.getUserID(), student);
     }
-
+    
     public boolean checkPassword(String userID, String password) { //where is this being used??
         Student student = students.get(userID);
 

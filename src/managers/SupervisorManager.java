@@ -59,7 +59,8 @@ public class SupervisorManager {
     	return output;
     }
 
-    public void addSupervisor(Supervisor supervisor) {
+    public void addSupervisor(String userID, String name) {
+    	Supervisor supervisor = new Supervisor(userID, name);
         supervisors.put(supervisor.getUserID(), supervisor);
     }
     

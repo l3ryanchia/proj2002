@@ -8,7 +8,7 @@ import models.*;
 import models.Request.UserType;
 
 public class FYPCoordinatorMenu {
-    protected static void displayMenu(FYPCoordinator coordinator) {
+    protected static void displayMenu(Supervisor coordinator) {
         boolean logout = false;
         Scanner scanner = new Scanner(System.in);
 
