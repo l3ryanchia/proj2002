@@ -236,6 +236,25 @@ public class SupervisorMenu {
             }
         }
     }
+    
+    public static void createNewProject(Supervisor supervisor) {
+    	Project newProj = supervisor.createProject();
+    	FYPMSApp.projectManager.addProject(newProj);
+    	if(supervisor.getNumOfAllocated() >= 2) FYPMSApp.projectManager.makeUnavailable(supervisor, FYPMSApp.requestManager);
+
+    }
+    
+    public static void viewProject() {
+    	
+    }
+    
+    public static void viewPendingRequests() {
+    	
+    }
+    
+    public static void viewRequestHistory() {
+    	
+    }
 
 /*
     private static void viewProjects(Supervisor supervisor, Scanner scanner) {
