@@ -151,8 +151,7 @@ public class ProjectManager {
     	    Project project = set.getValue();
     	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     	   	if(project.getStatus() == Status.ALLOCATED) {
-    	   		System.out.printf("%96s %56s \n", "ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg");
-    	   		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	   		System.out.printf("%96s %56s \n", "[ ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg ]");
     	   	}
     	   	count++;
     	   }
@@ -165,8 +164,7 @@ public class ProjectManager {
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     	   	if(project.getStatus() == Status.ALLOCATED) {
-    	   		System.out.printf("%96s %56s \n", "ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg");
-    	   		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+       	   		System.out.printf("%96s %56s \n", "[ ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg ]");
     	   	}
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }

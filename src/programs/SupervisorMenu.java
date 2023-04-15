@@ -208,14 +208,6 @@ public class SupervisorMenu {
                     
                 case 4:
                     viewRequestHistory(supervisor);
-                	//FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true);
-                	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
-                		System.out.println("Request history is empty.");
-                	}
-                	
-                	//add outgoing history
-                	
-                	//FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true);
                     break;
                     
                 case 5:
@@ -338,9 +330,11 @@ public class SupervisorMenu {
     
     public static void viewPendingRequests(Supervisor supervisor, Scanner scanner) {
     	//Scanner scanner = new Scanner(System.in);
+    	System.out.println("PENDING INCOMING REQUESTS:");
     	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
     		System.out.println("You have no pending incoming request.");
     	}
+    	System.out.println("PENDING OUTGOING REQUESTS:");
     	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) {
     		System.out.println("You have no pending outgoing request.");
     	}

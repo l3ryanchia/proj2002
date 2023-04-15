@@ -29,7 +29,7 @@ public class Req_TransferStudent extends Request {
 	}
 	
 	public String getSenderID() {
-		return this.project.getSupervisor().getUserID();
+		return this.supervisorOld.getUserID();
 	}
 	
     public String getReceiverID() {
