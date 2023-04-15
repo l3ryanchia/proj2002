@@ -226,6 +226,10 @@ public class StudentMenu {
             		}
             		
             		Project selectedProj = FYPMSApp.projectManager.getProject(selection);
+            		if(selectedProj==null) {
+            			System.out.println("Invalid Project ID!");
+            			break;
+            		}
             		
             		if(selectedProj.getStatus() != Status.AVAILABLE) {
             			System.out.println("You are not allowed to select this project!");

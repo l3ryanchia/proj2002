@@ -356,7 +356,7 @@ public class SupervisorMenu {
 	            	scanner.nextLine(); // Consume the newline
 	            	isValidInput = true;
 	            } catch(Exception e) {
-	            	System.out.println("Invalid choice. Please try again.");
+	            	//System.out.println("Invalid choice. Please try again.");
 	            	scanner.nextLine();
 	            	break;
 	            }
@@ -395,10 +395,11 @@ public class SupervisorMenu {
     }
     
     public static void viewRequestHistory(Supervisor supervisor) {
-    	
+    	System.out.println("INCOMING REQUEST HISTORY:");
     	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) {
     		System.out.println("You have no incoming request history.");
     	}
+    	System.out.println("OUTGOING REQUEST HISTORY:");
     	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0) {
     		System.out.println("You have no outgoing request history.");
     	}

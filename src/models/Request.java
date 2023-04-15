@@ -49,7 +49,7 @@ public abstract class Request {
     
     protected boolean checkPending() {
     	if(this.getRequestStatus() != ReqStatus.PENDING) {
-    		System.out.println("Request has already been processed!");
+    		System.out.println(this.getRequestID() + " - Request has already been processed!");
     		return false;
     	} else return true;
     }

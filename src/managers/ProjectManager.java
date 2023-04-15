@@ -6,9 +6,11 @@ import models.Req_AllocateProj;
 import models.Req_DeallocateProj;
 import models.Req_TransferStudent;
 import models.Request;
+import models.Request.ReqStatus;
 import models.Supervisor;
 //import models.to;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,13 @@ public class ProjectManager {
     		if(supervisor.getNumOfAllocated() == 1) {
     			this.makeAvailable(supervisor);
     		}
+    		String projID = ((Req_DeallocateProj) request).getProject().getProjectID();
+    		List <Request> requests = reqManager.getRequestByProjID(projID);
+    	    for(int i=0; i<requests.size(); i++) {
+    	    	if(requests.get(i).getRequestStatus() != ReqStatus.PENDING) continue;
+    	    	requests.get(i).rejectRequest();
+    	    	System.out.println("All pending requests for " + projID + " has been automatically rejected...");
+    	    }
     	} else if (request instanceof Req_TransferStudent) {
     		Supervisor supervisorOld = ((Req_TransferStudent) request).getSupervisorOld(); 
     		Supervisor supervisorNew = ((Req_TransferStudent) request).getSupervisorNew(); 
@@ -79,6 +88,7 @@ public class ProjectManager {
     				if (project.getStatus() == Status.RESERVED) {
     					List<Request> projectRequests = reqManager.getRequestByProjID(project.getProjectID());
     					for(int i=0; i<projectRequests.size(); i++) {
+    						if(projectRequests.get(i).getRequestStatus() != ReqStatus.PENDING) continue;
     						projectRequests.get(i).rejectRequest();
     					}
     				}
@@ -137,7 +147,7 @@ public class ProjectManager {
     	
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
 	    	Project project = set.getValue();
-	    	if(project.getSupervisor().getUserID().equals(studentID)) filteredProjs.put(project.getProjectID(), project);
+	    	if(project.getStudent().getUserID().equals(studentID)) filteredProjs.put(project.getProjectID(), project);
     	}
     	
     	return filteredProjs;
