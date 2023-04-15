@@ -41,13 +41,15 @@ public class SupervisorMenu {
 
             switch (choice) {
                 case 1:
-                	Project newProj = supervisor.createProject();
+                	createNewProject(supervisor);
+                	/*Project newProj = supervisor.createProject();
                 	FYPMSApp.projectManager.addProject(newProj);
-                	if(supervisor.getNumOfAllocated() >= 2) FYPMSApp.projectManager.makeUnavailable(supervisor, FYPMSApp.requestManager);
+                	if(supervisor.getNumOfAllocated() >= 2) FYPMSApp.projectManager.makeUnavailable(supervisor, FYPMSApp.requestManager);*/
                     break;
                     
                 case 2:
-                	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
+                	viewProject(supervisor, scanner);
+                	/*Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
                 	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
 
                 	if(FYPMSApp.projectManager.displayProjects(projectsList) == 0) {
@@ -127,7 +129,7 @@ public class SupervisorMenu {
 	                    			else System.out.print("Supervisor does not exist in our system.");	
 	                    		}
 	                    		else System.out.println("You did not submit this project!");
-	                    		*/
+	                    		**end/
 	                    		
 		                    	break;
 		                    case 3:
@@ -137,12 +139,12 @@ public class SupervisorMenu {
 	                            System.out.println("Invalid choice. Please try again.");
 	                    }
 	                    if(subchoice==3) break;
-                	}
+                	}*/
                     break;
                     
                 case 3:
-                    //viewPendingRequests(supervisor, scanner);
-                	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
+                    viewPendingRequests(supervisor, scanner);
+                	/*if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
                 		System.out.println("You have no pending incoming request.");
                 	}
                 	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) {
@@ -201,11 +203,11 @@ public class SupervisorMenu {
 	                            System.out.println("Invalid choice. Please try again.");
 	                    }
 	                    if(subchoice==3) break;
-                	}
+                	}*/
                     break;
                     
                 case 4:
-                    //viewRequestHistory(supervisor, scanner);
+                    viewRequestHistory(supervisor);
                 	//FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true);
                 	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
                 		System.out.println("Request history is empty.");
@@ -244,16 +246,171 @@ public class SupervisorMenu {
 
     }
     
-    public static void viewProject() {
+    public static void viewProject(Supervisor supervisor, Scanner scanner) {
+    	//Scanner scanner = new Scanner(System.in);
+    	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
+    	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
+
+    	if(FYPMSApp.projectManager.displayProjects(projectsList) == 0) {
+    		System.out.println("You have no projects under your name.");
+    		return;
+    	}
     	
+    	while(true) {
+    		boolean isValidInput = false;
+    		int subchoice = 0;
+    		System.out.println("1. Modify title");
+    		System.out.println("2. Transfer student");
+            System.out.println("3. Back");
+            System.out.print("Please choose an option: ");
+            
+            //subchoice = scanner.nextInt();
+            //scanner.nextLine();
+            while (!isValidInput) {
+	            try {
+	            	subchoice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }
+            
+            switch (subchoice) {
+                case 1:
+                	System.out.print("Please enter projectID: ");
+            		String selection = scanner.nextLine();
+            		
+            		if (supervisor.getProjIDs().contains(selection)) { //or if project.getSupervisor() is him, then dunnid the ProjID list?
+            			System.out.print("Please enter new title: ");
+            			String newTitle = scanner.nextLine();
+            			Project project = FYPMSApp.projectManager.getProject(selection);
+            			project.setTitle(newTitle);
+            		}
+            		else {
+            			System.out.println("You did not submit this project!");
+            		}
+                	break;
+                	
+                case 2: // reorganised this part to improve readability
+                	
+                	System.out.print("Please enter projectID for transfer of student: ");
+            		String changeID = scanner.nextLine(); //can someone help add the exception handling here	
+            	
+            		Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
+            		if(!selectedProj.getSupervisor().equals(supervisor.getName())) {
+            			System.out.println("You did not submit this project!");
+            			break;
+            		}
+            		
+            		System.out.print("Please enter supervisorID for replacement: ");
+            		String newSupervisorID = scanner.nextLine();
+            		
+            		Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(newSupervisorID);
+            		if (newSup == null) {
+            			System.out.print("Supervisor does not exist in our system."); 
+            			break;
+            		}
+            		
+            		FYPMSApp.requestManager.addRequest(new Req_TransferStudent(newSup, selectedProj));
+            		
+            		/*
+            		if (supervisor.getProjIDs().contains(changeID)) {
+            			
+            			if (selectedProj.getStatus() != Status.ALLOCATED) {
+            				System.out.print("This project has not been allocated to a student.");
+            				break;
+            			}
+            			Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(supervisorNewID);
+            			if (newSup != null) FYPMSApp.requestManager.addRequest(new Req_TransferStudent(supervisor, newSup, selectedProj));
+            			else System.out.print("Supervisor does not exist in our system.");	
+            		}
+            		else System.out.println("You did not submit this project!");
+            		*/
+            		
+                	break;
+                case 3:
+                	break;
+                	
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            if(subchoice==3) break;
+    	}
     }
     
-    public static void viewPendingRequests() {
+    public static void viewPendingRequests(Supervisor supervisor, Scanner scanner) {
+    	//Scanner scanner = new Scanner(System.in);
+    	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0) {
+    		System.out.println("You have no pending incoming request.");
+    	}
+    	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) {
+    		System.out.println("You have no pending outgoing request.");
+    	}
     	
+    	if((FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) && (FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0))
+    		return;
+    	
+    	while(true) {
+    		boolean isValidInput = false;
+    		int subchoice = 0;
+    		System.out.println("1. Approve a request:");
+    		System.out.println("2. Reject a request:");
+            System.out.println("3. Back");
+            System.out.print("Please choose an option: ");
+            
+            //subchoice = scanner.nextInt();
+            //scanner.nextLine();
+            while (!isValidInput) {
+	            try {
+	            	subchoice = scanner.nextInt();
+	            	scanner.nextLine(); // Consume the newline
+	            	isValidInput = true;
+	            } catch(Exception e) {
+	            	//System.out.println("Invalid choice. Please try again.");
+	            	scanner.nextLine();
+	            	break;
+	            }
+            }
+            
+            models.Request request;
+            switch (subchoice) {
+                case 1:
+                	System.out.print("Please enter requestID: ");
+            		String toApprove = scanner.nextLine();
+            		request = FYPMSApp.requestManager.getRequestByID(toApprove);
+            		if(request == null) {System.out.print("Invalid ID."); break;}
+            		if(request.getReceiverID() != supervisor.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+            		
+            		if(request.approveRequest()) System.out.print("Request Approved!");
+                	break;
+                	
+                case 2:
+                	System.out.print("Please enter requestID: ");
+            		String toReject = scanner.nextLine();
+            		request = FYPMSApp.requestManager.getRequestByID(toReject);
+            		if(request == null) {System.out.print("Invalid ID."); break;}
+            		if(request.getReceiverID() != supervisor.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+            		
+            		if(request.rejectRequest()) System.out.print("Request Rejected!");
+                	break;
+                	
+                case 3:
+                	break;
+                	
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            if(subchoice==3) break;
+    	}
     }
     
-    public static void viewRequestHistory() {
-    	
+    public static void viewRequestHistory(Supervisor supervisor) {
+    	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
+    		System.out.println("Request history is empty.");
+    	}
     }
 
 /*
