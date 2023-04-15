@@ -6,8 +6,7 @@ public class Req_ChangeTitle extends Request {
 	
 	public Req_ChangeTitle(Project project, String newTitle) { 
 		super();
-		//this.senderID = project.getStudent();
-		//this.receiverID = supervisorID;  //think of way to remove supervisorID as input
+
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.SUPERVISOR;
 		this.project = project;
@@ -17,7 +16,6 @@ public class Req_ChangeTitle extends Request {
 	
 	public  String getSenderID() {
 		return this.project.getStudent().getUserID();
-		//return this.student.getUserID();	or this??
 	}
 	
     public String getReceiverID() {

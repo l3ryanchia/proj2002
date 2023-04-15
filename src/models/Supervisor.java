@@ -30,7 +30,7 @@ package models;
 import java.util.*;
 
 public class Supervisor extends User {
-    private ArrayList<String> projectIDs; //this is not initialised by serialiser so its empty, propose to remove
+    private ArrayList<String> projectIDs; //this is not initialised by serialiser so its empty, propose to remove - does sup need to know his own projs?
     private int numOfProjs;
     private int numOfAllocated;
     private boolean coordinator;
@@ -52,6 +52,7 @@ public class Supervisor extends User {
     public int getNumOfProjs() {
     	return this.numOfProjs;
     }
+   
     
     public int getNumOfAllocated() {
     	return this.numOfAllocated;
@@ -61,9 +62,15 @@ public class Supervisor extends User {
     	return this.projectIDs;
     }
     
+    public void addProject(String projectID) {
+    	this.projectIDs.add(projectID);
+    	this.numOfProjs++;
+    }
+    
     public void setCoordinator() {
     	coordinator = true;
     }
+    
     public Project createProject() {
     	Scanner scanner = new Scanner(System.in);
 

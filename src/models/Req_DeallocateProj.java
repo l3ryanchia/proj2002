@@ -2,10 +2,10 @@ package models;
 
 public class Req_DeallocateProj extends Request{
 	
-	//private Student student;//remove
+	private Student student;
 	//private Supervisor supervisor;//remove
 	
-	public Req_DeallocateProj(Student student, Supervisor supervisor, Project project) {
+	public Req_DeallocateProj(Student student, Project project) {
 		super();
 		//this.senderID = student.getUserID();
 		//this.receiverID = FYPCoordinator.FYPCoordinatorID;
@@ -13,34 +13,32 @@ public class Req_DeallocateProj extends Request{
 		this.receiverType = UserType.FYPCOORDINATOR;
 		this.project = project;
 		
-		//this.student = student;
+		this.student = student;
 		//this.supervisor = supervisor;
 	}
 	
-	public Supervisor getSupervisor() {
+	public Supervisor getSupervisor() { //need?
 		return this.project.getSupervisor();
 	}
 	
 	//getstudent
 	public Student getSender() {
-		return this.project.getStudent();
+		return this.student;
 	}
 	
-	public  String getSenderID() {
-		return this.project.getStudent().getUserID();
-		//return this.student.getUserID();	or this??
+	public String getSenderID() {
+		return this.student.getUserID();
 	}
 	
     public String getReceiverID() {
-    	//return FYPcoordinatorID
+    	return null;
     }
 	
 	public boolean approveRequest() {
 		if(!this.checkPending()) return false;
-		this.project.getStudent().deallocateProject(project.getProjectID());
-		//reverse of: supervisor.addProj(project.getProjectID());
-		project.deallocateStudent();
+		this.project.getStudent().deallocateProject();
 		this.project.getSupervisor().deallocateProject(project.getProjectID());
+		project.deallocateStudent();
 		setRequestStatus(ReqStatus.APPROVED);
 		return true;
 	}

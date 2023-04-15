@@ -61,19 +61,18 @@ public class Project {
 
     private String projectID;
     private String projectTitle;
-    private Supervisor supervisor; //put the whole supervisor
-    private Student student;//put the whole student
-    //private String emailAddress;
+    private Supervisor supervisor; 
+    private Student student;
+
     private Status status;
     
-    public Project(String title, Supervisor supervisor) {		//supervisor object
+    public Project(String title, Supervisor supervisor) {		
         this.projectID = "P" + projectIDCounter;
         this.projectTitle = title;
         this.supervisor = supervisor;
         this.student = null;
         this.status = Status.AVAILABLE;
         projectIDCounter++;
-        //this.emailAddress = supervisorID + "@e.ntu.edu.sg"; //i think supervisor is the ID eh cos its the key for the hashmap?
     }
 
     // Getters and setters for projectID, title, and supervisor
@@ -109,10 +108,6 @@ public class Project {
     public void setStatus(Status state) {
     	this.status = state;
     }
-    
-    /*public String getEmail() {
-    	return this.emailAddress;
-    }*/
 
     public void setStudent(Student student) {
     	this.student = student;
@@ -121,14 +116,17 @@ public class Project {
     public Student getStudent() {
     	return this.student;
     }
-    
-    public void displayProject() {
+  
+    public void displayProject() { //only being used in student menu
     	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "PROJECT SUPERVISOR");
     	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
-    	System.out.printf("%10s %85s %25s \n", this.getProjectID(), this.getTitle(), this.getSupervisor());
+    	System.out.printf("%10s %85s %25s \n", this.getProjectID(), this.getTitle(), this.getSupervisor().getName());
+	   	if(this.getStatus() == Status.ALLOCATED) {
+	   		System.out.printf(" ALLOCATED STUDENT: %-10s \n STUDENT EMAIL: %-20s \n", this.getStudent().getName(), this.getStudent().getUserID() + "@e.ntu.edu.sg");
+	   	}
     	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
     }
-    
+  
     public void reserveProject(Student student) {
     	this.setStudent(student);
     	this.setStatus(Status.RESERVED);
@@ -139,7 +137,7 @@ public class Project {
     	this.setStatus(Status.AVAILABLE);
     }
 
-    public void allocateStudent(String studentID) {
+    public void allocateStudent() {
     	//this.setStudent(studentID);
     	this.setStatus(Status.ALLOCATED);
     }
@@ -149,16 +147,16 @@ public class Project {
     	this.setStatus(Status.AVAILABLE);
     }
     
-    public void reallocateSupervisor(Supervisor supervisor) {
+    public void reallocateSupervisor(Supervisor supervisor) { //delete?
     	this.setSupervisor(supervisor);
     }
     
-    public void allocateSupervisor(Supervisor supervisor) {
+    public void allocateSupervisor(Supervisor supervisor) { //delete
     	this.setSupervisor(supervisor);
     	this.setStatus(Status.ALLOCATED);
     }
     
-    public void deallocateSupervisor() {
+    public void deallocateSupervisor() { //delete
     	this.setSupervisor(null);
     	this.setStatus(Status.AVAILABLE); //why set to available?
     }

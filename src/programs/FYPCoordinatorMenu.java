@@ -282,6 +282,7 @@ public class FYPCoordinatorMenu {
                 	System.out.println("Filter by: ");
                 	System.out.println("1. Project Status");
                 	System.out.println("2. Project Supervisor");
+                	System.out.println("3. Student allocated to project");
                 	isValidInput = false;
                 	//filter = scanner.nextInt();
                 	
@@ -315,12 +316,18 @@ public class FYPCoordinatorMenu {
                 			break;
                 		case 2:
                 			String supersivorFilter; //consider making this a list to filter by multiple options
-                			System.out.println("Enter supervisor's full name: ");
+                			System.out.println("Enter supervisor ID: ");
                 			supersivorFilter = scanner.nextLine();
                 			
                 			projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supersivorFilter);
                 			break;
+                		case 3:
+                			String studentFilter; //consider making this a list to filter by multiple options
+                			System.out.println("Enter student ID: ");
+                			studentFilter = scanner.nextLine();
                 			
+                			projectsList = FYPMSApp.projectManager.filterByStudent(projectsList, studentFilter);
+                			break;	
                 		default:
                 			System.out.println("Invalid input.");
                 			break;
@@ -338,9 +345,9 @@ public class FYPCoordinatorMenu {
     public static void viewPendingRequests(Supervisor coordinator) {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("PENDING REQUESTS FROM STUDENTS:");
-    	if(FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.STUDENT, true)==0) System.out.println("No pending requests.");
+    	if(FYPMSApp.requestManager.displayRequestsFYPCoordinator(models.Request.UserType.STUDENT, true)==0) System.out.println("No pending requests.");
     	System.out.println("PENDING REQUESTS FROM SUPERVISORS:");
-    	if(FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)==0) System.out.println("No pending requests.");
+    	if(FYPMSApp.requestManager.displayRequestsFYPCoordinator(models.Request.UserType.SUPERVISOR, true)==0) System.out.println("No pending requests.");
     	while(true) {
     		boolean isValidInput = false;
     		int subchoice = 0;
@@ -369,7 +376,7 @@ public class FYPCoordinatorMenu {
             		selection = scanner.nextLine();
             		request = FYPMSApp.requestManager.getRequestByID(selection);
             		if(request == null) {System.out.print("Invalid ID."); break;}
-            		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+            		if(request.getReceiverType() != UserType.FYPCOORDINATOR) {System.out.print("This request is not addressed to you."); break;}
             		
             		if(request.approveRequest()) {
             			System.out.print("Request Approved!"); //why no new line
@@ -382,7 +389,7 @@ public class FYPCoordinatorMenu {
             		selection = scanner.nextLine();
             		request = FYPMSApp.requestManager.getRequestByID(selection);
             		if(request == null) {System.out.print("Invalid ID."); break;}
-            		if(request.getReceiverID() != coordinator.getUserID()) {System.out.print("This request is not addressed to you."); break;}
+            		if(request.getReceiverType() != UserType.FYPCOORDINATOR) {System.out.print("This request is not addressed to you."); break;}
             		
             		if(request.rejectRequest()) System.out.print("Request Rejected!");
             		
@@ -397,8 +404,8 @@ public class FYPCoordinatorMenu {
     }
     
     public static void viewRequestHistory(Supervisor coordinator) {
-    	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), UserType.STUDENT, false);
-    	FYPMSApp.requestManager.checkIncoming(coordinator.getUserID(), UserType.SUPERVISOR, false);
+    	FYPMSApp.requestManager.displayRequestsFYPCoordinator(UserType.STUDENT, false);
+    	FYPMSApp.requestManager.displayRequestsFYPCoordinator(UserType.SUPERVISOR, false);
     }
     
 /*

@@ -58,8 +58,12 @@ public class FYPCoordinatorSerializer {
                 String email = values[1].trim();
                 String userID = email.substring(0, email.indexOf('@'));
                 //coordinator = new FYPCoordinator(userID, name, email); //find by name from supervisor manager
-                
+
                 coordinator = supervisorManager.getSupervisor(userID);
+            	if(coordinator == null) {
+	        		System.out.println("FYP Coordinator must be registered as a Supervisor!");
+	        		//return null;
+	        	}
                 fypCoordinatorManager.setCoordinator(coordinator);
             }
         } catch (IOException e) {

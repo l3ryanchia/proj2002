@@ -1,6 +1,7 @@
 package managers;
 
 import models.*;
+import models.Request.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,80 +46,20 @@ public class RequestManager {
         requests.add(request);
     }
 
-    // Other methods related to requests can be added here
-    /*
-    public void displayStudentRequests() {					//should this be specific to a certain student? nobody can see all of students req right?
-    	for(int i=0; i<requests.size(); i++) {
-    		if(requests.get(i).getSenderType() != models.Request.UserType.STUDENT) continue;
-    		requests.get(i).displayRequest();
-    	}
-    }
-    */
-    //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.STUDENT, true)
-    //FYPCoord function call: checkIncoming(FYPCoordinator.getUserID(), models.Request.UserType.SUPERVISOR, true)
-    //add receiverID
-    public int checkIncoming(String receiverID, models.Request.UserType userType, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    public int checkIncoming(String receiverID, models.Request.UserType sender, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
     	int count=0;
     	for (int i=0; i<requests.size(); i++) {
-			if ((requests.get(i).getSenderType() == userType) && (requests.get(i).getReceiverID().equals(receiverID))) {
+			if ((requests.get(i).getSenderType() == sender) && (requests.get(i).getReceiver().equals(receiverID))) {
 				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
+				System.out.println("NEW!!"); //put here?
 				requests.get(i).displayRequest();
 				count++;
 				continue;
 			}
 		}
     	return count;
-    	
-    	/*switch(choice){
-    		case 1:
-    			for (int i=0; i<requests.size(); i++) {
-    				if ((requests.get(i).getSenderType() == models.Request.UserType.STUDENT) && (requests.get(i).getReceiverID() == receiverID)) {
-    					requests.get(i).displayRequest();
-    					continue;
-    				}
-    			}
-    			break;
-    			
-    		case 2:
-    			for (int i=0; i<requests.size(); i++) {
-    				if ((requests.get(i).getSenderType() == models.Request.UserType.STUDENT) && (requests.get(i).getReceiverID() == receiverID)) {
-    					requests.get(i).displayRequest();
-    					continue;
-    				}
-    			}
-    			break;
-    			
-    		case 3:
-    			for (int i=0; i<requests.size(); i++) {
-    				if ((requests.get(i).getSenderType() == models.Request.UserType.SUPERVISOR) && (requests.get(i).getReceiverID() == receiverID)) {
-    					requests.get(i).displayRequest();
-    					continue;
-    				}
-    			}
-    			break;
-    	}*/
     }
-    /*
-    public void checkOutgoing(String senderID, boolean pending) {		//only student and sup
-    	if (pending) {
-    		for (int i=0; i<requests.size(); i++) {
-        		if ((requests.get(i).getSenderID() == senderID) && (requests.get(i).getRequestStatus() == models.Request.ReqStatus.PENDING)) {
-       				requests.get(i).displayRequest();
-      				continue;
-       			}
-       		}
-    	}
-    	else {
-	    	for (int i=0; i<requests.size(); i++) {
-	    		if (requests.get(i).getSenderID() == senderID) {
-	    			requests.get(i).displayRequest();
-	  				continue;
-	   			}
-	   		}
-    	}
-    }*/
-    
-    //proposed concise version
+
     public int checkOutgoing(String senderID, boolean pending) { 
     	int count = 0;
     	for (int i=0; i<requests.size(); i++) {
@@ -131,6 +72,17 @@ public class RequestManager {
     	return count;
     }
     
+    public int displayRequestsFYPCoordinator(models.Request.UserType sender, boolean pending) {
+    	int count = 0;
+    	for (int i=0; i<requests.size(); i++) {
+    		if ((requests.get(i).getSenderType() == sender) && requests.get(i).getReceiverType() == UserType.FYPCOORDINATOR) {
+   				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
+    			requests.get(i).displayRequest();
+    			count++;
+   			}
+   		}
+    	return count;
+    }
     
     
 }

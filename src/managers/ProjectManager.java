@@ -24,51 +24,24 @@ public class ProjectManager {
         return projects.get(projectID);
     }
 
-    public void addProject(String title, Supervisor supervisor) {
+    public Project addProject(String title, Supervisor supervisor) {
     	Project project = new Project(title, supervisor);
         projects.put(project.getProjectID(), project);
+        supervisor.addProject(project.getProjectID());
+        return project;
     }
     
     public Map<String, Project> getProjectList(){
     	return projects;
     }
 
-    // Other methods related to projects can be added here
-//    public List<Project> getProjectsBySupervisor(String supervisorID) {
-//        List<Project> supervisorProjects = new ArrayList<>();
-//        for (Project project : projects.values()) {
-//            if (project.getSupervisor().equals(supervisorID)) {
-//                supervisorProjects.add(project);
-//            }
-//        }
-//        return supervisorProjects;
-//    }
-    /*
-    public void reserveProject(String projectID) {
-    	Project project = getProject(projectID);
-    	project.setStatus(Status.RESERVED);
-    }
-
-    public void unreserveProject(String projectID) {
-    	Project project = getProject(projectID);
-    	project.setStatus(Status.AVAILABLE);
-    }
-
-    public void allocateStudent(String projectID, String studentID) {
-    	Project project = getProject(projectID);
-    	project.setStudent(studentID);
-    	project.setStatus(Status.ALLOCATED);
-    }
-    */
-    
-    //add filters
-    public void displayAllAvailableProjects() {
+    public void displayAllAvailableProjects() {//remove
     	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
     		Project project = set.getValue();
     		if(project.getStatus()==Status.AVAILABLE) {
-    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
+    			System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     		}
     	}
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -76,28 +49,24 @@ public class ProjectManager {
     
     public void updateProjectsStatus(Request request, RequestManager reqManager) { //move to request manager
     	if(request instanceof Req_AllocateProj) {
-    		Supervisor supervisor = ((Req_AllocateProj) request).getSupervisor(); //downcasting - check if its legal
+    		Supervisor supervisor = ((Req_AllocateProj) request).getProject().getSupervisor();//downcasting
     		if(supervisor.getNumOfAllocated() >= 2) {
     			this.makeUnavailable(supervisor, reqManager);
-    			//print notif
     		}
     		
     	} else if (request instanceof Req_DeallocateProj) {
-    		Supervisor supervisor = ((Req_DeallocateProj) request).getSupervisor(); //downcasting - check if its legal
+    		Supervisor supervisor = ((Req_DeallocateProj) request).getProject().getSupervisor(); 
     		if(supervisor.getNumOfAllocated() == 1) {
     			this.makeAvailable(supervisor);
-    			//print notif
     		}
     	} else if (request instanceof Req_TransferStudent) {
-    		Supervisor supervisorOld = ((Req_TransferStudent) request).getSupervisorOld(); //downcasting - check if its legal
-    		Supervisor supervisorNew = ((Req_TransferStudent) request).getSupervisorNew(); //downcasting - check if its legal
+    		Supervisor supervisorOld = ((Req_TransferStudent) request).getSupervisorOld(); 
+    		Supervisor supervisorNew = ((Req_TransferStudent) request).getSupervisorNew(); 
     		if(supervisorNew.getNumOfAllocated() >= 2) {
     			this.makeUnavailable(supervisorNew, reqManager);
-    			//print notif
     		}
     		if(supervisorOld.getNumOfAllocated() == 1) {
     			this.makeAvailable(supervisorOld);
-    			//print notif
     		}
     	}
     }
@@ -117,6 +86,9 @@ public class ProjectManager {
     			}
     		}
         }
+		System.out.println("\n" + supervisor.getUserID() + " has reached the maximum number of allocated projects...");
+		System.out.println("All AVAILABLE projects of " + supervisor.getUserID() + " has been made UNAVAILABLE.");
+		System.out.println("All requests for RESERVED projects have been automatically REJECTED.");
     }
     
     public void makeAvailable(Supervisor supervisor) {
@@ -128,10 +100,12 @@ public class ProjectManager {
     			}
     		}
         }
+		System.out.println("\n" + supervisor.getUserID() + " now has less than the maximum number of allocated projects...");
+		System.out.println("All UNAVAILABLE projects of " + supervisor.getUserID() + " has been made AVAILABLE.");
     }
     
     public Map<String, Project> filterByStatus(Map<String, Project> projects, Status status){
-    	if(status==null) return this.getProjectList();
+    	//if(status==null) return this.getProjectList();
     	
     	Map<String, Project> filteredProjs = new HashMap<>();
     	
@@ -143,14 +117,27 @@ public class ProjectManager {
     	return filteredProjs;
     }
     
-    public Map<String, Project> filterBySupervisor(Map<String, Project> projects, String supervisor){
-    	if(supervisor==null) return this.getProjectList();
+    public Map<String, Project> filterBySupervisor(Map<String, Project> projects, String supervisorID){
+    	//if(supervisorID==null) return this.getProjectList();
     	
     	Map<String, Project> filteredProjs = new HashMap<>();
     	
     	for(Map.Entry<String, Project> set:projects.entrySet()) {
 	    	Project project = set.getValue();
-	    	if(project.getSupervisor().equals(supervisor)) filteredProjs.put(project.getProjectID(), project);
+	    	if(project.getSupervisor().getUserID().equals(supervisorID)) filteredProjs.put(project.getProjectID(), project);
+    	}
+    	
+    	return filteredProjs;
+    }
+    
+    public Map<String, Project> filterByStudent(Map<String, Project> projects, String studentID){
+    	//if(studentID==null) return this.getProjectList();
+    	
+    	Map<String, Project> filteredProjs = new HashMap<>();
+    	
+    	for(Map.Entry<String, Project> set:projects.entrySet()) {
+	    	Project project = set.getValue();
+	    	if(project.getSupervisor().getUserID().equals(studentID)) filteredProjs.put(project.getProjectID(), project);
     	}
     	
     	return filteredProjs;
@@ -162,14 +149,17 @@ public class ProjectManager {
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
    	    for(Map.Entry<String, Project> set:projects.entrySet()) {
     	    Project project = set.getValue();
-    	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
+    	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
+    	   	if(project.getStatus() == Status.ALLOCATED) {
+    	   		System.out.printf(" ALLOCATED STUDENT: %-10s \n STUDENT EMAIL: %-20s \n", project.getStudent().getName(), project.getStudent().getUserID() + "@e.ntu.edu.sg");
+    	   	}
     	   	count++;
     	   }
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	return count;
     }
     
-    public int displayFilter(Status status, String supervisor) {
+    public int displayFilter(Status status, String supervisor) {//remove
     	int count = 0;
     	if ((status == null) && (supervisor == null)) {
     		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");

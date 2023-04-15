@@ -20,8 +20,8 @@ import java.util.*;
 public class FYPCoordinator extends Supervisor {
 	public static String FYPCoordinatorID;
 	
-    public FYPCoordinator(String userID, String name, String email) {
-        super(userID, name, email);
+    public FYPCoordinator(String userID, String name) {
+        super(userID, name);
         FYPCoordinatorID = userID;
     }
 

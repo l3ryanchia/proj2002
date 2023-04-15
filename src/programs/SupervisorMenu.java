@@ -48,7 +48,7 @@ public class SupervisorMenu {
                     break;
                     
                 case 2:
-                	viewProject(supervisor, scanner);
+                	viewProjects(supervisor, scanner);
                 	/*Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
                 	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
 
@@ -240,16 +240,20 @@ public class SupervisorMenu {
     }
     
     public static void createNewProject(Supervisor supervisor) {
-    	Project newProj = supervisor.createProject();
-    	FYPMSApp.projectManager.addProject(newProj);
-    	if(supervisor.getNumOfAllocated() >= 2) FYPMSApp.projectManager.makeUnavailable(supervisor, FYPMSApp.requestManager);
-
+    	Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter project title: ");
+        String title = scanner.nextLine();
+  
+    	Project newProj = FYPMSApp.projectManager.addProject(title, supervisor);
+    	
+    	System.out.println("Project created successfully!");
+    	if(supervisor.getNumOfAllocated() >= 2) newProj.setStatus(Status.UNAVAILABLE);
     }
     
-    public static void viewProject(Supervisor supervisor, Scanner scanner) {
+    public static void viewProjects(Supervisor supervisor, Scanner scanner) {
     	//Scanner scanner = new Scanner(System.in);
     	Map <String, Project> projectsList = FYPMSApp.projectManager.getProjectList();
-    	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getName());
+    	projectsList = FYPMSApp.projectManager.filterBySupervisor(projectsList, supervisor.getUserID());
 
     	if(FYPMSApp.projectManager.displayProjects(projectsList) == 0) {
     		System.out.println("You have no projects under your name.");
@@ -264,15 +268,13 @@ public class SupervisorMenu {
             System.out.println("3. Back");
             System.out.print("Please choose an option: ");
             
-            //subchoice = scanner.nextInt();
-            //scanner.nextLine();
             while (!isValidInput) {
 	            try {
 	            	subchoice = scanner.nextInt();
 	            	scanner.nextLine(); // Consume the newline
 	            	isValidInput = true;
 	            } catch(Exception e) {
-	            	//System.out.println("Invalid choice. Please try again.");
+	            	System.out.println("Invalid choice. Please try again.");
 	            	scanner.nextLine();
 	            	break;
 	            }
@@ -283,10 +285,11 @@ public class SupervisorMenu {
                 	System.out.print("Please enter projectID: ");
             		String selection = scanner.nextLine();
             		
-            		if (supervisor.getProjIDs().contains(selection)) { //or if project.getSupervisor() is him, then dunnid the ProjID list?
+            		Project project = FYPMSApp.projectManager.getProject(selection);
+            		if (!project.getSupervisor().equals(supervisor)) { //or if project.getSupervisor() is him, then dunnid the ProjID list?
             			System.out.print("Please enter new title: ");
             			String newTitle = scanner.nextLine();
-            			Project project = FYPMSApp.projectManager.getProject(selection);
+            			
             			project.setTitle(newTitle);
             		}
             		else {
@@ -294,13 +297,12 @@ public class SupervisorMenu {
             		}
                 	break;
                 	
-                case 2: // reorganised this part to improve readability
-                	
+                case 2:
                 	System.out.print("Please enter projectID for transfer of student: ");
             		String changeID = scanner.nextLine(); //can someone help add the exception handling here	
             	
             		Project selectedProj = FYPMSApp.projectManager.getProject(changeID);
-            		if(!selectedProj.getSupervisor().equals(supervisor.getName())) {
+            		if(!selectedProj.getSupervisor().equals(supervisor)) {
             			System.out.println("You did not submit this project!");
             			break;
             		}
@@ -361,15 +363,13 @@ public class SupervisorMenu {
             System.out.println("3. Back");
             System.out.print("Please choose an option: ");
             
-            //subchoice = scanner.nextInt();
-            //scanner.nextLine();
             while (!isValidInput) {
 	            try {
 	            	subchoice = scanner.nextInt();
 	            	scanner.nextLine(); // Consume the newline
 	            	isValidInput = true;
 	            } catch(Exception e) {
-	            	//System.out.println("Invalid choice. Please try again.");
+	            	System.out.println("Invalid choice. Please try again.");
 	            	scanner.nextLine();
 	            	break;
 	            }
@@ -408,9 +408,14 @@ public class SupervisorMenu {
     }
     
     public static void viewRequestHistory(Supervisor supervisor) {
-    	if ((FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) && (FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0)) {
-    		System.out.println("Request history is empty.");
+    	
+    	if(FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, false) == 0) {
+    		System.out.println("You have no incoming request history.");
     	}
+    	if(FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), false) == 0) {
+    		System.out.println("You have no outgoing request history.");
+    	}
+    	
     }
 
 /*

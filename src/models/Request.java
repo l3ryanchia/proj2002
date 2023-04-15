@@ -1,27 +1,5 @@
 package models;
 
-/*public class Request {
-	public enum Status {PENDING, APPROVED, REJECTED}
-	
-    private String requestID;
-    private User sender;
-    private User receiver;
-    private String type;
-    private Status status;
-
-    public Request(String requestID, User sender, User receiver, String type) {
-        this.requestID = requestID;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.type = type;
-        this.status = Status.PENDING;
-    }
-    //hello
-
-    // Getters and Setters
-    // ...
-}*/
-
 public abstract class Request {
 	public enum ReqStatus {PENDING, APPROVED, REJECTED}
 	public enum UserType {STUDENT, SUPERVISOR, FYPCOORDINATOR};
@@ -80,10 +58,17 @@ public abstract class Request {
     	this.status = state;
     }
     
-    public abstract boolean approveRequest();
-    public abstract boolean rejectRequest();
     public abstract String getSenderID();
     public abstract String getReceiverID();
+    
+    public String getReceiver() {
+    	if(this.getReceiverType() == UserType.FYPCOORDINATOR) return "FYP COORDINATOR"; //either this or have to access coord id
+    	else return getReceiverID();
+    };    
+    
+    public abstract boolean approveRequest();
+    public abstract boolean rejectRequest();
+
     protected abstract void displayRequestType();
     protected void displayAdditionalInfo() {};
     
@@ -91,9 +76,9 @@ public abstract class Request {
     	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
     	System.out.println("RequestID: " + this.getRequestID() + " - " + this.getRequestStatus());
     	this.displayRequestType(); //may vary for each subclass
-		System.out.println("SenderID: " + this.getSenderID() + " || ReceiverID: " + this.getReceiverID());
+		System.out.println("Sender: " + this.getSenderID() + " || Receiver: " + this.getReceiver());
     	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME");
-    	System.out.printf("%10s %85s %25s \n", this.project.getProjectID(), this.project.getTitle(), this.project.getSupervisor());
+    	System.out.printf("%10s %85s %25s \n", this.project.getProjectID(), this.project.getTitle(), this.project.getSupervisor().getName());
     	this.displayAdditionalInfo(); //may vary for each subclass
     	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
     };

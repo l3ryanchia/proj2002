@@ -42,7 +42,6 @@ public class Student extends User {
 
     public Student(String userID, String name) {
         super(userID, name);
-        //this.password = "password"; // Set the default password
         this.status = StudentStatus.UNREGISTERED;
         this.projectID = null;
         this.projectBlacklist = new ArrayList<>();
@@ -68,25 +67,29 @@ public class Student extends User {
     	return this.projectBlacklist;
     }
     
-    public void allocateProject(String projectID) {
-    	this.setProject(projectID);
-    	this.setStatus(StudentStatus.REGISTERED);
-    }
-    
-    public void deallocateProject(String projectID) {
-    	this.setProject("NIL");
-    	this.setStatus(StudentStatus.UNREGISTERED);
-    	this.projectBlacklist.add(projectID);
-    }
-    
     public void reserveProject(String projectID) {
     	this.setProject(projectID);
     	this.setStatus(StudentStatus.RESERVED);
     }
     
     public void unreserveProject() {
-    	this.setProject("NIL");
+    	this.setProject(null);
     	this.setStatus(StudentStatus.UNREGISTERED);
+    }    
+    
+    public void allocateProject() {
+    	//this.setProject(projectID);
+    	if(this.getStatus() != StudentStatus.RESERVED) { //do we need this?
+    		System.out.println("Student has not reserved a project!");
+    		return;
+    	}
+    	this.setStatus(StudentStatus.REGISTERED);
+    }
+    
+    public void deallocateProject() {
+    	this.setStatus(StudentStatus.UNREGISTERED);
+    	this.projectBlacklist.add(this.getProject());
+    	this.setProject(null);
     }
     
 }

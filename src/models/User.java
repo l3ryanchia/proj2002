@@ -31,14 +31,12 @@ package models;
 public abstract class User {
     private String userID;
     private String name;
-    //private String email; //remove
     private String password;
 
-    public User(String userID, String name) { //remove email
+    public User(String userID, String name) {
         this.userID = userID;
         this.name = name;
-        //this.email = email;
-        this.password = "password";
+        this.password = "password"; //set default password
     }
 
     public String getUserID() {
@@ -50,7 +48,7 @@ public abstract class User {
     }
 
     public String getEmail() {
-        return this.userID + "@e.ntu.edu.sg"; //get ID plus @e.ntu.edu.sg
+        return this.userID + "@e.ntu.edu.sg"; 
     }
     
     public String getPassword() {

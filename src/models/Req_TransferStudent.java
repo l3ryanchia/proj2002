@@ -4,44 +4,41 @@ import models.Request.ReqStatus;
 import models.Request.UserType;
 
 public class Req_TransferStudent extends Request {
-	//private Student student;
-	//private Supervisor supervisorOld;//remove
+
+	private Supervisor supervisorOld;//do we need only one?
 	private Supervisor supervisorNew;
 	
 	public Req_TransferStudent(Supervisor supervisorNew, Project project) {
 		super();
-		//this.senderID = supervisorOld.getUserID();
-		//this.receiverID = FYPCoordinator.FYPCoordinatorID;
 		this.senderType = UserType.SUPERVISOR;
 		this.receiverType = UserType.FYPCOORDINATOR;
 		this.project = project;
 		
-		//this.student = student;
+		this.supervisorOld = project.getSupervisor();
 		this.supervisorNew = supervisorNew;
-		//this.supervisorOld = supervisorOld;
+		
 	}
 	
 	public Supervisor getSupervisorOld() {
-		return this.project.getSupervisor();
+		return supervisorOld;
+		//return this.project.getSupervisor();//wrong after approved
 	}
 	
 	public Supervisor getSupervisorNew() {
 		return supervisorNew;
 	}
 	
-	public  String getSenderID() {
+	public String getSenderID() {
 		return this.project.getSupervisor().getUserID();
-		//return this.student.getUserID();	or this??
 	}
 	
     public String getReceiverID() {
     	//return FYPcoordinatorID
+    	return null;
     }
 	
 	public boolean approveRequest() {
 		if(!this.checkPending()) return false;
-		//project.deallocateSupervisor();
-		//project.allocateSupervisor(supervisorNew.getName());
 		if(!supervisorNew.allocateProject(project.getProjectID())) {
 			System.out.println("Failed to approve request!");
 			return false;
@@ -49,7 +46,6 @@ public class Req_TransferStudent extends Request {
 		this.getSupervisorOld().deallocateProject(project.getProjectID());
 		
 		project.setSupervisor(supervisorNew);
-		//project.reallocateSupervisor(supervisorNew.getName());
 		
 		setRequestStatus(ReqStatus.APPROVED);
 		return true;

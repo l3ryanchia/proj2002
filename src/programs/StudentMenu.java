@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import models.*;
+import models.Project.Status;
 import models.Student.StudentStatus;
 
 public class StudentMenu {
@@ -185,8 +186,6 @@ public class StudentMenu {
     	projectsList = FYPMSApp.projectManager.filterByStatus(projectsList, Project.Status.AVAILABLE);
     	FYPMSApp.projectManager.displayProjects(projectsList);
     	
-    	//FYPMSApp.projectManager.displayAllAvailableProjects(FYPMSApp.supervisorManager);
-    	
     	while(true) {
     		boolean isValidInput = false;
     		int subchoice = 0;
@@ -194,8 +193,6 @@ public class StudentMenu {
             System.out.println("2. Back");
             System.out.print("Please choose an option: ");
             
-            //subchoice = scanner.nextInt();
-            //scanner.nextLine();
             while (!isValidInput) {
 	            try {
 	            	subchoice = scanner.nextInt();
@@ -225,7 +222,13 @@ public class StudentMenu {
             		}
             		
             		Project selectedProj = FYPMSApp.projectManager.getProject(selection);
-            		Supervisor selectedSup = selectedProj.getSupervisor();
+            		
+            		if(selectedProj.getStatus() != Status.AVAILABLE) {
+            			System.out.println("You are not allowed to select this project!");
+            			break;
+            		}
+            		
+            		//Supervisor selectedSup = selectedProj.getSupervisor();
             		FYPMSApp.requestManager.addRequest(new Req_AllocateProj(student, selectedProj));
             		break;
             	case 2:
@@ -255,8 +258,6 @@ public class StudentMenu {
             System.out.println("3. Back");
             System.out.print("Please choose an option: ");
             
-            //subchoice = scanner.nextInt();
-            //scanner.nextLine();
             while (!isValidInput) {
 	            try {
 	            	subchoice = scanner.nextInt();
@@ -279,7 +280,7 @@ public class StudentMenu {
             	case 2: //deregister project
             		//seems abit inefficient here, to get the supervisor object need to first get the supervisor ID by getting the supervisor name
             		Supervisor registeredSup = registeredProj.getSupervisor();
-            		FYPMSApp.requestManager.addRequest(new Req_DeallocateProj(student, registeredSup, registeredProj));
+            		FYPMSApp.requestManager.addRequest(new Req_DeallocateProj(student, registeredProj));
             		break;
             	case 3:
             		break;

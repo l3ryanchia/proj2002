@@ -33,7 +33,7 @@ public class FYPMSApp {
 
     public static void main(String[] args) {
         FYPMSApp app = new FYPMSApp();
-        app.loadData(); //no need alr right?
+        //app.loadData(); //no need alr right?
         app.run();
     }
 
