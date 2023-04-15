@@ -3,8 +3,6 @@ package serializers;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import managers.StudentManager;
 
@@ -20,8 +18,7 @@ public class StudentSerializer {
                 String email = studentData[1].trim();
                 String userID = email.split("@")[0]; 
                 
-                studentManager.addStudent(userID, name); //remove email
-                //students.add(new Student(userID, name, email));
+                studentManager.addStudent(userID, name);
             }
         } catch (IOException e) {
             e.printStackTrace();

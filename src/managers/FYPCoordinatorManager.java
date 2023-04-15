@@ -1,23 +1,3 @@
-//package managers;
-//
-//import models.FYPCoordinator;
-//
-//public class FYPCoordinatorManager {
-//    private FYPCoordinator coordinator;
-//
-//    public FYPCoordinatorManager() {
-//        coordinator = null;
-//    }
-//
-//    public FYPCoordinator getCoordinator() {
-//        return coordinator;
-//    }
-//
-//    public void setCoordinator(FYPCoordinator coordinator) {
-//        this.coordinator = coordinator;
-//    }
-//}
-//
 
 package managers;
 
@@ -34,15 +14,9 @@ public class FYPCoordinatorManager {
         return coordinator;
     }
 
-    public void setCoordinator(Supervisor coordinator/*, SupervisorManager supervisorManager*/) {
-    	/*if(supervisorManager.getSupervisor(coordinator.getUserID()) == null) {
-    		System.out.println("FYP Coordinator must be registered as a Supervisor!");
-    		return;
-    	}*/		//above needed?
-        coordinator.setCoordinator();
+    public void setCoordinator(Supervisor coordinator, SupervisorManager supervisorManager) {
+        coordinator.setCoordinator(true);
     	this.coordinator = coordinator;
-        //supervisorManager.removeSupervisor(coordinator);
-        //supervisorManager.addSupervisor(coordinator);
     }
 
 }

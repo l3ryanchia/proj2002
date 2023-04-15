@@ -6,11 +6,9 @@ public class Req_ChangeTitle extends Request {
 	
 	public Req_ChangeTitle(Project project, String newTitle) { 
 		super();
-
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.SUPERVISOR;
-		this.project = project;
-		
+		this.project = project;		
 		this.newTitle = newTitle;
 	}
 	

@@ -5,17 +5,13 @@ import models.Request.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Map;
 
 public class RequestManager {
-    private List<Request> requests; //change hash map??
+    private List<Request> requests;
 
     public RequestManager() {
         requests = new ArrayList<>();
     }
-
-    //get request by request ID
-    //get request by project ID
     
     public Request getRequest(int index) {
         return requests.get(index);
@@ -46,7 +42,7 @@ public class RequestManager {
         requests.add(request);
     }
 
-    public int checkIncoming(String receiverID, models.Request.UserType sender, boolean pending) {			//1: stu  to sup | 2: stu to FYPcoord | 3: sup to FYPcoord
+    public int checkIncoming(String receiverID, models.Request.UserType sender, boolean pending) {
     	int count=0;
     	for (int i=0; i<requests.size(); i++) {
 			if ((requests.get(i).getSenderType() == sender) && (requests.get(i).getReceiver().equals(receiverID))) {

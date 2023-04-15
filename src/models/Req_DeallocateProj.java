@@ -3,25 +3,15 @@ package models;
 public class Req_DeallocateProj extends Request{
 	
 	private Student student;
-	//private Supervisor supervisor;//remove
 	
 	public Req_DeallocateProj(Student student, Project project) {
 		super();
-		//this.senderID = student.getUserID();
-		//this.receiverID = FYPCoordinator.FYPCoordinatorID;
 		this.senderType = UserType.STUDENT;
 		this.receiverType = UserType.FYPCOORDINATOR;
 		this.project = project;
-		
 		this.student = student;
-		//this.supervisor = supervisor;
 	}
-	
-	public Supervisor getSupervisor() { //need?
-		return this.project.getSupervisor();
-	}
-	
-	//getstudent
+
 	public Student getSender() {
 		return this.student;
 	}

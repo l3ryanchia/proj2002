@@ -7,8 +7,6 @@ public abstract class Request {
 	
     private String requestID;
     private ReqStatus status;
-    //protected String senderID; //remove
-    //protected String receiverID; //remove
     protected UserType senderType;
     protected UserType receiverType;
     protected Project project;
@@ -22,14 +20,6 @@ public abstract class Request {
     public String getRequestID() {
     	return this.requestID;
     }
-    
-    /*public String getSenderID() { //change to abstract
-    	return this.senderID;
-    }*/
-    
-    /*public String getReceiverID() {//change to abstract
-    	return this.receiverID;
-    }*/
     
     public UserType getSenderType() {
     	return this.senderType;
@@ -62,7 +52,7 @@ public abstract class Request {
     public abstract String getReceiverID();
     
     public String getReceiver() {
-    	if(this.getReceiverType() == UserType.FYPCOORDINATOR) return "FYP COORDINATOR"; //either this or have to access coord id
+    	if(this.getReceiverType() == UserType.FYPCOORDINATOR) return "FYP COORDINATOR";
     	else return getReceiverID();
     };    
     

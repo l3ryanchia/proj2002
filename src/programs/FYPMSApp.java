@@ -1,13 +1,14 @@
 package programs;
 
-import java.io.*;
 import java.util.*;
 import managers.*;
 import models.*;
-import serializers.*;
+
 
 public class FYPMSApp {
-    // Attributes to store loaded data
+    // Singleton instance
+	private static FYPMSApp instance; 
+	// Attributes to store loaded data
 	protected static StudentManager studentManager;
 	protected static SupervisorManager supervisorManager;
 	protected static ProjectManager projectManager;
@@ -15,55 +16,25 @@ public class FYPMSApp {
 	protected static RequestManager requestManager;
 
     // Constructor
-    public FYPMSApp() {
-        //studentManager = new StudentManager();
+    private FYPMSApp() {
     	studentManager = ReadCSV.loadStudentData();
-        //supervisorManager = new SupervisorManager();
         supervisorManager = ReadCSV.loadSupervisorData();
-        //projectManager = new ProjectManager();
         projectManager = ReadCSV.loadProjectData(supervisorManager);
-        //fypCoordinatorManager = new FYPCoordinatorManager();
         fypCoordinatorManager = ReadCSV.loadFYPCoordinator(supervisorManager);
         requestManager = new RequestManager();
     }
-    /*
-    public SupervisorManager getSupervisorManager() {
-    	return supervisorManager;
-    }*/
-
-    public static void main(String[] args) {
-        FYPMSApp app = new FYPMSApp();
-        //app.loadData(); //no need alr right?
-        app.run();
+    
+    public static FYPMSApp getInstance() {
+        if (instance == null) {
+            instance = new FYPMSApp();
+          }
+        return instance;
     }
 
-    // Load data from files
-    /*private void loadData() {
-        // Load students
-    	
-    	studentManager = StudentSerializer.readStudentsFromFile("database/studentList.csv");
-/*    	
-        List<Student> students = StudentSerializer.readStudentsFromFile("database/studentList.csv");
-        for (Student student : students) {
-            studentManager.addStudent(student);
-        }
-*/
-        /*// Load supervisors
-        List<Supervisor> supervisors = SupervisorSerializer.readSupervisorsFromFile("database/facultyList.csv");
-        for (Supervisor supervisor : supervisors) {
-            supervisorManager.addSupervisor(supervisor);
-        }
-
-        // Load projects
-        List<Project> projects = ProjectSerializer.readProjectsFromFile("database/projects.csv", supervisorManager);
-        for (Project project : projects) {
-            projectManager.addProject(project);
-        }
-
-        // Load FYP coordinator
-        FYPCoordinator coordinator = FYPCoordinatorSerializer.readCoordinatorFromFile("database/fypCoordinator.csv"); //change object type to supervisor
-        fypCoordinatorManager.setCoordinator(coordinator, supervisorManager);
-    }*/
+    public static void main(String[] args) {
+        FYPMSApp app = FYPMSApp.getInstance();
+        app.run();
+    }
 
     // The main loop of the application
     private void run() {
@@ -84,7 +55,6 @@ public class FYPMSApp {
 	            	scanner.nextLine(); // Consume the newline
 	            	isValidInput = true;
 	            } catch(Exception e) {
-	            	//System.out.println("Invalid choice. Please try again.");
 	            	scanner.nextLine();
 	            	break;
 	            }
@@ -92,7 +62,7 @@ public class FYPMSApp {
 
             switch (choice) {
                 case 1:
-                    login();
+                    login(scanner);
                     break;
                 case 2:
                     exit = true;
@@ -105,8 +75,7 @@ public class FYPMSApp {
         scanner.close();
     }
     
-    private void login() {
-        Scanner scanner = new Scanner(System.in);
+    private void login(Scanner scanner) {
 
         System.out.print("Enter your userID (CASE-SENSITIVE): ");
         String userID = scanner.nextLine();
@@ -114,30 +83,25 @@ public class FYPMSApp {
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
 
-        // Check if user is a student
-        if (studentManager.getStudent(userID) != null) {
+        
+        if (studentManager.getStudent(userID) != null) { // Check if user is a student
             Student student = studentManager.getStudent(userID);
 
             if (student.authenticate(password)) {
                 System.out.println("Login successful!");
-                // Allow user to change password or perform other student-related tasks
-                StudentMenu.displayMenu(student);
+                StudentMenu.displayMenu(student); // Allow user to perform student-related tasks
             } else {
                 System.out.println("Invalid password.");
             }
         }
-        // Check if user is a supervisor
-        else if (supervisorManager.getSupervisor(userID) != null) {
+        
+        else if (supervisorManager.getSupervisor(userID) != null) { // Check if user is a supervisor
             Supervisor supervisor = supervisorManager.getSupervisor(userID);
 
             if (supervisor.authenticate(password)) {
                 System.out.println("Login successful!");
-                
 
-                // Check if the user is also the FYP coordinator
-                Supervisor coordinator = fypCoordinatorManager.getCoordinator();
-                
-                if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) {
+                if (fypCoordinatorManager.getCoordinator().getUserID().equals(userID)) { // Check if the user is also the FYP coordinator
                 	System.out.println("Login as: ");
                 	System.out.println("1. FYP Coordinator");
                 	System.out.println("2. Supervisor");
@@ -146,17 +110,15 @@ public class FYPMSApp {
                 	
                 	if(selection==1) { //exception handling
 	                    System.out.println("Welcome, FYP coordinator!");
-	                    FYPCoordinatorMenu.displayMenu(coordinator);
-	                    // Allow user to perform FYP coordinator-related tasks
+	                    FYPCoordinatorMenu.displayMenu(supervisor); // Allow user to perform FYP coordinator-related tasks
                 	} else {
                 		System.out.println("Welcome, Supervisor!");
                         SupervisorMenu.displayMenu(supervisor);
-                    	// Allow user to perform supervisor-related tasks
+                    	
                 	}
                 } else {
                     System.out.println("Welcome, Supervisor!");
-                    SupervisorMenu.displayMenu(supervisor);
-                	// Allow user to perform supervisor-related tasks
+                    SupervisorMenu.displayMenu(supervisor); // Allow user to perform supervisor-related tasks
                 }
             } else {
                 System.out.println("Invalid password.");
@@ -165,6 +127,4 @@ public class FYPMSApp {
             System.out.println("Invalid userID.");
         }
     }
-
 }
-// push test 1 2 3 30 mar 16:10

@@ -1,11 +1,8 @@
 package models;
 
-import models.Request.ReqStatus;
-import models.Request.UserType;
-
 public class Req_TransferStudent extends Request {
 
-	private Supervisor supervisorOld;//do we need only one?
+	private Supervisor supervisorOld;
 	private Supervisor supervisorNew;
 	
 	public Req_TransferStudent(Supervisor supervisorNew, Project project) {
@@ -21,7 +18,6 @@ public class Req_TransferStudent extends Request {
 	
 	public Supervisor getSupervisorOld() {
 		return supervisorOld;
-		//return this.project.getSupervisor();//wrong after approved
 	}
 	
 	public Supervisor getSupervisorNew() {
@@ -33,7 +29,6 @@ public class Req_TransferStudent extends Request {
 	}
 	
     public String getReceiverID() {
-    	//return FYPcoordinatorID
     	return null;
     }
 	
@@ -44,7 +39,6 @@ public class Req_TransferStudent extends Request {
 			return false;
 		}
 		this.getSupervisorOld().deallocateProject(project.getProjectID());
-		
 		project.setSupervisor(supervisorNew);
 		
 		setRequestStatus(ReqStatus.APPROVED);
