@@ -57,17 +57,12 @@ public class ProjectManager {
     		}
     		
     	} else if (request instanceof Req_DeallocateProj) {
-    		Supervisor supervisor = ((Req_DeallocateProj) request).getProject().getSupervisor(); 
+    		Project project = ((Req_DeallocateProj) request).getProject();
+    		Supervisor supervisor = project.getSupervisor(); 
     		if(supervisor.getNumOfAllocated() == 1) {
     			this.makeAvailable(supervisor);
     		}
-    		String projID = ((Req_DeallocateProj) request).getProject().getProjectID();
-    		List <Request> requests = reqManager.getRequestByProjID(projID);
-    	    for(int i=0; i<requests.size(); i++) {
-    	    	if(requests.get(i).getRequestStatus() != ReqStatus.PENDING) continue;
-    	    	requests.get(i).rejectRequest();
-    	    	System.out.println("All pending requests for " + projID + " has been automatically rejected...");
-    	    }
+    		this.rejectAllPending(project.getProjectID(), reqManager);
     	} else if (request instanceof Req_TransferStudent) {
     		Supervisor supervisorOld = ((Req_TransferStudent) request).getSupervisorOld(); 
     		Supervisor supervisorNew = ((Req_TransferStudent) request).getSupervisorNew(); 
@@ -112,6 +107,15 @@ public class ProjectManager {
         }
 		System.out.println("\n" + supervisor.getUserID() + " now has less than the maximum number of allocated projects...");
 		System.out.println("All UNAVAILABLE projects of " + supervisor.getUserID() + " has been made AVAILABLE.");
+    }
+    
+    private void rejectAllPending(String projID, RequestManager reqManager) {
+		List <Request> requests = reqManager.getRequestByProjID(projID);
+	    for(int i=0; i<requests.size(); i++) {
+	    	if(requests.get(i).getRequestStatus() != ReqStatus.PENDING) continue;
+	    	requests.get(i).rejectRequest();
+	    	System.out.println("All pending requests for " + projID + " has been automatically rejected...");
+	    }
     }
     
     public Map<String, Project> filterByStatus(Map<String, Project> projects, Status status){
