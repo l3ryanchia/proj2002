@@ -151,12 +151,24 @@ public class ProjectManager {
     	    Project project = set.getValue();
     	   	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
     	   	if(project.getStatus() == Status.ALLOCATED) {
-    	   		System.out.printf(" ALLOCATED STUDENT: %-10s \n STUDENT EMAIL: %-20s \n", project.getStudent().getName(), project.getStudent().getUserID() + "@e.ntu.edu.sg");
+    	   		System.out.printf("%96s %56s \n", "ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg");
+    	   		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	   	}
     	   	count++;
     	   }
     	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	return count;
+    }
+    
+    public void displayProjects(Project project) {
+    	System.out.printf("%10s %85s %25s %30s %10s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME", "SUPERVISOR EMAIL", "STATUS");
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	System.out.printf("%10s %85s %25s %30s %10s \n", project.getProjectID(), project.getTitle(), project.getSupervisor().getName(), project.getSupervisor().getUserID() + "@e.ntu.edu.sg", project.getStatus());
+    	   	if(project.getStatus() == Status.ALLOCATED) {
+    	   		System.out.printf("%96s %56s \n", "ALLOCATED STUDENT: " + project.getStudent().getName(), "STUDENT EMAIL: " + project.getStudent().getUserID() + "@e.ntu.edu.sg");
+    	   		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	   	}
+    	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
     
     public int displayFilter(Status status, String supervisor) {//remove

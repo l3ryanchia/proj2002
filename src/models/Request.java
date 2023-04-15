@@ -71,10 +71,14 @@ public abstract class Request {
 
     protected abstract void displayRequestType();
     protected void displayAdditionalInfo() {};
+    protected void printNew() {
+    	if(this.getRequestStatus()==ReqStatus.PENDING) System.out.println("NEW!!");
+    }
     
     public void displayRequest() {
     	System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
-    	System.out.println("RequestID: " + this.getRequestID() + " - " + this.getRequestStatus());
+    	this.printNew();
+    	System.out.println("RequestID: " + this.getRequestID() + " - " + this.getRequestStatus()); 
     	this.displayRequestType(); //may vary for each subclass
 		System.out.println("Sender: " + this.getSenderID() + " || Receiver: " + this.getReceiver());
     	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "SUPERVISOR NAME");

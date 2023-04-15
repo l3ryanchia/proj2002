@@ -47,33 +47,8 @@ public class StudentManager {
     }
 
     public void addStudent(String userID, String name) {
-    	//constructor for student
     	Student student = new Student(userID, name);
         students.put(student.getUserID(), student);
     }
     
-    public boolean checkPassword(String userID, String password) { //where is this being used??
-        Student student = students.get(userID);
-
-        if (student != null) {
-            return student.getPassword().equals(password);
-        }
-
-        return false;
-    }
-
-    // Other methods related to students can be added here
-    /*
-    public void allocateProject(String projectID, String studentID) {
-    	Student student = getStudent(studentID);
-    	student.setProject(projectID);
-    	student.setStatus(StudentStatus.REGISTERED);
-    }
-    
-    public void reserveProject(String projectID, String studentID) {
-    	Student student = getStudent(studentID);
-    	student.setProject(projectID);
-    	student.setStatus(StudentStatus.RESERVED);
-    }
-    */
 }

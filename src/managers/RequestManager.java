@@ -51,7 +51,6 @@ public class RequestManager {
     	for (int i=0; i<requests.size(); i++) {
 			if ((requests.get(i).getSenderType() == sender) && (requests.get(i).getReceiver().equals(receiverID))) {
 				if(pending && requests.get(i).getRequestStatus() != models.Request.ReqStatus.PENDING) continue;
-				System.out.println("NEW!!"); //put here?
 				requests.get(i).displayRequest();
 				count++;
 				continue;

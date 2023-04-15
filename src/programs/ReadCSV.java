@@ -8,7 +8,7 @@ import serializers.SupervisorSerializer;
 
 public class ReadCSV {
 	
-	public static StudentManager loadStudentData() { //why static?? -- cause in mainApp u declare student manager as static
+	public static StudentManager loadStudentData() {
 		return StudentSerializer.readStudentsFromFile("database/studentList.csv");
 	}
 	

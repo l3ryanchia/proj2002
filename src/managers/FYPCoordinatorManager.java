@@ -45,11 +45,4 @@ public class FYPCoordinatorManager {
         //supervisorManager.addSupervisor(coordinator);
     }
 
-    public boolean checkPassword(String userID, String password) {
-        if (coordinator != null && coordinator.getUserID().equals(userID)) {
-            return coordinator.getPassword().equals(password);
-        }
-
-        return false;
-    }
 }

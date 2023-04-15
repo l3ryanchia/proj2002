@@ -144,7 +144,7 @@ public class FYPMSApp {
                 	int selection = scanner.nextInt();
                 	scanner.nextLine();
                 	
-                	if(selection==1) {
+                	if(selection==1) { //exception handling
 	                    System.out.println("Welcome, FYP coordinator!");
 	                    FYPCoordinatorMenu.displayMenu(coordinator);
 	                    // Allow user to perform FYP coordinator-related tasks

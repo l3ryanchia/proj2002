@@ -51,10 +51,6 @@
 
 package models;
 
-import java.util.Map;
-
-import models.Project.Status;
-
 public class Project {
 	public enum Status {AVAILABLE, ALLOCATED, RESERVED, UNAVAILABLE};
 	public static int projectIDCounter = 1;
@@ -75,7 +71,7 @@ public class Project {
         projectIDCounter++;
     }
 
-    // Getters and setters for projectID, title, and supervisor
+    // Getters and setters
 
     public String getProjectID() {
         return projectID;
@@ -117,16 +113,6 @@ public class Project {
     	return this.student;
     }
   
-    public void displayProject() { //only being used in student menu
-    	System.out.printf("%10s %85s %25s \n", "PROJECT ID", "PROJECT TITLE", "PROJECT SUPERVISOR");
-    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
-    	System.out.printf("%10s %85s %25s \n", this.getProjectID(), this.getTitle(), this.getSupervisor().getName());
-	   	if(this.getStatus() == Status.ALLOCATED) {
-	   		System.out.printf(" ALLOCATED STUDENT: %-10s \n STUDENT EMAIL: %-20s \n", this.getStudent().getName(), this.getStudent().getUserID() + "@e.ntu.edu.sg");
-	   	}
-    	System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
-    }
-  
     public void reserveProject(Student student) {
     	this.setStudent(student);
     	this.setStatus(Status.RESERVED);
@@ -138,26 +124,11 @@ public class Project {
     }
 
     public void allocateStudent() {
-    	//this.setStudent(studentID);
     	this.setStatus(Status.ALLOCATED);
     }
     
     public void deallocateStudent() {
     	this.setStudent(null);
     	this.setStatus(Status.AVAILABLE);
-    }
-    
-    public void reallocateSupervisor(Supervisor supervisor) { //delete?
-    	this.setSupervisor(supervisor);
-    }
-    
-    public void allocateSupervisor(Supervisor supervisor) { //delete
-    	this.setSupervisor(supervisor);
-    	this.setStatus(Status.ALLOCATED);
-    }
-    
-    public void deallocateSupervisor() { //delete
-    	this.setSupervisor(null);
-    	this.setStatus(Status.AVAILABLE); //why set to available?
     }
 }

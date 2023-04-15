@@ -263,7 +263,7 @@ public class SupervisorMenu {
     	while(true) {
     		boolean isValidInput = false;
     		int subchoice = 0;
-    		System.out.println("1. Modify title");
+    		System.out.println("\n1. Modify title");
     		System.out.println("2. Transfer student");
             System.out.println("3. Back");
             System.out.print("Please choose an option: ");
@@ -285,16 +285,18 @@ public class SupervisorMenu {
                 	System.out.print("Please enter projectID: ");
             		String selection = scanner.nextLine();
             		
-            		Project project = FYPMSApp.projectManager.getProject(selection);
-            		if (!project.getSupervisor().equals(supervisor)) { //or if project.getSupervisor() is him, then dunnid the ProjID list?
-            			System.out.print("Please enter new title: ");
-            			String newTitle = scanner.nextLine();
-            			
-            			project.setTitle(newTitle);
-            		}
-            		else {
+            		Project project = FYPMSApp.projectManager.getProject(selection); //can someone help add the exception handling here
+            		
+            		if(!project.getSupervisor().equals(supervisor)) {
             			System.out.println("You did not submit this project!");
+            			break;
             		}
+            		
+            		System.out.print("Please enter new title: ");
+            		String newTitle = scanner.nextLine();
+            			
+            		project.setTitle(newTitle);
+            		
                 	break;
                 	
                 case 2:
@@ -307,6 +309,11 @@ public class SupervisorMenu {
             			break;
             		}
             		
+            		if (selectedProj.getStatus() != Status.ALLOCATED) {
+        				System.out.print("This project has not been allocated to a student.");
+        				break;
+        			}
+            		
             		System.out.print("Please enter supervisorID for replacement: ");
             		String newSupervisorID = scanner.nextLine();
             		
@@ -317,20 +324,6 @@ public class SupervisorMenu {
             		}
             		
             		FYPMSApp.requestManager.addRequest(new Req_TransferStudent(newSup, selectedProj));
-            		
-            		/*
-            		if (supervisor.getProjIDs().contains(changeID)) {
-            			
-            			if (selectedProj.getStatus() != Status.ALLOCATED) {
-            				System.out.print("This project has not been allocated to a student.");
-            				break;
-            			}
-            			Supervisor newSup = FYPMSApp.supervisorManager.getSupervisor(supervisorNewID);
-            			if (newSup != null) FYPMSApp.requestManager.addRequest(new Req_TransferStudent(supervisor, newSup, selectedProj));
-            			else System.out.print("Supervisor does not exist in our system.");	
-            		}
-            		else System.out.println("You did not submit this project!");
-            		*/
             		
                 	break;
                 case 3:
@@ -352,13 +345,13 @@ public class SupervisorMenu {
     		System.out.println("You have no pending outgoing request.");
     	}
     	
-    	if((FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) && (FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0))
-    		return;
+    	//if((FYPMSApp.requestManager.checkOutgoing(supervisor.getUserID(), true) == 0) && (FYPMSApp.requestManager.checkIncoming(supervisor.getUserID(), UserType.STUDENT, true) == 0))
+    		//return;
     	
     	while(true) {
     		boolean isValidInput = false;
     		int subchoice = 0;
-    		System.out.println("1. Approve a request:");
+    		System.out.println("\n1. Approve a request:");
     		System.out.println("2. Reject a request:");
             System.out.println("3. Back");
             System.out.print("Please choose an option: ");

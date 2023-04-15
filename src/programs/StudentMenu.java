@@ -15,7 +15,6 @@ public class StudentMenu {
     	
         while (!logout) {
         	boolean isValidInput = false;
-        	int subchoice;
             int choice = 0;
             System.out.println("\nWelcome to FYP Management System - Students");
             System.out.println("1. View all available projects");
@@ -213,8 +212,13 @@ public class StudentMenu {
             			break;
             		}
             		
-            		System.out.print("Please enter projectID: ");
-            		String selection = scanner.nextLine();
+            		String selection = null;
+            		try {
+            			System.out.print("Please enter projectID: ");
+            			selection = scanner.nextLine();
+            		} catch (Exception e) {
+            			break;
+            		}
             		
             		if(student.getProjectBlacklist().contains(selection)) {
             			System.out.println("You are not allowed to select this project!");
@@ -248,7 +252,7 @@ public class StudentMenu {
     	}
     	
     	Project registeredProj = FYPMSApp.projectManager.getProject(student.getProject());
-    	registeredProj.displayProject();
+    	FYPMSApp.projectManager.displayProjects(registeredProj);
     	
     	while(true) {
     		boolean isValidInput = false;
@@ -278,8 +282,6 @@ public class StudentMenu {
             		FYPMSApp.requestManager.addRequest(new Req_ChangeTitle(registeredProj, newTitle));
             		break;
             	case 2: //deregister project
-            		//seems abit inefficient here, to get the supervisor object need to first get the supervisor ID by getting the supervisor name
-            		Supervisor registeredSup = registeredProj.getSupervisor();
             		FYPMSApp.requestManager.addRequest(new Req_DeallocateProj(student, registeredProj));
             		break;
             	case 3:
