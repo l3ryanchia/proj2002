@@ -1,4 +1,4 @@
-# FYPMS
+# Final Year Project Management System (FYPMS)
 
 NTU AY22/23 S2 SC2002 Group Project - Final Year Project Management System (FYPMS).
 
