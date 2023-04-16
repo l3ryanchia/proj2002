@@ -21,7 +21,7 @@ Group 2 LAB A50
 |--------------|-------------------------------------------------|
 | Bryan Chia Song Nian     | [l3ryanchia](https://github.com/l3ryanchia)          
 | Phun Wei Cheng Russell | [russellphun](https://github.com/russellphun) 
-| Siew Jia Yang  |         
+| Siew Jia Yang  | [siewjiayang](https://github.com/siewjiayang)
   
 
 ## Highlights
