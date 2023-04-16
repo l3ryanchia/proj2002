@@ -11,6 +11,7 @@ Final Year Project Management System (FYPMS) is an application for staff and stu
 - [Report](insert report link)
 - [Documentation](insert report link)
 - [Presentation Video](https://youtu.be/AA8NXlhY16o)
+- [UML Class Diagram] ()
 
 ## Team Members
 
@@ -97,20 +98,4 @@ The main class is `src/main/Main.java`.
 
 The java class `src/test/HardReload.java` is used to hard reload the database.
 
-## UML Class Diagram
 
-### Main Diagram
-
-[![Main Diagram](UMLClassDiagram/main.svg)](UMLClassDiagram/main.svg)
-
-### Entity Sub-Diagram
-
-[![Entity Sub-Diagram](UMLClassDiagram/entity.svg)](UMLClassDiagram/entity.svg)
-
-### Controller Sub-Diagram
-
-[![Controller Sub-Diagram](UMLClassDiagram/controller.svg)](UMLClassDiagram/controller.svg)
-
-### Boundary Sub-Diagram
-
-[![Boundary Sub-Diagram](UMLClassDiagram/boundary.svg)](UMLClassDiagram/boundary.svg)
