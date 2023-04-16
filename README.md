@@ -8,7 +8,7 @@ Final Year Project Management System (FYPMS) is an application for staff and stu
 
 
 - [GitHub Repository](https://github.com/l3ryanchia/proj2002)
-- [Report](insert new report with updated class diagram)
+- [Report](https://github.com/l3ryanchia/proj2002/blob/master/A50-grp2-Project-Report-Final.pdf)
 - [Presentation Video](https://youtu.be/AA8NXlhY16o)
 - [UML Class Diagram](https://github.com/l3ryanchia/proj2002/blob/master/A50-grp2-UML.jpg)
 
